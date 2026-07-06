@@ -1,0 +1,31 @@
+@tailwind base;
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top, rgba(205, 237, 246, 0.16), transparent 35%),
+      linear-gradient(180deg, #ffffff 0%, #f7f5f2 100%);
+    color: #1f2937;
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
