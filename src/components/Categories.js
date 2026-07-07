@@ -12,7 +12,7 @@ const icons = {
 function categoryCard(category, index) {
   const activeClass = index === 0 ? ' is-active' : '';
   return `
-    <button type="button" data-category="${category.value}" class="category-card ripple-button${activeClass}" aria-pressed="${index === 0}">
+    <button type="button" data-category="${category.value}" class="category-card ripple-button${activeClass}" aria-pressed="${index === 0}" aria-label="${category.label}, ${category.count} products">
       <span class="category-card-glow bg-gradient-to-br ${category.toneClass}" aria-hidden="true"></span>
       <span class="category-icon-wrap bg-gradient-to-br ${category.toneClass}" aria-hidden="true">
         ${icons[category.icon]}
@@ -25,7 +25,7 @@ function categoryCard(category, index) {
         <span class="category-count">${category.count}</span>
       </span>
       <span class="mt-7 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.22em] text-brand-green">
-        <span>${category.count} products</span>
+        <span aria-hidden="true">${category.count} products</span>
         <span class="category-arrow" aria-hidden="true">-&gt;</span>
       </span>
     </button>
@@ -34,7 +34,7 @@ function categoryCard(category, index) {
 
 export function Categories() {
   return `
-    <section id="categories" class="category-section relative overflow-hidden py-20 lg:py-24">
+    <section id="categories" class="category-section relative overflow-hidden py-20 lg:py-24" aria-labelledby="categories-title" data-reveal>
       <div class="pointer-events-none absolute left-[-8rem] top-10 h-72 w-72 rounded-full bg-brand-mint/50 blur-3xl" aria-hidden="true"></div>
       <div class="pointer-events-none absolute right-[-8rem] bottom-10 h-80 w-80 rounded-full bg-brand-gold/20 blur-3xl" aria-hidden="true"></div>
 
@@ -42,13 +42,13 @@ export function Categories() {
         <div class="md:flex md:items-end md:justify-between md:gap-10">
           <div>
             <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">Shop by category</p>
-            <h2 class="section-heading mt-4">Choose your next premium treat.</h2>
+            <h2 id="categories-title" class="section-heading mt-4">Choose your next premium treat.</h2>
             <p class="section-copy mt-4">Swipe, tap, or browse our signature families crafted for milk tea lovers, coffee guests, and dessert pairings.</p>
           </div>
           <p class="mt-8 max-w-sm text-sm leading-6 text-[#7b6a5a] md:mt-0">Interactive category cards highlight product depth and make mobile discovery feel as smooth as the first sip.</p>
         </div>
 
-        <div class="category-scroll mt-12" aria-label="Product categories">
+        <div class="category-scroll mt-12" role="group" aria-label="Product categories">
           ${CATEGORIES.map(categoryCard).join('')}
         </div>
 

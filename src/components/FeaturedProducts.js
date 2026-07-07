@@ -17,19 +17,19 @@ function featuredCard(product) {
           width="900"
           height="900"
         />
-        <span class="product-discount">-${product.discount}%</span>
+        <span class="product-discount" aria-label="${product.discount} percent discount">-${product.discount}%</span>
         <span class="product-badge">${product.badge}</span>
         <button type="button" class="favorite-button ripple-button" aria-label="Add ${product.title} to favorites" aria-pressed="false" data-favorite-button>
           <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="M20.8 5.6a5.1 5.1 0 0 0-7.2 0L12 7.2l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2L12 21.6l8.8-8.8a5.1 5.1 0 0 0 0-7.2Z"></path>
           </svg>
         </button>
-        <button type="button" class="quick-view-button ripple-button" aria-label="Quick view ${product.title}">
+        <button type="button" class="quick-view-button ripple-button" aria-label="Open quick view for ${product.title}">
           Quick view
         </button>
       </div>
 
-      <div class="p-5">
+      <div class="p-6">
         <div class="flex items-center justify-between gap-3">
           <span class="rounded-full bg-brand-mint/60 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-brand-green">${product.label}</span>
           <span class="flex items-center gap-1 text-sm font-semibold text-[#6f4329]" aria-label="${product.rating} out of 5 stars">
@@ -37,7 +37,7 @@ function featuredCard(product) {
               <path d="m12 3 2.7 5.47 6.04.88-4.37 4.26 1.03 6.01L12 16.78l-5.4 2.84 1.03-6.01-4.37-4.26 6.04-.88L12 3Z"></path>
             </svg>
             ${product.rating}
-            <span class="font-medium text-[#9a8675]">(${product.reviews})</span>
+            <span class="font-medium text-[#9a8675]" aria-hidden="true">(${product.reviews})</span>
           </span>
         </div>
 
@@ -65,14 +65,14 @@ function featuredCard(product) {
 
 export function FeaturedProducts() {
   return `
-    <section id="order" class="featured-products-section relative overflow-hidden py-20 lg:py-24">
+    <section id="order" class="featured-products-section relative overflow-hidden py-20 lg:py-24" aria-labelledby="featured-title" data-reveal>
       <div class="pointer-events-none absolute left-[-8rem] top-20 h-72 w-72 rounded-full bg-brand-peach/30 blur-3xl" aria-hidden="true"></div>
       <div class="pointer-events-none absolute right-[-7rem] bottom-16 h-80 w-80 rounded-full bg-brand-mint/45 blur-3xl" aria-hidden="true"></div>
 
       <div id="featured" class="relative mx-auto max-w-7xl px-6 lg:flex lg:items-end lg:justify-between lg:gap-10 lg:px-8">
         <div>
           <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">Featured products</p>
-          <h2 class="section-heading mt-4">Premium picks, ready for your cart.</h2>
+          <h2 id="featured-title" class="section-heading mt-4">Premium picks, ready for your cart.</h2>
         </div>
         <p class="section-copy mt-6 max-w-xl text-gray-600 lg:mt-0">Image-led product cards with instant favorite, quick view, discounts, ratings, and polished cart actions.</p>
       </div>

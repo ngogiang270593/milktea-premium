@@ -1,25 +1,23 @@
-import { Navbar } from './components/Navbar.js';
 import { Hero } from './components/Hero.js';
 import { Categories } from './components/Categories.js';
 import { FeaturedProducts } from './components/FeaturedProducts.js';
 import { Promotion } from './components/Promotion.js';
 import { Testimonials } from './components/Testimonials.js';
 import { Newsletter } from './components/Newsletter.js';
-import { Footer } from './components/Footer.js';
+import { DefaultLayout } from './layouts/DefaultLayout.js';
+import { MenuPage } from './pages/MenuPage.js';
 
 const app = document.querySelector('#app');
 
 if (app) {
-  app.innerHTML = `
-    ${Navbar()}
-    <main>
+  const HomePage = `
       ${Hero()}
       ${Categories()}
       ${FeaturedProducts()}
       ${Promotion()}
       ${Testimonials()}
       ${Newsletter()}
-      ${Footer()}
-    </main>
   `;
+
+  app.innerHTML = DefaultLayout(window.location.pathname === '/menu' ? MenuPage() : HomePage);
 }

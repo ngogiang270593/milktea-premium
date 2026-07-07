@@ -2,7 +2,7 @@ import { BRAND_NAME } from '../utils/constants.js';
 
 export function Footer() {
   return `
-    <footer class="border-t border-gray-200 bg-white py-14">
+    <footer class="border-t border-gray-200 bg-white py-14" aria-label="Site footer">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="grid gap-10 md:grid-cols-3">
           <div>
@@ -11,11 +11,13 @@ export function Footer() {
           </div>
           <div>
             <p class="font-semibold text-gray-900">Explore</p>
-            <ul class="mt-4 space-y-3 text-sm text-gray-600">
+            <nav class="mt-4" aria-label="Footer navigation">
+            <ul class="space-y-3 text-sm text-gray-600">
               <li><a href="#categories" class="hover:text-brand-green">Categories</a></li>
               <li><a href="#featured" class="hover:text-brand-green">Featured</a></li>
               <li><a href="#testimonials" class="hover:text-brand-green">Testimonials</a></li>
             </ul>
+            </nav>
           </div>
           <div>
             <p class="font-semibold text-gray-900">Contact</p>

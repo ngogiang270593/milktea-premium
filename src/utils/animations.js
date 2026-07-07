@@ -147,26 +147,16 @@ export function initRippleButtons() {
 
 export function initCategoryFilters() {
   const categoryButtons = document.querySelectorAll('[data-category]');
-  const productCards = document.querySelectorAll('[data-product-category]');
   const categoryDots = document.querySelectorAll('.category-scroll-dot');
 
   categoryButtons.forEach((button, index) => {
     button.addEventListener('click', () => {
-      const category = button.dataset.category;
-
       categoryButtons.forEach((btn, btnIndex) => {
         const isActive = btn === button;
 
         btn.classList.toggle('is-active', isActive);
-        btn.classList.toggle('bg-brand-green', isActive && btn.classList.contains('btn-secondary'));
-        btn.classList.toggle('text-white', isActive && btn.classList.contains('btn-secondary'));
         btn.setAttribute('aria-pressed', String(isActive));
         categoryDots[btnIndex]?.classList.toggle('is-active', isActive);
-      });
-
-      productCards.forEach((card) => {
-        const cardCategory = card.dataset.productCategory;
-        card.classList.toggle('hidden', category !== 'all' && cardCategory !== category);
       });
 
       button.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
@@ -229,10 +219,245 @@ export function initProductCards() {
   });
 }
 
+export function initMenuPage() {
+  const grid = document.querySelector('[data-menu-grid]');
+
+  if (!grid) {
+    return;
+  }
+
+  const search = document.querySelector('[data-menu-search]');
+  const sort = document.querySelector('[data-menu-sort]');
+  const filters = document.querySelectorAll('[data-menu-filter]');
+  const priceRanges = document.querySelectorAll('[data-price-range]');
+  const priceValues = document.querySelectorAll('[data-price-value]');
+  const count = document.querySelector('[data-product-count]');
+  const empty = document.querySelector('[data-menu-empty]');
+  const pagination = document.querySelector('[data-menu-pagination]');
+  const filterOpen = document.querySelector('[data-filter-open]');
+  const filterClose = document.querySelector('[data-filter-close]');
+  const filterDrawer = document.querySelector('#menu-filter-drawer');
+  const filterOverlay = document.querySelector('[data-filter-overlay]');
+  const viewButtons = document.querySelectorAll('[data-view-mode]');
+  const products = [...grid.querySelectorAll('[data-menu-product]')];
+  const pageSize = 8;
+  let currentPage = 1;
+  let filteredProducts = [...products];
+
+  const selectedValues = (name) => [...filters]
+    .filter((input) => input.name === name && input.checked)
+    .map((input) => input.value);
+
+  const productMatches = (product) => {
+    const query = search?.value.trim().toLowerCase() || '';
+    const maxPrice = Number(priceRanges[0]?.value || 12);
+    const groups = ['category', 'size', 'sugar', 'ice', 'availability'];
+
+    if (query && !product.dataset.name.includes(query)) {
+      return false;
+    }
+
+    if (Number(product.dataset.price) > maxPrice) {
+      return false;
+    }
+
+    return groups.every((group) => {
+      const values = selectedValues(group);
+      return !values.length || values.includes(product.dataset[group]);
+    });
+  };
+
+  const sortProducts = (items) => {
+    const mode = sort?.value || 'featured';
+    const sorted = [...items];
+
+    if (mode === 'rating-desc') {
+      sorted.sort((a, b) => Number(b.dataset.rating) - Number(a.dataset.rating));
+    } else if (mode === 'price-asc') {
+      sorted.sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price));
+    } else if (mode === 'price-desc') {
+      sorted.sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price));
+    } else if (mode === 'newest') {
+      sorted.sort((a, b) => Number(b.dataset.new === 'true') - Number(a.dataset.new === 'true'));
+    }
+
+    return sorted;
+  };
+
+  const updatePagination = () => {
+    const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
+    const buttons = pagination?.querySelectorAll('[data-page]');
+
+    pagination?.querySelector('[data-page-prev]')?.toggleAttribute('disabled', currentPage === 1);
+    pagination?.querySelector('[data-page-next]')?.toggleAttribute('disabled', currentPage === totalPages);
+
+    buttons?.forEach((button) => {
+      const page = Number(button.dataset.page);
+      const isActive = page === currentPage;
+
+      button.hidden = page > totalPages;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-current', isActive ? 'page' : 'false');
+    });
+  };
+
+  const renderProducts = () => {
+    filteredProducts = sortProducts(products.filter(productMatches));
+    const start = (currentPage - 1) * pageSize;
+    const visibleProducts = filteredProducts.slice(start, start + pageSize);
+
+    products.forEach((product) => {
+      product.hidden = !visibleProducts.includes(product);
+    });
+
+    filteredProducts.forEach((product) => grid.append(product));
+
+    if (count) {
+      count.textContent = String(filteredProducts.length);
+    }
+
+    if (empty) {
+      empty.hidden = filteredProducts.length > 0;
+    }
+
+    updatePagination();
+  };
+
+  const resetAndRender = () => {
+    currentPage = 1;
+    renderProducts();
+  };
+
+  const openFilters = () => {
+    if (!filterDrawer || !filterOverlay || !filterOpen) {
+      return;
+    }
+
+    filterOverlay.hidden = false;
+    filterDrawer.inert = false;
+    filterDrawer.setAttribute('aria-hidden', 'false');
+    filterOpen.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+
+    requestAnimationFrame(() => {
+      filterOverlay.classList.add('is-open');
+      filterDrawer.classList.add('is-open');
+      filterClose?.focus();
+    });
+  };
+
+  const closeFilters = () => {
+    if (!filterDrawer || !filterOverlay || !filterOpen) {
+      return;
+    }
+
+    filterOverlay.classList.remove('is-open');
+    filterDrawer.classList.remove('is-open');
+    filterDrawer.inert = true;
+    filterDrawer.setAttribute('aria-hidden', 'true');
+    filterOpen.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+
+    window.setTimeout(() => {
+      if (!filterDrawer.classList.contains('is-open')) {
+        filterOverlay.hidden = true;
+      }
+    }, 260);
+  };
+
+  search?.addEventListener('input', resetAndRender);
+  sort?.addEventListener('change', resetAndRender);
+  filters.forEach((input) => input.addEventListener('change', resetAndRender));
+  priceRanges.forEach((range) => {
+    range.addEventListener('input', () => {
+      priceRanges.forEach((input) => {
+        input.value = range.value;
+      });
+      priceValues.forEach((value) => {
+        value.textContent = `$${range.value}`;
+      });
+      resetAndRender();
+    });
+  });
+
+  viewButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const mode = button.dataset.viewMode;
+
+      viewButtons.forEach((item) => {
+        const isActive = item === button;
+        item.classList.toggle('is-active', isActive);
+        item.setAttribute('aria-pressed', String(isActive));
+      });
+
+      grid.classList.toggle('is-list', mode === 'list');
+    });
+  });
+
+  pagination?.addEventListener('click', (event) => {
+    const target = event.target.closest('button');
+
+    if (!target) {
+      return;
+    }
+
+    const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
+
+    if (target.dataset.pagePrev !== undefined) {
+      currentPage = Math.max(1, currentPage - 1);
+    } else if (target.dataset.pageNext !== undefined) {
+      currentPage = Math.min(totalPages, currentPage + 1);
+    } else if (target.dataset.page) {
+      currentPage = Number(target.dataset.page);
+    }
+
+    renderProducts();
+    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  filterOpen?.addEventListener('click', openFilters);
+  filterClose?.addEventListener('click', closeFilters);
+  filterOverlay?.addEventListener('click', closeFilters);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeFilters();
+    }
+  });
+
+  renderProducts();
+}
+
+export function initScrollReveal() {
+  const revealItems = document.querySelectorAll('[data-reveal]');
+
+  if (!revealItems.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        return;
+      }
+
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    rootMargin: '0px 0px -12% 0px',
+    threshold: 0.12
+  });
+
+  revealItems.forEach((item) => observer.observe(item));
+}
+
 export function initAppInteractions() {
   initNavigation();
   initRippleButtons();
   initCategoryFilters();
   initHeroParallax();
   initProductCards();
+  initMenuPage();
+  initScrollReveal();
 }

@@ -1,7 +1,8 @@
 import { BRAND_NAME, NAV_LINKS } from '../utils/constants.js';
 
 function navLink({ label, href }, className) {
-  return `<a href="${href}" class="${className}" data-nav-link>${label}</a>`;
+  const resolvedHref = href.startsWith('#') && window.location.pathname === '/menu' ? `/${href}` : href;
+  return `<a href="${resolvedHref}" class="${className}" data-nav-link>${label}</a>`;
 }
 
 function iconButton(label, icon, extraClass = '') {
@@ -28,9 +29,9 @@ export function Navbar() {
   `;
 
   return `
-    <header id="site-header" class="site-header sticky top-0 z-50 px-4 py-4 transition-all duration-300">
+    <header id="site-header" class="site-header sticky top-0 z-50 px-4 py-4 transition-all duration-300" data-reveal>
       <div class="nav-shell mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-3 rounded-full px-4 py-3 transition-all duration-300 md:grid-cols-[1fr_auto_1fr] md:px-5">
-        <a href="#home" class="nav-logo group inline-flex items-center gap-3 rounded-full text-sm font-semibold tracking-tight text-brand-green outline-none transition focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">
+        <a href="/" class="nav-logo group inline-flex items-center gap-3 rounded-full text-sm font-semibold tracking-tight text-brand-green outline-none transition focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">
           <span class="grid h-10 w-10 place-items-center rounded-full bg-[#0d3b2e] text-sm font-semibold text-white shadow-[0_10px_30px_rgba(13,59,46,0.24)]">MP</span>
           <span class="hidden sm:inline">${BRAND_NAME}</span>
         </a>
@@ -44,7 +45,7 @@ export function Navbar() {
           <a href="#newsletter" class="nav-login ripple-button rounded-full bg-[#0d3b2e] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">Login</a>
           <button type="button" class="nav-icon-button ripple-button relative" aria-label="Open shopping cart">
             ${cartIcon}
-            <span class="cart-badge absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand-gold px-1 text-[10px] font-bold text-[#2f2419] shadow-sm" aria-label="2 items in cart">2</span>
+            <span class="cart-badge absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand-gold px-1 text-[10px] font-bold text-[#2f2419] shadow-sm" aria-hidden="true">2</span>
           </button>
         </div>
 
@@ -55,10 +56,10 @@ export function Navbar() {
         </button>
       </div>
 
-      <div id="drawer-overlay" class="drawer-overlay fixed inset-0 z-40 bg-[#1f1710]/30 opacity-0 backdrop-blur-sm transition duration-300 md:hidden" hidden></div>
+      <div id="drawer-overlay" class="drawer-overlay fixed inset-0 z-40 bg-[#1f1710]/30 opacity-0 backdrop-blur-sm transition duration-300 md:hidden" hidden aria-hidden="true"></div>
       <aside id="mobile-drawer" class="mobile-drawer fixed right-0 top-0 z-50 h-dvh w-[min(86vw,24rem)] translate-x-full bg-white/92 p-5 shadow-[-24px_0_70px_rgba(31,23,16,0.2)] backdrop-blur-2xl transition duration-300 md:hidden" aria-label="Mobile navigation" aria-hidden="true" inert>
         <div class="flex items-center justify-between">
-          <a href="#home" class="inline-flex items-center gap-3 rounded-full text-sm font-semibold text-brand-green outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/70">
+          <a href="/" class="inline-flex items-center gap-3 rounded-full text-sm font-semibold text-brand-green outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/70">
             <span class="grid h-10 w-10 place-items-center rounded-full bg-[#0d3b2e] text-sm font-semibold text-white">MP</span>
             ${BRAND_NAME}
           </a>

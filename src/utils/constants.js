@@ -1,6 +1,7 @@
 export const BRAND_NAME = 'MilkTea Premium';
 
 export const NAV_LINKS = [
+  { label: 'Menu', href: '/menu' },
   { label: 'Categories', href: '#categories' },
   { label: 'Featured', href: '#featured' },
   { label: 'Testimonials', href: '#testimonials' },
