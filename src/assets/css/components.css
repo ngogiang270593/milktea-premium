@@ -106,8 +106,7 @@
     background: rgba(211, 168, 106, 0.32);
     border-radius: 9999px;
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
-    animation: ripple-expand 560ms ease-out;
+    transform: translate(-50%, -50%) scale(0);
     z-index: -1;
   }
 
@@ -2027,6 +2026,18 @@
 
   .theme-toggle {
     position: relative;
+  }
+
+  .gsap-motion .site-header,
+  .gsap-motion .fade-up,
+  .gsap-motion .hero-bubble,
+  .gsap-motion .floating-card,
+  .gsap-motion .hero-quality-card,
+  .gsap-motion .tea-illustration,
+  .gsap-motion .cart-item,
+  .gsap-motion .wishlist-item,
+  .gsap-motion .quantity-bump {
+    animation: none;
   }
 
   .theme-toggle-track {

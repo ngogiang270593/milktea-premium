@@ -33,7 +33,12 @@ import {
   THEMES
 } from '../store/themeStore.js';
 import { formatCurrency } from './format.js';
+import { animateCardSet, initGsapMotion, playButtonRipple } from './motion.js';
 import { applyProductFilters } from './productFilter.js';
+
+function getScrollBehavior() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+}
 
 function updateThemeControls() {
   const preference = getThemePreference();
@@ -214,15 +219,7 @@ export function initRippleButtons() {
 
     button.dataset.rippleReady = 'true';
     button.addEventListener('click', (event) => {
-      const rect = button.getBoundingClientRect();
-      const ripple = document.createElement('span');
-
-      ripple.className = 'ripple';
-      ripple.style.left = `${event.clientX - rect.left}px`;
-      ripple.style.top = `${event.clientY - rect.top}px`;
-
-      button.append(ripple);
-      ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+      playButtonRipple(button, event);
     });
   });
 }
@@ -297,7 +294,7 @@ export function initCategoryFilters() {
         categoryDots[btnIndex]?.classList.toggle('is-active', isActive);
       });
 
-      button.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      button.scrollIntoView({ behavior: getScrollBehavior(), inline: 'center', block: 'nearest' });
     });
   });
 }
@@ -409,6 +406,7 @@ function renderWishlistContent() {
   updateWishlistBadges();
   initRippleButtons();
   bindWishlistControls();
+  animateCardSet(content.querySelectorAll('.wishlist-item'));
 }
 
 function bindWishlistControls() {
@@ -587,6 +585,7 @@ function renderCartContent() {
   updateCartBadges();
   initRippleButtons();
   bindCartControls();
+  animateCardSet(content.querySelectorAll('.cart-item'));
 }
 
 function bindCartControls() {
@@ -849,6 +848,15 @@ export function initMenuPage() {
     }
 
     updatePagination();
+
+    if (grid.dataset.initialMenuMotion === 'true') {
+      animateCardSet(products.filter((product) => !product.hidden), {
+        duration: 0.38,
+        stagger: 0.035
+      });
+    } else {
+      grid.dataset.initialMenuMotion = 'true';
+    }
   };
 
   const resetAndRender = () => {
@@ -947,7 +955,7 @@ export function initMenuPage() {
     }
 
     renderProducts();
-    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    grid.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
   });
 
   filterOpen?.addEventListener('click', openFilters);
@@ -999,7 +1007,7 @@ export function initAppInteractions() {
   initCartPage();
   initWishlistPage();
   initProductDetail();
-  initScrollReveal();
+  initGsapMotion();
 
   window.addEventListener('cart:updated', updateCartBadges);
   window.addEventListener('wishlist:updated', updateWishlistBadges);
