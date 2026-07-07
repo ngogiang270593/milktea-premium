@@ -9,10 +9,54 @@ export const NAV_LINKS = [
 ];
 
 export const CATEGORIES = [
-  { label: 'All', value: 'all' },
-  { label: 'Classic', value: 'classic' },
-  { label: 'Milk Tea', value: 'milk' },
-  { label: 'Fruit Tea', value: 'fruit' }
+  {
+    label: 'Milk Tea',
+    value: 'milk-tea',
+    count: 24,
+    icon: 'MilkTea',
+    toneClass: 'from-[#0d3b2e] to-[#2f6b58]',
+    description: 'Velvety classics and brown sugar signatures.'
+  },
+  {
+    label: 'Fruit Tea',
+    value: 'fruit-tea',
+    count: 18,
+    icon: 'FruitTea',
+    toneClass: 'from-[#f8c3b6] to-[#d86f5d]',
+    description: 'Bright citrus, berry, mango, and popping pearls.'
+  },
+  {
+    label: 'Coffee',
+    value: 'coffee',
+    count: 12,
+    icon: 'Coffee',
+    toneClass: 'from-[#6f4329] to-[#2f2419]',
+    description: 'Tea bar espresso blends with creamy foam.'
+  },
+  {
+    label: 'Smoothie',
+    value: 'smoothie',
+    count: 16,
+    icon: 'Smoothie',
+    toneClass: 'from-[#cdebf6] to-[#62a8b8]',
+    description: 'Cold, silky fruit blends for slower afternoons.'
+  },
+  {
+    label: 'Cake',
+    value: 'cake',
+    count: 10,
+    icon: 'Cake',
+    toneClass: 'from-[#d3a86a] to-[#b7793f]',
+    description: 'Soft patisserie pairings for every tea order.'
+  },
+  {
+    label: 'Topping',
+    value: 'topping',
+    count: 22,
+    icon: 'Topping',
+    toneClass: 'from-[#e7f8f6] to-[#1f7665]',
+    description: 'Pearls, jellies, foam, pudding, and crunch.'
+  }
 ];
 
 export const TESTIMONIALS = [

@@ -42,3 +42,136 @@
     transform: scale(1.12);
   }
 }
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -1rem;
+  }
+}
+
+@keyframes category-icon-pop {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+
+  38% {
+    transform: translateY(-0.28rem) rotate(-4deg) scale(1.08);
+  }
+
+  68% {
+    transform: translateY(0.08rem) rotate(3deg) scale(0.98);
+  }
+}
+
+@media (max-width: 767px) {
+  .category-scroll {
+    display: flex;
+    gap: 1rem;
+    margin-right: -1.5rem;
+    margin-left: -1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1rem;
+    padding-left: 1.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 1.5rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .category-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-card {
+    flex: 0 0 min(82vw, 21rem);
+    scroll-snap-align: start;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .category-scroll {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1023px) {
+  .topping-card-left {
+    left: 1rem;
+  }
+
+  .topping-card-right {
+    right: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .premium-hero {
+    background:
+      radial-gradient(circle at 20% 12%, rgba(205, 237, 246, 0.72), transparent 18rem),
+      radial-gradient(circle at 90% 32%, rgba(211, 168, 106, 0.26), transparent 16rem),
+      linear-gradient(135deg, #fffdf8 0%, #f8f2e8 52%, #eef7f1 100%);
+  }
+
+  .hero-quality-card {
+    top: 4%;
+    right: 4%;
+  }
+
+  .floating-card {
+    max-width: 12.5rem;
+  }
+
+  .topping-card-left {
+    top: 40%;
+  }
+
+  .topping-card-right {
+    top: 65%;
+  }
+
+  .tea-illustration {
+    width: min(76%, 19rem);
+  }
+
+  .tea-cup {
+    height: 22rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .hero-bubble,
+  .floating-card,
+  .hero-quality-card,
+  .tea-illustration,
+  .cart-badge,
+  .site-header,
+  .category-card:hover .category-icon,
+  .category-card:focus-visible .category-icon,
+  .category-card.is-active .category-icon {
+    animation: none;
+  }
+
+  .hero-copy {
+    transition: none;
+  }
+}

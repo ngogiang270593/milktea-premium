@@ -148,21 +148,83 @@ export function initRippleButtons() {
 export function initCategoryFilters() {
   const categoryButtons = document.querySelectorAll('[data-category]');
   const productCards = document.querySelectorAll('[data-product-category]');
+  const categoryDots = document.querySelectorAll('.category-scroll-dot');
 
-  categoryButtons.forEach((button) => {
+  categoryButtons.forEach((button, index) => {
     button.addEventListener('click', () => {
       const category = button.dataset.category;
 
-      categoryButtons.forEach((btn) => {
-        btn.classList.remove('bg-brand-green', 'text-white');
-      });
+      categoryButtons.forEach((btn, btnIndex) => {
+        const isActive = btn === button;
 
-      button.classList.add('bg-brand-green', 'text-white');
+        btn.classList.toggle('is-active', isActive);
+        btn.classList.toggle('bg-brand-green', isActive && btn.classList.contains('btn-secondary'));
+        btn.classList.toggle('text-white', isActive && btn.classList.contains('btn-secondary'));
+        btn.setAttribute('aria-pressed', String(isActive));
+        categoryDots[btnIndex]?.classList.toggle('is-active', isActive);
+      });
 
       productCards.forEach((card) => {
         const cardCategory = card.dataset.productCategory;
         card.classList.toggle('hidden', category !== 'all' && cardCategory !== category);
       });
+
+      button.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+  });
+}
+
+export function initHeroParallax() {
+  const scene = document.querySelector('[data-parallax-scene]');
+
+  if (!scene || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  const items = scene.querySelectorAll('[data-parallax-item]');
+  let animationFrame = null;
+
+  const updateItems = (event) => {
+    if (animationFrame) {
+      window.cancelAnimationFrame(animationFrame);
+    }
+
+    animationFrame = window.requestAnimationFrame(() => {
+      const rect = scene.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      items.forEach((item) => {
+        const depth = Number(item.dataset.depth || 0);
+        item.style.setProperty('--parallax-x', `${x * depth}px`);
+        item.style.setProperty('--parallax-y', `${y * depth}px`);
+      });
+    });
+  };
+
+  const resetItems = () => {
+    items.forEach((item) => {
+      item.style.removeProperty('--parallax-x');
+      item.style.removeProperty('--parallax-y');
+    });
+  };
+
+  scene.addEventListener('pointermove', updateItems, { passive: true });
+  scene.addEventListener('pointerleave', resetItems);
+}
+
+export function initProductCards() {
+  const favoriteButtons = document.querySelectorAll('[data-favorite-button]');
+
+  favoriteButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const isActive = button.classList.toggle('is-active');
+
+      button.setAttribute('aria-pressed', String(isActive));
+      button.setAttribute(
+        'aria-label',
+        button.getAttribute('aria-label').replace(isActive ? 'Add' : 'Remove', isActive ? 'Remove' : 'Add')
+      );
     });
   });
 }
@@ -171,4 +233,6 @@ export function initAppInteractions() {
   initNavigation();
   initRippleButtons();
   initCategoryFilters();
+  initHeroParallax();
+  initProductCards();
 }

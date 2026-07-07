@@ -13,7 +13,6 @@ if (app) {
   app.innerHTML = `
     ${Navbar()}
     <main>
-      <section id="home"></section>
       ${Hero()}
       ${Categories()}
       ${FeaturedProducts()}
