@@ -23,8 +23,57 @@ import {
   removeWishlistItem,
   toggleWishlistItem
 } from '../store/wishlistStore.js';
+import {
+  applyTheme,
+  cycleThemePreference,
+  getThemeLabel,
+  getThemePreference,
+  getResolvedTheme,
+  subscribeToSystemTheme,
+  THEMES
+} from '../store/themeStore.js';
 import { formatCurrency } from './format.js';
 import { applyProductFilters } from './productFilter.js';
+
+function updateThemeControls() {
+  const preference = getThemePreference();
+  const resolvedTheme = getResolvedTheme(preference);
+  const label = getThemeLabel(preference);
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+    button.dataset.themePreference = preference;
+    button.dataset.themeResolved = resolvedTheme;
+    button.setAttribute('aria-label', `Current theme: ${label}. Change theme`);
+    button.setAttribute('aria-pressed', String(preference !== THEMES.SYSTEM));
+  });
+
+  document.querySelectorAll('[data-theme-label]').forEach((element) => {
+    element.textContent = label;
+  });
+}
+
+export function initThemeSystem() {
+  applyTheme();
+  updateThemeControls();
+
+  if (window.themeSystemReady !== true) {
+    window.themeSystemReady = true;
+    subscribeToSystemTheme(updateThemeControls);
+    window.addEventListener('theme:updated', updateThemeControls);
+  }
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+    if (button.dataset.themeReady === 'true') {
+      return;
+    }
+
+    button.dataset.themeReady = 'true';
+    button.addEventListener('click', () => {
+      const { preference } = cycleThemePreference();
+      showToast(`Theme set to ${getThemeLabel(preference)}`);
+    });
+  });
+}
 
 export function initNavigation() {
   const header = document.querySelector('#site-header');
@@ -939,6 +988,7 @@ export function initScrollReveal() {
 }
 
 export function initAppInteractions() {
+  initThemeSystem();
   initNavigation();
   initRippleButtons();
   initCategoryFilters();

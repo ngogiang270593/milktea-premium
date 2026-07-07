@@ -1,4 +1,5 @@
 import { BRAND_NAME, NAV_LINKS } from '../utils/constants.js';
+import { ThemeToggle } from './ThemeToggle.js';
 import { getCartQuantity } from '../store/cartStore.js';
 import { getWishlistCount } from '../store/wishlistStore.js';
 
@@ -49,6 +50,7 @@ export function Navbar() {
 
         <div class="hidden items-center justify-end gap-2 md:flex">
           ${iconButton('Search products', searchIcon, '', 'data-search-open aria-haspopup="dialog"')}
+          ${ThemeToggle()}
           <a href="${window.location.pathname === '/' ? '#newsletter' : '/#newsletter'}" class="nav-login ripple-button rounded-full bg-[#0d3b2e] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">Login</a>
           <a href="/wishlist" class="nav-icon-button ripple-button relative" aria-label="Open wishlist">
             ${heartIcon}
@@ -90,6 +92,7 @@ export function Navbar() {
             ${searchIcon}
             Search
           </button>
+          ${ThemeToggle({ mobile: true })}
           <a href="${window.location.pathname === '/' ? '#newsletter' : '/#newsletter'}" class="ripple-button rounded-full bg-[#0d3b2e] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70">Login</a>
           <a href="/wishlist" class="ripple-button rounded-full border border-[#d8c8b8] bg-white px-5 py-3 text-center text-sm font-semibold text-[#4d4035] outline-none transition hover:border-brand-green hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70">Wishlist (<span data-wishlist-count>${getWishlistCount()}</span>)</a>
           <a href="/cart" class="ripple-button rounded-full border border-[#d8c8b8] bg-white px-5 py-3 text-center text-sm font-semibold text-[#4d4035] outline-none transition hover:border-brand-green hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70">View cart (<span data-cart-count>${getCartQuantity()}</span>)</a>

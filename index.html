@@ -13,6 +13,31 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (() => {
+        const storageKey = 'milktea-premium-theme';
+        const validThemes = ['light', 'dark', 'system'];
+
+        try {
+          const preference = validThemes.includes(localStorage.getItem(storageKey))
+            ? localStorage.getItem(storageKey)
+            : 'system';
+          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          const resolvedTheme = preference === 'system' ? systemTheme : preference;
+          const root = document.documentElement;
+
+          root.dataset.theme = resolvedTheme;
+          root.dataset.themePreference = preference;
+          root.style.colorScheme = resolvedTheme;
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute('content', resolvedTheme === 'dark' ? '#101512' : '#0D3B2E');
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+          document.documentElement.dataset.themePreference = 'system';
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="dns-prefetch" href="https://images.unsplash.com" />
     <link rel="icon" href="favicon.svg" />
