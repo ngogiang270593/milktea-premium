@@ -37,6 +37,7 @@ export function MenuFilterPanel({ mobile = false } = {}) {
       </fieldset>
 
       ${filterGroup('Size', MENU_FILTERS.sizes.map((size) => checkbox('size', size, size)).join(''))}
+      ${filterGroup('Rating', MENU_FILTERS.ratings.map((rating) => checkbox('rating', rating.value, rating.label)).join(''))}
       ${filterGroup('Sugar level', MENU_FILTERS.sugarLevels.map((level) => checkbox('sugar', level, level)).join(''))}
       ${filterGroup('Ice level', MENU_FILTERS.iceLevels.map((level) => checkbox('ice', level, level)).join(''))}
       ${filterGroup('Availability', MENU_FILTERS.availability.map((item) => checkbox('availability', item, item)).join(''))}

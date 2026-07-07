@@ -1,5 +1,5 @@
 import { CartContent } from '../components/cart/CartContent.js';
-import { getProductById } from '../data/products.js';
+import { getProductById, MENU_PRODUCTS } from '../data/products.js';
 import {
   clearRecentSearches,
   getRecentSearches,
@@ -17,6 +17,7 @@ import {
   removeItem
 } from '../store/cartStore.js';
 import { formatCurrency } from './format.js';
+import { applyProductFilters } from './productFilter.js';
 
 export function initNavigation() {
   const header = document.querySelector('#site-header');
@@ -643,47 +644,23 @@ export function initMenuPage() {
   const products = [...grid.querySelectorAll('[data-menu-product]')];
   const pageSize = 8;
   let currentPage = 1;
-  let filteredProducts = [...products];
+  let filteredProducts = [...MENU_PRODUCTS];
 
   const selectedValues = (name) => [...filters]
     .filter((input) => input.name === name && input.checked)
     .map((input) => input.value);
 
-  const productMatches = (product) => {
-    const query = search?.value.trim().toLowerCase() || '';
-    const maxPrice = Number(priceRanges[0]?.value || 12);
-    const groups = ['category', 'size', 'sugar', 'ice', 'availability'];
-
-    if (query && !product.dataset.name.includes(query)) {
-      return false;
-    }
-
-    if (Number(product.dataset.price) > maxPrice) {
-      return false;
-    }
-
-    return groups.every((group) => {
-      const values = selectedValues(group);
-      return !values.length || values.includes(product.dataset[group]);
-    });
-  };
-
-  const sortProducts = (items) => {
-    const mode = sort?.value || 'featured';
-    const sorted = [...items];
-
-    if (mode === 'rating-desc') {
-      sorted.sort((a, b) => Number(b.dataset.rating) - Number(a.dataset.rating));
-    } else if (mode === 'price-asc') {
-      sorted.sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price));
-    } else if (mode === 'price-desc') {
-      sorted.sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price));
-    } else if (mode === 'newest') {
-      sorted.sort((a, b) => Number(b.dataset.new === 'true') - Number(a.dataset.new === 'true'));
-    }
-
-    return sorted;
-  };
+  const getFilterState = () => ({
+    search: search?.value || '',
+    categories: selectedValues('category'),
+    maxPrice: Number(priceRanges[0]?.value || 12),
+    sizes: selectedValues('size'),
+    sugarLevels: selectedValues('sugar'),
+    iceLevels: selectedValues('ice'),
+    availability: selectedValues('availability'),
+    minRating: Math.max(0, ...selectedValues('rating').map(Number)),
+    sort: sort?.value || 'featured'
+  });
 
   const updatePagination = () => {
     const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
@@ -703,15 +680,22 @@ export function initMenuPage() {
   };
 
   const renderProducts = () => {
-    filteredProducts = sortProducts(products.filter(productMatches));
+    filteredProducts = applyProductFilters(MENU_PRODUCTS, getFilterState());
     const start = (currentPage - 1) * pageSize;
     const visibleProducts = filteredProducts.slice(start, start + pageSize);
+    const visibleIds = new Set(visibleProducts.map((product) => product.id));
 
     products.forEach((product) => {
-      product.hidden = !visibleProducts.includes(product);
+      product.hidden = !visibleIds.has(product.dataset.productId);
     });
 
-    filteredProducts.forEach((product) => grid.append(product));
+    filteredProducts.forEach((product) => {
+      const element = products.find((item) => item.dataset.productId === product.id);
+
+      if (element) {
+        grid.append(element);
+      }
+    });
 
     if (count) {
       count.textContent = String(filteredProducts.length);
@@ -768,7 +752,14 @@ export function initMenuPage() {
 
   search?.addEventListener('input', resetAndRender);
   sort?.addEventListener('change', resetAndRender);
-  filters.forEach((input) => input.addEventListener('change', resetAndRender));
+  filters.forEach((input) => input.addEventListener('change', () => {
+    filters.forEach((matchingInput) => {
+      if (matchingInput !== input && matchingInput.name === input.name && matchingInput.value === input.value) {
+        matchingInput.checked = input.checked;
+      }
+    });
+    resetAndRender();
+  }));
   priceRanges.forEach((range) => {
     range.addEventListener('input', () => {
       priceRanges.forEach((input) => {

@@ -9,6 +9,11 @@ export const MENU_CATEGORIES = [
 
 export const MENU_FILTERS = {
   sizes: ['Regular', 'Large'],
+  ratings: [
+    { label: '4.8 and up', value: '4.8' },
+    { label: '4.7 and up', value: '4.7' },
+    { label: '4.5 and up', value: '4.5' }
+  ],
   sugarLevels: ['0%', '30%', '50%', '70%', '100%'],
   iceLevels: ['No ice', 'Less ice', 'Regular ice'],
   availability: ['Available now', 'Seasonal', 'Pickup only']
@@ -16,6 +21,7 @@ export const MENU_FILTERS = {
 
 export const SORT_OPTIONS = [
   { label: 'Featured', value: 'featured' },
+  { label: 'Most popular', value: 'popular' },
   { label: 'Highest rated', value: 'rating-desc' },
   { label: 'Price: Low to high', value: 'price-asc' },
   { label: 'Price: High to low', value: 'price-desc' },

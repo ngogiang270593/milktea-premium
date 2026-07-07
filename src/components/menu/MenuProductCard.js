@@ -14,6 +14,7 @@ export function MenuProductCard(product) {
       data-ice="${product.ice}"
       data-availability="${product.availability}"
       data-new="${product.isNew}"
+      data-product-id="${product.id}"
     >
       <div class="menu-product-media">
         <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="900" height="900" />
