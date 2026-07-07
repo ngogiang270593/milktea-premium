@@ -33,7 +33,7 @@ export function MenuProductCard(product) {
           </span>
         </div>
         <h2 class="menu-product-title">${product.name}</h2>
-        <p class="menu-product-meta">${product.size} · ${product.sugar} sugar · ${product.ice}</p>
+        <p class="menu-product-meta">${product.size} / ${product.sugar} sugar / ${product.ice}</p>
         <div class="mt-5 flex items-end justify-between gap-4">
           <div>
             <div class="text-2xl font-semibold text-brand-green">${formatCurrency(product.price)}</div>
@@ -41,7 +41,7 @@ export function MenuProductCard(product) {
           </div>
           <div class="flex gap-2">
             <button type="button" class="quick-view-icon ripple-button" aria-label="Quick view ${product.name}">View</button>
-            <button type="button" class="add-cart-button ripple-button" aria-label="Add ${product.name} to cart">Add</button>
+            <button type="button" class="add-cart-button ripple-button" aria-label="Add ${product.name} to cart" data-add-to-cart="${product.id}">Add</button>
           </div>
         </div>
       </div>

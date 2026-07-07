@@ -1,3 +1,16 @@
+import { CartContent } from '../components/cart/CartContent.js';
+import { getProductById } from '../data/products.js';
+import {
+  addItem,
+  clearCart,
+  decreaseQuantity,
+  getCartQuantity,
+  getTotal,
+  increaseQuantity,
+  removeItem
+} from '../store/cartStore.js';
+import { formatCurrency } from './format.js';
+
 export function initNavigation() {
   const header = document.querySelector('#site-header');
   const mobileToggle = document.querySelector('#menu-toggle');
@@ -131,6 +144,11 @@ export function initRippleButtons() {
   const rippleButtons = document.querySelectorAll('.ripple-button');
 
   rippleButtons.forEach((button) => {
+    if (button.dataset.rippleReady === 'true') {
+      return;
+    }
+
+    button.dataset.rippleReady = 'true';
     button.addEventListener('click', (event) => {
       const rect = button.getBoundingClientRect();
       const ripple = document.createElement('span');
@@ -143,6 +161,40 @@ export function initRippleButtons() {
       ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
     });
   });
+}
+
+function updateCartBadges() {
+  const quantity = getCartQuantity();
+
+  document.querySelectorAll('[data-cart-count]').forEach((badge) => {
+    badge.textContent = String(quantity);
+    badge.setAttribute('aria-label', `${quantity} items in cart`);
+  });
+
+  document.querySelectorAll('[data-cart-page-count]').forEach((count) => {
+    count.textContent = String(quantity);
+  });
+}
+
+function showToast(message) {
+  let toast = document.querySelector('[data-toast]');
+
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.dataset.toast = '';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    document.body.append(toast);
+  }
+
+  toast.textContent = message;
+  toast.classList.add('is-visible');
+
+  window.clearTimeout(showToast.timeout);
+  showToast.timeout = window.setTimeout(() => {
+    toast.classList.remove('is-visible');
+  }, 2400);
 }
 
 export function initCategoryFilters() {
@@ -205,6 +257,7 @@ export function initHeroParallax() {
 
 export function initProductCards() {
   const favoriteButtons = document.querySelectorAll('[data-favorite-button]');
+  const addToCartButtons = document.querySelectorAll('[data-add-to-cart]');
 
   favoriteButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -217,6 +270,104 @@ export function initProductCards() {
       );
     });
   });
+
+  addToCartButtons.forEach((button) => {
+    if (button.dataset.cartReady === 'true') {
+      return;
+    }
+
+    button.dataset.cartReady = 'true';
+    button.addEventListener('click', () => {
+      const product = getProductById(button.dataset.addToCart);
+
+      if (!product) {
+        return;
+      }
+
+      addItem(product);
+      updateCartBadges();
+      showToast(`${product.name} added to cart`);
+    });
+  });
+}
+
+function renderCartContent() {
+  const content = document.querySelector('[data-cart-content]');
+
+  if (!content) {
+    return;
+  }
+
+  content.innerHTML = CartContent();
+  updateCartBadges();
+  initRippleButtons();
+  bindCartControls();
+}
+
+function bindCartControls() {
+  const content = document.querySelector('[data-cart-content]');
+
+  if (!content || content.dataset.cartReady === 'true') {
+    return;
+  }
+
+  content.dataset.cartReady = 'true';
+  content.addEventListener('click', (event) => {
+    const increase = event.target.closest('[data-cart-increase]');
+    const decrease = event.target.closest('[data-cart-decrease]');
+    const remove = event.target.closest('[data-cart-remove]');
+    const clear = event.target.closest('[data-cart-clear]');
+
+    if (increase) {
+      increaseQuantity(increase.dataset.cartIncrease);
+      showToast('Quantity updated');
+      content.dataset.cartReady = 'false';
+      renderCartContent();
+    } else if (decrease) {
+      decreaseQuantity(decrease.dataset.cartDecrease);
+      showToast('Quantity updated');
+      content.dataset.cartReady = 'false';
+      renderCartContent();
+    } else if (remove) {
+      removeItem(remove.dataset.cartRemove);
+      showToast('Item removed');
+      content.dataset.cartReady = 'false';
+      renderCartContent();
+    } else if (clear) {
+      clearCart();
+      showToast('Cart cleared');
+      content.dataset.cartReady = 'false';
+      renderCartContent();
+    }
+  });
+
+  content.addEventListener('submit', (event) => {
+    const form = event.target.closest('.cart-coupon');
+
+    if (!form) {
+      return;
+    }
+
+    event.preventDefault();
+    const input = form.querySelector('[data-coupon-input]');
+    const message = form.querySelector('[data-coupon-message]');
+    const total = form.closest('.cart-summary')?.querySelector('[data-cart-total]');
+    const code = input?.value.trim().toUpperCase();
+
+    if (code === 'MILKTEA10') {
+      const discountedTotal = Math.max(0, getTotal() - getTotal() * 0.1);
+      total.textContent = formatCurrency(discountedTotal);
+      message.textContent = 'Coupon applied: 10% off your order.';
+      showToast('Coupon applied');
+    } else {
+      message.textContent = 'Try MILKTEA10 for 10% off.';
+    }
+  });
+}
+
+export function initCartPage() {
+  updateCartBadges();
+  bindCartControls();
 }
 
 export function initMenuPage() {
@@ -459,5 +610,8 @@ export function initAppInteractions() {
   initHeroParallax();
   initProductCards();
   initMenuPage();
+  initCartPage();
   initScrollReveal();
+
+  window.addEventListener('cart:updated', updateCartBadges);
 }

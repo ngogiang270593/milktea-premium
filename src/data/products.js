@@ -278,3 +278,25 @@ export const MENU_PRODUCTS = [
     isNew: false
   }
 ];
+
+const normalizeProduct = (product) => ({
+  id: product.id,
+  name: product.name || product.title,
+  title: product.title || product.name,
+  image: product.image,
+  price: product.price,
+  oldPrice: product.oldPrice,
+  size: product.size || 'Regular',
+  sugar: product.sugar || '50%',
+  ice: product.ice || 'Regular ice',
+  category: product.category || product.label || 'milk-tea'
+});
+
+export const CART_PRODUCTS = [
+  ...FEATURED_PRODUCTS.map(normalizeProduct),
+  ...MENU_PRODUCTS.map(normalizeProduct)
+];
+
+export function getProductById(id) {
+  return CART_PRODUCTS.find((product) => product.id === id);
+}

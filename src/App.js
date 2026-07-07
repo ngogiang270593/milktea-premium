@@ -5,6 +5,7 @@ import { Promotion } from './components/Promotion.js';
 import { Testimonials } from './components/Testimonials.js';
 import { Newsletter } from './components/Newsletter.js';
 import { DefaultLayout } from './layouts/DefaultLayout.js';
+import { CartPage } from './pages/CartPage.js';
 import { MenuPage } from './pages/MenuPage.js';
 
 const app = document.querySelector('#app');
@@ -19,5 +20,11 @@ if (app) {
       ${Newsletter()}
   `;
 
-  app.innerHTML = DefaultLayout(window.location.pathname === '/menu' ? MenuPage() : HomePage);
+  const routes = {
+    '/cart': CartPage,
+    '/menu': MenuPage
+  };
+  const Page = routes[window.location.pathname];
+
+  app.innerHTML = DefaultLayout(Page ? Page() : HomePage);
 }

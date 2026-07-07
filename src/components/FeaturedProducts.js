@@ -49,7 +49,7 @@ function featuredCard(product) {
             <div class="text-2xl font-semibold text-brand-green">${formatPrice(product.price)}</div>
             <div class="text-sm text-[#a39080] line-through">${formatPrice(product.oldPrice)}</div>
           </div>
-          <button type="button" class="add-cart-button ripple-button" aria-label="Add ${product.title} to cart">
+          <button type="button" class="add-cart-button ripple-button" aria-label="Add ${product.title} to cart" data-add-to-cart="${product.id}">
             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
               <path d="M6.5 8h11l-1.1 7.2a2 2 0 0 1-2 1.8H9.6a2 2 0 0 1-2-1.8L6.5 8Z"></path>
               <path d="M9 8a3 3 0 0 1 6 0"></path>

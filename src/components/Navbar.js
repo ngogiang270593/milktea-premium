@@ -1,7 +1,8 @@
 import { BRAND_NAME, NAV_LINKS } from '../utils/constants.js';
+import { getCartQuantity } from '../store/cartStore.js';
 
 function navLink({ label, href }, className) {
-  const resolvedHref = href.startsWith('#') && window.location.pathname === '/menu' ? `/${href}` : href;
+  const resolvedHref = href.startsWith('#') && window.location.pathname !== '/' ? `/${href}` : href;
   return `<a href="${resolvedHref}" class="${className}" data-nav-link>${label}</a>`;
 }
 
@@ -42,11 +43,11 @@ export function Navbar() {
 
         <div class="hidden items-center justify-end gap-2 md:flex">
           ${iconButton('Search products', searchIcon)}
-          <a href="#newsletter" class="nav-login ripple-button rounded-full bg-[#0d3b2e] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">Login</a>
-          <button type="button" class="nav-icon-button ripple-button relative" aria-label="Open shopping cart">
+          <a href="${window.location.pathname === '/' ? '#newsletter' : '/#newsletter'}" class="nav-login ripple-button rounded-full bg-[#0d3b2e] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">Login</a>
+          <a href="/cart" class="nav-icon-button ripple-button relative" aria-label="Open shopping cart">
             ${cartIcon}
-            <span class="cart-badge absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand-gold px-1 text-[10px] font-bold text-[#2f2419] shadow-sm" aria-hidden="true">2</span>
-          </button>
+            <span class="cart-badge absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand-gold px-1 text-[10px] font-bold text-[#2f2419] shadow-sm" aria-label="${getCartQuantity()} items in cart" data-cart-count>${getCartQuantity()}</span>
+          </a>
         </div>
 
         <button id="menu-toggle" type="button" class="nav-icon-button ripple-button justify-self-end md:hidden" aria-label="Open navigation menu" aria-controls="mobile-drawer" aria-expanded="false">
@@ -79,7 +80,8 @@ export function Navbar() {
             ${searchIcon}
             Search
           </button>
-          <a href="#newsletter" class="ripple-button rounded-full bg-[#0d3b2e] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70">Login</a>
+          <a href="${window.location.pathname === '/' ? '#newsletter' : '/#newsletter'}" class="ripple-button rounded-full bg-[#0d3b2e] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70">Login</a>
+          <a href="/cart" class="ripple-button rounded-full border border-[#d8c8b8] bg-white px-5 py-3 text-center text-sm font-semibold text-[#4d4035] outline-none transition hover:border-brand-green hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70">View cart (<span data-cart-count>${getCartQuantity()}</span>)</a>
         </div>
       </aside>
     </header>
