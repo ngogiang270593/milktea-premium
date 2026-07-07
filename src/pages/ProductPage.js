@@ -86,7 +86,7 @@ export function ProductPage() {
             <p class="menu-product-category">${formatCategoryName(product.category)}</p>
             <div class="mt-4 flex items-start justify-between gap-4">
               <h1 id="product-title">${title}</h1>
-              <button type="button" class="favorite-button ripple-button static shrink-0" aria-label="Add ${title} to favorites" aria-pressed="false" data-favorite-button>
+              <button type="button" class="favorite-button ripple-button static shrink-0" aria-label="Add ${title} to wishlist" aria-pressed="false" data-favorite-button="${product.id}">
                 <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 5.6a5.1 5.1 0 0 0-7.2 0L12 7.2l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2L12 21.6l8.8-8.8a5.1 5.1 0 0 0 0-7.2Z"></path></svg>
               </button>
             </div>

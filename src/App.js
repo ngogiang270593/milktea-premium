@@ -8,6 +8,7 @@ import { DefaultLayout } from './layouts/DefaultLayout.js';
 import { CartPage } from './pages/CartPage.js';
 import { MenuPage } from './pages/MenuPage.js';
 import { ProductPage } from './pages/ProductPage.js';
+import { WishlistPage } from './pages/WishlistPage.js';
 
 const app = document.querySelector('#app');
 
@@ -24,7 +25,8 @@ if (app) {
   const routes = {
     '/cart': CartPage,
     '/menu': MenuPage,
-    '/product': ProductPage
+    '/product': ProductPage,
+    '/wishlist': WishlistPage
   };
   const Page = routes[window.location.pathname];
 

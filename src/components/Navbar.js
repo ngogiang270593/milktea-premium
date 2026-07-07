@@ -1,5 +1,6 @@
 import { BRAND_NAME, NAV_LINKS } from '../utils/constants.js';
 import { getCartQuantity } from '../store/cartStore.js';
+import { getWishlistCount } from '../store/wishlistStore.js';
 
 function navLink({ label, href }, className) {
   const resolvedHref = href.startsWith('#') && window.location.pathname !== '/' ? `/${href}` : href;
@@ -28,6 +29,11 @@ export function Navbar() {
       <path d="M9 20h.01M15 20h.01"></path>
     </svg>
   `;
+  const heartIcon = `
+    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <path d="M20.8 5.6a5.1 5.1 0 0 0-7.2 0L12 7.2l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2L12 21.6l8.8-8.8a5.1 5.1 0 0 0 0-7.2Z"></path>
+    </svg>
+  `;
 
   return `
     <header id="site-header" class="site-header sticky top-0 z-50 px-4 py-4 transition-all duration-300" data-reveal>
@@ -44,6 +50,10 @@ export function Navbar() {
         <div class="hidden items-center justify-end gap-2 md:flex">
           ${iconButton('Search products', searchIcon, '', 'data-search-open aria-haspopup="dialog"')}
           <a href="${window.location.pathname === '/' ? '#newsletter' : '/#newsletter'}" class="nav-login ripple-button rounded-full bg-[#0d3b2e] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">Login</a>
+          <a href="/wishlist" class="nav-icon-button ripple-button relative" aria-label="Open wishlist">
+            ${heartIcon}
+            <span class="wishlist-badge absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand-peach px-1 text-[10px] font-bold text-[#2f2419] shadow-sm" aria-label="${getWishlistCount()} saved wishlist items" data-wishlist-count>${getWishlistCount()}</span>
+          </a>
           <a href="/cart" class="nav-icon-button ripple-button relative" aria-label="Open shopping cart">
             ${cartIcon}
             <span class="cart-badge absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand-gold px-1 text-[10px] font-bold text-[#2f2419] shadow-sm" aria-label="${getCartQuantity()} items in cart" data-cart-count>${getCartQuantity()}</span>
@@ -81,6 +91,7 @@ export function Navbar() {
             Search
           </button>
           <a href="${window.location.pathname === '/' ? '#newsletter' : '/#newsletter'}" class="ripple-button rounded-full bg-[#0d3b2e] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70">Login</a>
+          <a href="/wishlist" class="ripple-button rounded-full border border-[#d8c8b8] bg-white px-5 py-3 text-center text-sm font-semibold text-[#4d4035] outline-none transition hover:border-brand-green hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70">Wishlist (<span data-wishlist-count>${getWishlistCount()}</span>)</a>
           <a href="/cart" class="ripple-button rounded-full border border-[#d8c8b8] bg-white px-5 py-3 text-center text-sm font-semibold text-[#4d4035] outline-none transition hover:border-brand-green hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70">View cart (<span data-cart-count>${getCartQuantity()}</span>)</a>
         </div>
       </aside>

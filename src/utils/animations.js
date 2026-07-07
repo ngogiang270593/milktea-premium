@@ -1,4 +1,5 @@
 import { CartContent } from '../components/cart/CartContent.js';
+import { WishlistContent } from '../components/wishlist/WishlistContent.js';
 import { getProductById, MENU_PRODUCTS } from '../data/products.js';
 import {
   clearRecentSearches,
@@ -16,6 +17,12 @@ import {
   increaseQuantity,
   removeItem
 } from '../store/cartStore.js';
+import {
+  getWishlistCount,
+  isWishlistItem,
+  removeWishlistItem,
+  toggleWishlistItem
+} from '../store/wishlistStore.js';
 import { formatCurrency } from './format.js';
 import { applyProductFilters } from './productFilter.js';
 
@@ -184,6 +191,19 @@ function updateCartBadges() {
   });
 }
 
+function updateWishlistBadges() {
+  const quantity = getWishlistCount();
+
+  document.querySelectorAll('[data-wishlist-count]').forEach((badge) => {
+    badge.textContent = String(quantity);
+    badge.setAttribute('aria-label', `${quantity} saved wishlist items`);
+  });
+
+  document.querySelectorAll('[data-wishlist-page-count]').forEach((count) => {
+    count.textContent = String(quantity);
+  });
+}
+
 function showToast(message) {
   let toast = document.querySelector('[data-toast]');
 
@@ -277,14 +297,35 @@ export function initProductCards() {
   const addToCartButtons = document.querySelectorAll('[data-add-to-cart]');
 
   favoriteButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const isActive = button.classList.toggle('is-active');
+    if (button.dataset.favoriteReady === 'true') {
+      return;
+    }
 
-      button.setAttribute('aria-pressed', String(isActive));
-      button.setAttribute(
-        'aria-label',
-        button.getAttribute('aria-label').replace(isActive ? 'Add' : 'Remove', isActive ? 'Remove' : 'Add')
-      );
+    button.dataset.favoriteReady = 'true';
+    const productId = button.dataset.favoriteButton;
+    const product = getProductById(productId);
+
+    if (product && isWishlistItem(product.id)) {
+      button.classList.add('is-active');
+      button.setAttribute('aria-pressed', 'true');
+      button.setAttribute('aria-label', `Remove ${product.name} from wishlist`);
+    }
+
+    button.addEventListener('click', () => {
+      const currentProduct = getProductById(button.dataset.favoriteButton);
+
+      if (!currentProduct) {
+        return;
+      }
+
+      const { active } = toggleWishlistItem(currentProduct);
+      button.classList.toggle('is-active', active);
+      button.classList.add('heart-pop');
+      button.setAttribute('aria-pressed', String(active));
+      button.setAttribute('aria-label', `${active ? 'Remove' : 'Add'} ${currentProduct.name} ${active ? 'from' : 'to'} wishlist`);
+      updateWishlistBadges();
+      showToast(active ? `${currentProduct.name} saved to wishlist` : `${currentProduct.name} removed from wishlist`);
+      button.addEventListener('animationend', () => button.classList.remove('heart-pop'), { once: true });
     });
   });
 
@@ -306,6 +347,59 @@ export function initProductCards() {
       showToast(`${product.name} added to cart`);
     });
   });
+}
+
+function renderWishlistContent() {
+  const content = document.querySelector('[data-wishlist-content]');
+
+  if (!content) {
+    return;
+  }
+
+  content.innerHTML = WishlistContent();
+  updateWishlistBadges();
+  initRippleButtons();
+  bindWishlistControls();
+}
+
+function bindWishlistControls() {
+  const content = document.querySelector('[data-wishlist-content]');
+
+  if (!content || content.dataset.wishlistReady === 'true') {
+    return;
+  }
+
+  content.dataset.wishlistReady = 'true';
+  content.addEventListener('click', (event) => {
+    const move = event.target.closest('[data-wishlist-move]');
+    const remove = event.target.closest('[data-wishlist-remove]');
+
+    if (move) {
+      const product = getProductById(move.dataset.wishlistMove);
+
+      if (product) {
+        addItem(product);
+        removeWishlistItem(product.id);
+        showToast(`${product.name} moved to cart`);
+      }
+
+      content.dataset.wishlistReady = 'false';
+      renderWishlistContent();
+      updateCartBadges();
+    } else if (remove) {
+      const product = getProductById(remove.dataset.wishlistRemove);
+
+      removeWishlistItem(remove.dataset.wishlistRemove);
+      showToast(`${product?.name || 'Item'} removed from wishlist`);
+      content.dataset.wishlistReady = 'false';
+      renderWishlistContent();
+    }
+  });
+}
+
+export function initWishlistPage() {
+  updateWishlistBadges();
+  bindWishlistControls();
 }
 
 function searchResultItem(product, term) {
@@ -853,8 +947,10 @@ export function initAppInteractions() {
   initSearchOverlay();
   initMenuPage();
   initCartPage();
+  initWishlistPage();
   initProductDetail();
   initScrollReveal();
 
   window.addEventListener('cart:updated', updateCartBadges);
+  window.addEventListener('wishlist:updated', updateWishlistBadges);
 }
