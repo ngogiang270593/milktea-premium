@@ -32,6 +32,23 @@
     @apply max-w-2xl text-gray-600;
   }
 
+  .category-section,
+  .featured-products-section,
+  #testimonials,
+  #instagram,
+  #newsletter,
+  .cart-page,
+  .wishlist-page,
+  .product-page {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 720px;
+  }
+
+  .menu-page {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 960px;
+  }
+
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-full bg-brand-green px-7 py-3 text-sm font-semibold text-white transition hover:bg-[#0b3427];
   }
@@ -107,6 +124,7 @@
     border-radius: 9999px;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0);
+    animation: ripple-expand 560ms ease-out;
     z-index: -1;
   }
 

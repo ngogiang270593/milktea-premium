@@ -33,11 +33,46 @@ import {
   THEMES
 } from '../store/themeStore.js';
 import { formatCurrency } from './format.js';
-import { animateCardSet, initGsapMotion, playButtonRipple } from './motion.js';
+import { imageAttributes } from './images.js';
 import { applyProductFilters } from './productFilter.js';
+
+let motionModulePromise;
 
 function getScrollBehavior() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+}
+
+function loadMotionModule() {
+  motionModulePromise ||= import('./motion.js');
+  return motionModulePromise;
+}
+
+function scheduleMotionInit() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('reduced-motion');
+    document.querySelectorAll('[data-reveal], .fade-up').forEach((element) => {
+      element.classList.add('is-visible');
+    });
+    return;
+  }
+
+  const startMotion = () => {
+    loadMotionModule().then(({ initGsapMotion }) => initGsapMotion());
+  };
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(startMotion, { timeout: 1200 });
+  } else {
+    window.setTimeout(startMotion, 120);
+  }
+}
+
+function animateCards(cards, options) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  loadMotionModule().then(({ animateCardSet }) => animateCardSet(cards, options));
 }
 
 function updateThemeControls() {
@@ -219,7 +254,15 @@ export function initRippleButtons() {
 
     button.dataset.rippleReady = 'true';
     button.addEventListener('click', (event) => {
-      playButtonRipple(button, event);
+      const rect = button.getBoundingClientRect();
+      const ripple = document.createElement('span');
+
+      ripple.className = 'ripple';
+      ripple.style.left = `${event.clientX - rect.left}px`;
+      ripple.style.top = `${event.clientY - rect.top}px`;
+
+      button.append(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
     });
   });
 }
@@ -406,7 +449,7 @@ function renderWishlistContent() {
   updateWishlistBadges();
   initRippleButtons();
   bindWishlistControls();
-  animateCardSet(content.querySelectorAll('.wishlist-item'));
+  animateCards(content.querySelectorAll('.wishlist-item'));
 }
 
 function bindWishlistControls() {
@@ -452,7 +495,12 @@ export function initWishlistPage() {
 function searchResultItem(product, term) {
   return `
     <a href="/product?id=${product.id}" class="search-result-item" role="option">
-      <img src="${product.image}" alt="" loading="lazy" decoding="async" width="96" height="96" />
+      <img ${imageAttributes(product.image, {
+        alt: '',
+        width: 120,
+        height: 120,
+        sizes: '72px'
+      })} />
       <span>
         <strong>${highlightMatch(product.name, term)}</strong>
         <small>${highlightMatch(product.category.replaceAll('-', ' '), term)} · ${product.tags?.slice(0, 3).map((tag) => highlightMatch(tag, term)).join(', ')}</small>
@@ -585,7 +633,7 @@ function renderCartContent() {
   updateCartBadges();
   initRippleButtons();
   bindCartControls();
-  animateCardSet(content.querySelectorAll('.cart-item'));
+  animateCards(content.querySelectorAll('.cart-item'));
 }
 
 function bindCartControls() {
@@ -705,6 +753,8 @@ export function initProductDetail() {
   detail.querySelectorAll('[data-gallery-thumb]').forEach((thumb) => {
     thumb.addEventListener('click', () => {
       mainImage.src = thumb.dataset.galleryThumb;
+      mainImage.srcset = thumb.dataset.gallerySrcset;
+      mainImage.sizes = '(min-width: 1024px) 48vw, 92vw';
       detail.querySelectorAll('[data-gallery-thumb]').forEach((item) => {
         item.classList.toggle('is-active', item === thumb);
       });
@@ -850,7 +900,7 @@ export function initMenuPage() {
     updatePagination();
 
     if (grid.dataset.initialMenuMotion === 'true') {
-      animateCardSet(products.filter((product) => !product.hidden), {
+      animateCards(products.filter((product) => !product.hidden), {
         duration: 0.38,
         stagger: 0.035
       });
@@ -970,31 +1020,6 @@ export function initMenuPage() {
   renderProducts();
 }
 
-export function initScrollReveal() {
-  const revealItems = document.querySelectorAll('[data-reveal]');
-
-  if (!revealItems.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    revealItems.forEach((item) => item.classList.add('is-visible'));
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) {
-        return;
-      }
-
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
-    });
-  }, {
-    rootMargin: '0px 0px -12% 0px',
-    threshold: 0.12
-  });
-
-  revealItems.forEach((item) => observer.observe(item));
-}
-
 export function initAppInteractions() {
   initThemeSystem();
   initNavigation();
@@ -1007,7 +1032,7 @@ export function initAppInteractions() {
   initCartPage();
   initWishlistPage();
   initProductDetail();
-  initGsapMotion();
+  scheduleMotionInit();
 
   window.addEventListener('cart:updated', updateCartBadges);
   window.addEventListener('wishlist:updated', updateWishlistBadges);

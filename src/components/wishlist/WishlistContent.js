@@ -1,10 +1,16 @@
 import { getWishlist } from '../../store/wishlistStore.js';
 import { formatCategoryName, formatCurrency } from '../../utils/format.js';
+import { imageAttributes } from '../../utils/images.js';
 
 function wishlistItem(item) {
   return `
     <article class="wishlist-item" data-wishlist-item="${item.id}">
-      <img src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" width="180" height="180" />
+      <img ${imageAttributes(item.image, {
+        alt: item.name,
+        width: 180,
+        height: 180,
+        sizes: '128px'
+      })} />
       <div class="min-w-0">
         <span>${formatCategoryName(item.category)}</span>
         <h2>${item.name}</h2>
@@ -12,8 +18,8 @@ function wishlistItem(item) {
       </div>
       <div class="wishlist-actions">
         <strong>${formatCurrency(item.price)}</strong>
-        <button type="button" class="btn-primary" data-wishlist-move="${item.id}">Move to cart</button>
-        <button type="button" class="cart-remove" data-wishlist-remove="${item.id}">Remove</button>
+        <button type="button" class="btn-primary" data-wishlist-move="${item.id}" aria-label="Move ${item.name} to cart">Move to cart</button>
+        <button type="button" class="cart-remove" data-wishlist-remove="${item.id}" aria-label="Remove ${item.name} from wishlist">Remove</button>
       </div>
     </article>
   `;

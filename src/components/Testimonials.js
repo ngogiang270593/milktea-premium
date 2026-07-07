@@ -1,4 +1,5 @@
 import { INSTAGRAM_POSTS, TESTIMONIALS } from '../utils/constants.js';
+import { imageAttributes } from '../utils/images.js';
 
 function testimonialCard({ name, quote, rating }) {
   return `
@@ -16,7 +17,13 @@ function testimonialCard({ name, quote, rating }) {
 function instagramImage({ label, src }) {
   return `
     <figure class="group overflow-hidden rounded-[2rem] bg-gray-100 shadow-sm">
-      <img src="${src}" alt="${label}" class="h-72 w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" width="800" height="800" />
+      <img ${imageAttributes(src, {
+        alt: label,
+        width: 800,
+        height: 800,
+        sizes: '(min-width: 1024px) 288px, (min-width: 640px) 45vw, 92vw',
+        className: 'h-72 w-full object-cover transition duration-700 group-hover:scale-105'
+      })} />
       <figcaption class="p-4 text-sm font-medium text-gray-700">${label}</figcaption>
     </figure>
   `;

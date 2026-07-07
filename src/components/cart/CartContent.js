@@ -1,10 +1,16 @@
 import { getCart, getDiscount, getShipping, getSubtotal, getTotal } from '../../store/cartStore.js';
 import { formatCurrency } from '../../utils/format.js';
+import { imageAttributes } from '../../utils/images.js';
 
 function cartItem(item) {
   return `
     <article class="cart-item" data-cart-item="${item.id}">
-      <img src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" width="160" height="160" />
+      <img ${imageAttributes(item.image, {
+        alt: item.name,
+        width: 180,
+        height: 180,
+        sizes: '112px'
+      })} />
       <div class="min-w-0">
         <h2>${item.name}</h2>
         <p>${item.variant}</p>
@@ -14,7 +20,7 @@ function cartItem(item) {
             <output aria-live="polite">${item.quantity}</output>
             <button type="button" data-cart-increase="${item.id}" aria-label="Increase ${item.name} quantity">+</button>
           </div>
-          <button type="button" class="cart-remove" data-cart-remove="${item.id}">Remove</button>
+          <button type="button" class="cart-remove" data-cart-remove="${item.id}" aria-label="Remove ${item.name} from cart">Remove</button>
         </div>
       </div>
       <div class="cart-item-price">
@@ -74,8 +80,8 @@ function orderSummary() {
           <dd data-cart-total>${formatCurrency(total)}</dd>
         </div>
       </dl>
-      <button type="button" class="btn-primary w-full" ${subtotal === 0 ? 'disabled' : ''}>Checkout</button>
-      <button type="button" class="cart-clear" data-cart-clear ${subtotal === 0 ? 'disabled' : ''}>Clear cart</button>
+      <button type="button" class="btn-primary w-full" ${subtotal === 0 ? 'disabled aria-disabled="true"' : ''}>Checkout</button>
+      <button type="button" class="cart-clear" data-cart-clear ${subtotal === 0 ? 'disabled aria-disabled="true"' : ''}>Clear cart</button>
     </aside>
   `;
 }

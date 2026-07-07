@@ -1,4 +1,5 @@
 import { formatCategoryName, formatCurrency } from '../../utils/format.js';
+import { imageAttributes } from '../../utils/images.js';
 
 export function MenuProductCard(product) {
   return `
@@ -17,7 +18,12 @@ export function MenuProductCard(product) {
       data-product-id="${product.id}"
     >
       <div class="menu-product-media">
-        <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async" width="900" height="900" />
+        <img ${imageAttributes(product.image, {
+          alt: product.name,
+          width: 900,
+          height: 900,
+          sizes: '(min-width: 1280px) 276px, (min-width: 768px) 42vw, 92vw'
+        })} />
         <span class="product-discount" aria-label="${product.discount} percent discount">-${product.discount}%</span>
         <button type="button" class="favorite-button ripple-button" aria-label="Add ${product.name} to wishlist" aria-pressed="false" data-favorite-button="${product.id}">
           <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">

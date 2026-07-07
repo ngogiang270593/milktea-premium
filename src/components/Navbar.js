@@ -70,7 +70,7 @@ export function Navbar() {
       </div>
 
       <div id="drawer-overlay" class="drawer-overlay fixed inset-0 z-40 bg-[#1f1710]/30 opacity-0 backdrop-blur-sm transition duration-300 md:hidden" hidden aria-hidden="true"></div>
-      <aside id="mobile-drawer" class="mobile-drawer fixed right-0 top-0 z-50 h-dvh w-[min(86vw,24rem)] translate-x-full bg-white/92 p-5 shadow-[-24px_0_70px_rgba(31,23,16,0.2)] backdrop-blur-2xl transition duration-300 md:hidden" aria-label="Mobile navigation" aria-hidden="true" inert>
+      <aside id="mobile-drawer" class="mobile-drawer fixed right-0 top-0 z-50 h-dvh w-[min(86vw,24rem)] translate-x-full bg-white/92 p-5 shadow-[-24px_0_70px_rgba(31,23,16,0.2)] backdrop-blur-2xl transition duration-300 md:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation" aria-hidden="true" inert>
         <div class="flex items-center justify-between">
           <a href="/" class="inline-flex items-center gap-3 rounded-full text-sm font-semibold text-brand-green outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/70">
             <span class="grid h-10 w-10 place-items-center rounded-full bg-[#0d3b2e] text-sm font-semibold text-white">MP</span>

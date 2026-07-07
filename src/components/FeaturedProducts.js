@@ -1,4 +1,5 @@
 import { FEATURED_PRODUCTS } from '../data/products.js';
+import { imageAttributes } from '../utils/images.js';
 
 function formatPrice(price) {
   return `$${price.toFixed(2)}`;
@@ -8,15 +9,13 @@ function featuredCard(product) {
   return `
     <article class="product-card group" data-product-card>
       <div class="product-image-wrap">
-        <img
-          src="${product.image}"
-          alt="${product.title}"
-          class="product-image"
-          loading="lazy"
-          decoding="async"
-          width="900"
-          height="900"
-        />
+        <img ${imageAttributes(product.image, {
+          alt: product.title,
+          width: 900,
+          height: 900,
+          sizes: '(min-width: 1280px) 288px, (min-width: 640px) 45vw, 92vw',
+          className: 'product-image'
+        })} />
         <span class="product-discount" aria-label="${product.discount} percent discount">-${product.discount}%</span>
         <span class="product-badge">${product.badge}</span>
         <button type="button" class="favorite-button ripple-button" aria-label="Add ${product.title} to wishlist" aria-pressed="false" data-favorite-button="${product.id}">

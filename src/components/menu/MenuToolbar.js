@@ -9,7 +9,7 @@ export function MenuToolbar() {
           <path d="m21 21-4.35-4.35"></path>
           <circle cx="11" cy="11" r="7"></circle>
         </svg>
-        <input id="menu-search" type="search" placeholder="Search milk tea, coffee, toppings..." class="menu-search-input" data-menu-search />
+        <input id="menu-search" type="search" placeholder="Search milk tea, coffee, toppings..." class="menu-search-input" autocomplete="off" aria-controls="menu-results" data-menu-search />
       </div>
 
       <label class="sr-only" for="menu-sort">Sort products</label>
@@ -18,11 +18,11 @@ export function MenuToolbar() {
       </select>
 
       <div class="menu-view-switch" aria-label="Choose product view">
-        <button type="button" class="is-active" data-view-mode="grid" aria-pressed="true">Grid</button>
-        <button type="button" data-view-mode="list" aria-pressed="false">List</button>
+        <button type="button" class="is-active" data-view-mode="grid" aria-pressed="true" aria-label="Show products as grid">Grid</button>
+        <button type="button" data-view-mode="list" aria-pressed="false" aria-label="Show products as list">List</button>
       </div>
 
-      <button type="button" class="menu-filter-trigger ripple-button lg:hidden" data-filter-open aria-controls="menu-filter-drawer" aria-expanded="false">
+      <button type="button" class="menu-filter-trigger ripple-button lg:hidden" data-filter-open aria-controls="menu-filter-drawer" aria-expanded="false" aria-label="Open menu filters">
         Filters
       </button>
     </section>

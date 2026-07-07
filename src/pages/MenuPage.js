@@ -31,7 +31,7 @@ export function MenuPage() {
           </aside>
 
           <section aria-label="Product results" class="min-w-0">
-            <div class="menu-results-grid" data-menu-grid>
+            <div id="menu-results" class="menu-results-grid" data-menu-grid aria-live="polite">
               ${MENU_PRODUCTS.map(MenuProductCard).join('')}
             </div>
             <p class="menu-empty" data-menu-empty hidden>No products match those filters.</p>
@@ -41,7 +41,7 @@ export function MenuPage() {
       </div>
 
       <div class="menu-filter-overlay" data-filter-overlay hidden aria-hidden="true"></div>
-      <aside id="menu-filter-drawer" class="menu-filter-drawer" aria-label="Mobile filters" aria-hidden="true" inert>
+      <aside id="menu-filter-drawer" class="menu-filter-drawer" role="dialog" aria-modal="true" aria-label="Mobile filters" aria-hidden="true" inert>
         <div class="flex items-center justify-between gap-4">
           <h2 class="text-xl font-semibold text-[#1f1710]">Filters</h2>
           <button type="button" class="nav-icon-button ripple-button" data-filter-close aria-label="Close filters">

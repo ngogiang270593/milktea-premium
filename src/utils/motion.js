@@ -42,7 +42,7 @@ function prepareReducedMotion() {
 function initNavbarReveal() {
   const header = document.querySelector('#site-header');
 
-  if (!header) {
+  if (!header || performance.now() > 900) {
     return;
   }
 
@@ -61,7 +61,7 @@ function initNavbarReveal() {
 function initHeroReveal() {
   const hero = document.querySelector('.premium-hero');
 
-  if (!hero) {
+  if (!hero || performance.now() > 900) {
     return;
   }
 
@@ -246,37 +246,6 @@ export function initSmoothScroll() {
         autoKill: true
       }
     });
-  });
-}
-
-export function playButtonRipple(button, event) {
-  const rect = button.getBoundingClientRect();
-  const ripple = document.createElement('span');
-
-  ripple.className = 'ripple';
-  ripple.style.left = `${event.clientX - rect.left}px`;
-  ripple.style.top = `${event.clientY - rect.top}px`;
-
-  button.append(ripple);
-
-  if (prefersReducedMotion()) {
-    ripple.remove();
-    return;
-  }
-
-  gsap.fromTo(ripple, {
-    autoAlpha: 0.42,
-    xPercent: -50,
-    yPercent: -50,
-    scale: 0
-  }, {
-    autoAlpha: 0,
-    xPercent: -50,
-    yPercent: -50,
-    scale: 18,
-    duration: 0.56,
-    ease: 'power2.out',
-    onComplete: () => ripple.remove()
   });
 }
 

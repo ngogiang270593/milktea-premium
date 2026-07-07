@@ -1,5 +1,6 @@
 import { getProductById } from '../data/products.js';
 import { formatCategoryName, formatCurrency } from '../utils/format.js';
+import { escapeImageAttribute, imageAttributes, imageSourceSet, resizeImageUrl } from '../utils/images.js';
 
 const SIZES = ['Regular', 'Large'];
 const SUGAR_LEVELS = ['0%', '30%', '50%', '70%', '100%'];
@@ -71,12 +72,31 @@ export function ProductPage() {
         <div class="product-detail-layout">
           <section class="product-gallery" aria-label="${title} gallery" data-reveal>
             <div class="product-main-image" data-product-zoom>
-              <img src="${gallery[0]}" alt="${title}" width="1000" height="1000" decoding="async" data-gallery-main />
+              <img ${imageAttributes(gallery[0], {
+                alt: title,
+                width: 1000,
+                height: 1000,
+                sizes: '(min-width: 1024px) 48vw, 92vw',
+                loading: 'eager',
+                fetchPriority: 'high',
+                extra: 'data-gallery-main'
+              })} />
             </div>
             <div class="product-thumbnails" aria-label="Product images">
               ${gallery.map((image, index) => `
-                <button type="button" class="${index === 0 ? 'is-active' : ''}" data-gallery-thumb="${image}" aria-label="View image ${index + 1}">
-                  <img src="${image}" alt="" loading="lazy" decoding="async" width="120" height="120" />
+                <button
+                  type="button"
+                  class="${index === 0 ? 'is-active' : ''}"
+                  data-gallery-thumb="${escapeImageAttribute(resizeImageUrl(image, 1000))}"
+                  data-gallery-srcset="${imageSourceSet(image, 1000)}"
+                  aria-label="View image ${index + 1}"
+                >
+                  <img ${imageAttributes(image, {
+                    alt: '',
+                    width: 160,
+                    height: 160,
+                    sizes: '120px'
+                  })} />
                 </button>
               `).join('')}
             </div>
