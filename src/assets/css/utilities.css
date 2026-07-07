@@ -191,6 +191,53 @@
   .cart-coupon > div {
     display: grid;
   }
+
+  .product-detail-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .product-gallery {
+    position: static;
+  }
+
+  .product-info {
+    padding: 1.5rem;
+    border-radius: 2rem;
+  }
+
+  .product-main-image {
+    border-radius: 2rem;
+  }
+
+  .product-topping-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-action-row {
+    display: grid;
+  }
+
+  .mobile-product-bar {
+    display: flex;
+  }
+
+  .search-panel {
+    width: calc(100% - 1rem);
+    max-height: calc(100vh - 1rem);
+    margin: 0.5rem auto;
+    padding: 1rem;
+    border-radius: 1.5rem;
+  }
+
+  .search-result-item {
+    grid-template-columns: 3.75rem minmax(0, 1fr);
+  }
+
+  .search-result-item img {
+    width: 3.75rem;
+    height: 3.75rem;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -212,6 +259,19 @@
 
   .cart-summary {
     position: static;
+  }
+
+  .product-detail-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .product-gallery {
+    position: static;
+  }
+
+  .mobile-product-bar {
+    display: flex;
   }
 }
 

@@ -283,13 +283,31 @@ const normalizeProduct = (product) => ({
   id: product.id,
   name: product.name || product.title,
   title: product.title || product.name,
+  description: product.description || 'A handcrafted premium tea bar favorite made with balanced flavor, silky texture, and fresh toppings.',
   image: product.image,
+  gallery: product.gallery || [
+    product.image,
+    'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80'
+  ],
+  rating: product.rating || 4.8,
+  reviews: product.reviews || 128,
+  discount: product.discount || 0,
   price: product.price,
   oldPrice: product.oldPrice,
   size: product.size || 'Regular',
   sugar: product.sugar || '50%',
   ice: product.ice || 'Regular ice',
-  category: product.category || product.label || 'milk-tea'
+  category: product.category || product.label || 'milk-tea',
+  tags: product.tags || [
+    product.category || product.label || 'milk-tea',
+    product.badge,
+    product.availability,
+    product.size,
+    product.sugar,
+    product.ice,
+    ...(product.name || product.title || '').split(' ')
+  ].filter(Boolean)
 });
 
 export const CART_PRODUCTS = [

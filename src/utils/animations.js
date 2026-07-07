@@ -1,6 +1,13 @@
 import { CartContent } from '../components/cart/CartContent.js';
 import { getProductById } from '../data/products.js';
 import {
+  clearRecentSearches,
+  getRecentSearches,
+  highlightMatch,
+  saveRecentSearch,
+  searchProducts
+} from '../store/searchStore.js';
+import {
   addItem,
   clearCart,
   decreaseQuantity,
@@ -197,6 +204,15 @@ function showToast(message) {
   }, 2400);
 }
 
+function debounce(callback, delay = 300) {
+  let timeout;
+
+  return (...args) => {
+    window.clearTimeout(timeout);
+    timeout = window.setTimeout(() => callback(...args), delay);
+  };
+}
+
 export function initCategoryFilters() {
   const categoryButtons = document.querySelectorAll('[data-category]');
   const categoryDots = document.querySelectorAll('.category-scroll-dot');
@@ -291,6 +307,131 @@ export function initProductCards() {
   });
 }
 
+function searchResultItem(product, term) {
+  return `
+    <a href="/product?id=${product.id}" class="search-result-item" role="option">
+      <img src="${product.image}" alt="" loading="lazy" decoding="async" width="96" height="96" />
+      <span>
+        <strong>${highlightMatch(product.name, term)}</strong>
+        <small>${highlightMatch(product.category.replaceAll('-', ' '), term)} · ${product.tags?.slice(0, 3).map((tag) => highlightMatch(tag, term)).join(', ')}</small>
+      </span>
+    </a>
+  `;
+}
+
+export function initSearchOverlay() {
+  const overlay = document.querySelector('[data-search-overlay]');
+
+  if (!overlay) {
+    return;
+  }
+
+  const input = overlay.querySelector('[data-search-input]');
+  const results = overlay.querySelector('[data-search-results]');
+  const empty = overlay.querySelector('[data-search-empty]');
+  const meta = overlay.querySelector('[data-search-meta]');
+  const recentList = overlay.querySelector('[data-search-recent-list]');
+  const openButtons = document.querySelectorAll('[data-search-open]');
+  const closeButtons = overlay.querySelectorAll('[data-search-close]');
+  const clearButton = overlay.querySelector('[data-search-clear]');
+  let lastFocusedElement = null;
+
+  const renderRecentSearches = () => {
+    const recentSearches = getRecentSearches();
+    recentList.innerHTML = recentSearches.length
+      ? recentSearches.map((term) => `<button type="button" class="search-chip" data-search-term="${term}" data-search-recent>${term}</button>`).join('')
+      : '<p class="text-sm text-[#7b6a5a]">No recent searches yet.</p>';
+  };
+
+  const renderResults = (term) => {
+    const query = term.trim();
+    const matches = searchProducts(query);
+
+    meta.hidden = Boolean(query);
+    empty.hidden = !query || matches.length > 0;
+    results.innerHTML = query ? matches.map((product) => searchResultItem(product, query)).join('') : '';
+  };
+
+  const debouncedRender = debounce((event) => renderResults(event.target.value), 300);
+
+  const openSearch = () => {
+    lastFocusedElement = document.activeElement;
+    overlay.hidden = false;
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('nav-open');
+    renderRecentSearches();
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('is-open');
+      input.focus();
+    });
+  };
+
+  const closeSearch = () => {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('nav-open');
+
+    window.setTimeout(() => {
+      if (!overlay.classList.contains('is-open')) {
+        overlay.hidden = true;
+      }
+    }, 260);
+
+    lastFocusedElement?.focus();
+  };
+
+  openButtons.forEach((button) => button.addEventListener('click', openSearch));
+  closeButtons.forEach((button) => button.addEventListener('click', closeSearch));
+  input.addEventListener('input', debouncedRender);
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && input.value.trim()) {
+      const firstResult = results.querySelector('a');
+
+      if (firstResult) {
+        saveRecentSearch(input.value.trim());
+        renderRecentSearches();
+        firstResult.click();
+      }
+    }
+  });
+
+  overlay.addEventListener('click', (event) => {
+    const chip = event.target.closest('[data-search-term]');
+    const result = event.target.closest('.search-result-item');
+
+    if (result && input.value.trim()) {
+      saveRecentSearch(input.value.trim());
+      renderRecentSearches();
+      return;
+    }
+
+    if (!chip) {
+      return;
+    }
+
+    input.value = chip.dataset.searchTerm;
+    saveRecentSearch(input.value);
+    renderRecentSearches();
+    renderResults(input.value);
+    input.focus();
+  });
+
+  clearButton?.addEventListener('click', () => {
+    clearRecentSearches();
+    renderRecentSearches();
+    input.focus();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+      closeSearch();
+    }
+  });
+
+  renderRecentSearches();
+}
+
 function renderCartContent() {
   const content = document.querySelector('[data-cart-content]');
 
@@ -368,6 +509,115 @@ function bindCartControls() {
 export function initCartPage() {
   updateCartBadges();
   bindCartControls();
+}
+
+function getSelectedProductOptions() {
+  const selectedOptions = {};
+
+  document.querySelectorAll('[data-product-option].is-active').forEach((option) => {
+    selectedOptions[option.dataset.productOption] = option.dataset.optionValue;
+  });
+
+  const toppings = [...document.querySelectorAll('[data-product-topping]:checked')]
+    .map((input) => input.value);
+
+  return {
+    ...selectedOptions,
+    toppings
+  };
+}
+
+function buildDetailProduct(id) {
+  const product = getProductById(id);
+  const quantity = Number(document.querySelector('[data-detail-quantity-value]')?.textContent || 1);
+  const options = getSelectedProductOptions();
+  const variantParts = [
+    options.size || product.size,
+    `${options.sugar || product.sugar} sugar`,
+    options.ice || product.ice,
+    options.toppings.length ? options.toppings.join(', ') : 'No extra toppings'
+  ];
+
+  return {
+    ...product,
+    size: options.size || product.size,
+    sugar: options.sugar || product.sugar,
+    ice: options.ice || product.ice,
+    variant: variantParts.join(' / '),
+    quantity
+  };
+}
+
+export function initProductDetail() {
+  const detail = document.querySelector('[data-product-detail]');
+
+  if (!detail) {
+    return;
+  }
+
+  const mainImage = detail.querySelector('[data-gallery-main]');
+  const zoom = detail.querySelector('[data-product-zoom]');
+  const quantityValue = detail.querySelector('[data-detail-quantity-value]');
+
+  detail.querySelectorAll('[data-gallery-thumb]').forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      mainImage.src = thumb.dataset.galleryThumb;
+      detail.querySelectorAll('[data-gallery-thumb]').forEach((item) => {
+        item.classList.toggle('is-active', item === thumb);
+      });
+    });
+  });
+
+  zoom?.addEventListener('pointermove', (event) => {
+    const rect = zoom.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    mainImage.style.transformOrigin = `${x}% ${y}%`;
+    mainImage.classList.add('is-zoomed');
+  }, { passive: true });
+
+  zoom?.addEventListener('pointerleave', () => {
+    mainImage.classList.remove('is-zoomed');
+    mainImage.style.transformOrigin = '';
+  });
+
+  detail.querySelectorAll('[data-product-option]').forEach((option) => {
+    option.addEventListener('click', () => {
+      detail.querySelectorAll(`[data-product-option="${option.dataset.productOption}"]`).forEach((item) => {
+        const isActive = item === option;
+        item.classList.toggle('is-active', isActive);
+        item.setAttribute('aria-pressed', String(isActive));
+      });
+    });
+  });
+
+  detail.querySelectorAll('[data-detail-quantity]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const current = Number(quantityValue.textContent);
+      const next = button.dataset.detailQuantity === 'increase'
+        ? Math.min(12, current + 1)
+        : Math.max(1, current - 1);
+
+      quantityValue.textContent = String(next);
+      quantityValue.classList.remove('quantity-bump');
+      requestAnimationFrame(() => quantityValue.classList.add('quantity-bump'));
+    });
+  });
+
+  detail.querySelectorAll('[data-detail-add], [data-detail-buy]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const product = buildDetailProduct(button.dataset.detailAdd || button.dataset.detailBuy);
+
+      addItem(product);
+      updateCartBadges();
+      showToast(`${product.name} added to cart`);
+
+      if (button.dataset.detailBuy) {
+        window.location.href = '/cart';
+      }
+    });
+  });
 }
 
 export function initMenuPage() {
@@ -609,8 +859,10 @@ export function initAppInteractions() {
   initCategoryFilters();
   initHeroParallax();
   initProductCards();
+  initSearchOverlay();
   initMenuPage();
   initCartPage();
+  initProductDetail();
   initScrollReveal();
 
   window.addEventListener('cart:updated', updateCartBadges);

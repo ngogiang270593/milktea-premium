@@ -1,5 +1,6 @@
 import { Footer } from '../components/Footer.js';
 import { Navbar } from '../components/Navbar.js';
+import { SearchOverlay } from '../components/SearchOverlay.js';
 
 export function DefaultLayout(content, { mainClass = '' } = {}) {
   return `
@@ -8,5 +9,6 @@ export function DefaultLayout(content, { mainClass = '' } = {}) {
       ${content}
     </main>
     ${Footer()}
+    ${SearchOverlay()}
   `;
 }

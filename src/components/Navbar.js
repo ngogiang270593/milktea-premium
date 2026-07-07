@@ -6,9 +6,9 @@ function navLink({ label, href }, className) {
   return `<a href="${resolvedHref}" class="${className}" data-nav-link>${label}</a>`;
 }
 
-function iconButton(label, icon, extraClass = '') {
+function iconButton(label, icon, extraClass = '', attributes = '') {
   return `
-    <button type="button" class="nav-icon-button ripple-button ${extraClass}" aria-label="${label}">
+    <button type="button" class="nav-icon-button ripple-button ${extraClass}" aria-label="${label}" ${attributes}>
       ${icon}
     </button>
   `;
@@ -42,7 +42,7 @@ export function Navbar() {
         </nav>
 
         <div class="hidden items-center justify-end gap-2 md:flex">
-          ${iconButton('Search products', searchIcon)}
+          ${iconButton('Search products', searchIcon, '', 'data-search-open aria-haspopup="dialog"')}
           <a href="${window.location.pathname === '/' ? '#newsletter' : '/#newsletter'}" class="nav-login ripple-button rounded-full bg-[#0d3b2e] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">Login</a>
           <a href="/cart" class="nav-icon-button ripple-button relative" aria-label="Open shopping cart">
             ${cartIcon}
@@ -76,7 +76,7 @@ export function Navbar() {
         </nav>
 
         <div class="mt-8 grid gap-3">
-          <button type="button" class="ripple-button flex items-center justify-center gap-2 rounded-full border border-[#d8c8b8] bg-white px-5 py-3 text-sm font-semibold text-[#4d4035] outline-none transition hover:border-brand-green hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70" aria-label="Search products">
+          <button type="button" class="ripple-button flex items-center justify-center gap-2 rounded-full border border-[#d8c8b8] bg-white px-5 py-3 text-sm font-semibold text-[#4d4035] outline-none transition hover:border-brand-green hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70" aria-label="Search products" data-search-open aria-haspopup="dialog">
             ${searchIcon}
             Search
           </button>

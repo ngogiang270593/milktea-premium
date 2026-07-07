@@ -7,6 +7,7 @@ import { Newsletter } from './components/Newsletter.js';
 import { DefaultLayout } from './layouts/DefaultLayout.js';
 import { CartPage } from './pages/CartPage.js';
 import { MenuPage } from './pages/MenuPage.js';
+import { ProductPage } from './pages/ProductPage.js';
 
 const app = document.querySelector('#app');
 
@@ -22,7 +23,8 @@ if (app) {
 
   const routes = {
     '/cart': CartPage,
-    '/menu': MenuPage
+    '/menu': MenuPage,
+    '/product': ProductPage
   };
   const Page = routes[window.location.pathname];
 

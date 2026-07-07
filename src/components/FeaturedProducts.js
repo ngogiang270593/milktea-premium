@@ -24,9 +24,9 @@ function featuredCard(product) {
             <path d="M20.8 5.6a5.1 5.1 0 0 0-7.2 0L12 7.2l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2L12 21.6l8.8-8.8a5.1 5.1 0 0 0 0-7.2Z"></path>
           </svg>
         </button>
-        <button type="button" class="quick-view-button ripple-button" aria-label="Open quick view for ${product.title}">
+        <a href="/product?id=${product.id}" class="quick-view-button ripple-button text-center" aria-label="Open product detail for ${product.title}">
           Quick view
-        </button>
+        </a>
       </div>
 
       <div class="p-6">
@@ -41,7 +41,7 @@ function featuredCard(product) {
           </span>
         </div>
 
-        <h3 class="mt-4 text-xl font-semibold tracking-tight text-[#1f1710]">${product.title}</h3>
+        <h3 class="mt-4 text-xl font-semibold tracking-tight text-[#1f1710]"><a href="/product?id=${product.id}" class="outline-none hover:text-brand-green focus-visible:text-brand-green">${product.title}</a></h3>
         <p class="mt-2 min-h-[3rem] text-sm leading-6 text-[#7b6a5a]">${product.description}</p>
 
         <div class="mt-5 flex items-end justify-between gap-4">
