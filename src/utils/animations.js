@@ -32,6 +32,7 @@ import {
   subscribeToSystemTheme,
   THEMES
 } from '../store/themeStore.js';
+import { setLanguage } from '../store/languageStore.js';
 import { formatCurrency } from './format.js';
 import { escapeAttribute, escapeHtml } from './html.js';
 import { imageAttributes } from './images.js';
@@ -112,6 +113,19 @@ export function initThemeSystem() {
     button.addEventListener('click', () => {
       const { preference } = cycleThemePreference();
       showToast(`Theme set to ${getThemeLabel(preference)}`);
+    });
+  });
+}
+
+export function initLanguageControls() {
+  document.querySelectorAll('[data-language-switcher]').forEach((button) => {
+    if (button.dataset.languageReady === 'true') {
+      return;
+    }
+
+    button.dataset.languageReady = 'true';
+    button.addEventListener('click', () => {
+      setLanguage(button.dataset.languageNext);
     });
   });
 }
@@ -1037,6 +1051,7 @@ export function initMenuPage() {
 
 export function initAppInteractions() {
   initThemeSystem();
+  initLanguageControls();
   initNavigation();
   initRippleButtons();
   initCategoryFilters();

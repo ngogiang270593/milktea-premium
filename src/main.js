@@ -3,6 +3,7 @@ import './assets/css/components.css';
 import './assets/css/utilities.css';
 history.scrollRestoration = 'manual';
 import { renderApp } from './App.js';
+import { applyLanguage, subscribe } from './store/languageStore.js';
 import { initAppInteractions } from './utils/animations.js';
 
 const appRoutes = new Set(['/', '/cart', '/menu', '/product', '/wishlist']);
@@ -27,6 +28,7 @@ function scrollToHashAfterRender() {
 }
 
 async function renderCurrentRoute() {
+  applyLanguage();
   await renderApp();
   initAppInteractions();
   scrollToHashAfterRender();
@@ -81,5 +83,6 @@ document.addEventListener('click', (event) => {
 });
 
 window.addEventListener('popstate', renderCurrentRoute);
+subscribe(renderCurrentRoute);
 
 renderCurrentRoute();
