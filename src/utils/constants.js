@@ -6,12 +6,12 @@ import TeaBar04 from '../assets/images/testimonials/tea-bar-04.jpg';
 export const BRAND_NAME = 'MilkTea Premium';
 
 export const NAV_LINKS = [
-  { label: 'Menu', labelKey: 'nav.menu', href: '/menu' },
-  { label: 'Categories', labelKey: 'nav.categories', href: '#categories' },
-  { label: 'Featured', labelKey: 'nav.featured', href: '#featured' },
-  { label: 'Testimonials', labelKey: 'nav.testimonials', href: '#testimonials' },
-  { label: 'Instagram', labelKey: 'nav.instagram', href: '#instagram' },
-  { label: 'Newsletter', labelKey: 'nav.newsletter', href: '#newsletter' }
+  { label: 'Menu', labelKey: 'navbar.menu', href: '/menu' },
+  { label: 'Categories', labelKey: 'navbar.categories', href: '#categories' },
+  { label: 'Featured', labelKey: 'navbar.featured', href: '#featured' },
+  { label: 'Testimonials', labelKey: 'navbar.testimonials', href: '#testimonials' },
+  { label: 'Instagram', labelKey: 'navbar.instagram', href: '#instagram' },
+  { label: 'Newsletter', labelKey: 'navbar.newsletter', href: '#newsletter' }
 ];
 
 export const CATEGORIES = [

@@ -3,7 +3,7 @@ import './assets/css/components.css';
 import './assets/css/utilities.css';
 history.scrollRestoration = 'manual';
 import { renderApp } from './App.js';
-import { applyLanguage, subscribe } from './store/languageStore.js';
+import { applyLanguage } from './store/languageStore.js';
 import { initAppInteractions } from './utils/animations.js';
 
 const appRoutes = new Set(['/', '/cart', '/menu', '/product', '/wishlist']);
@@ -83,6 +83,5 @@ document.addEventListener('click', (event) => {
 });
 
 window.addEventListener('popstate', renderCurrentRoute);
-subscribe(renderCurrentRoute);
 
 renderCurrentRoute();

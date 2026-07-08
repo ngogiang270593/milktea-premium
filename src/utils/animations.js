@@ -1,4 +1,6 @@
 import { CartContent } from '../components/cart/CartContent.js';
+import { updateLanguageSwitchers } from '../components/LanguageSwitcher.js';
+import { updateNavbarTranslations } from '../components/Navbar.js';
 import { WishlistContent } from '../components/wishlist/WishlistContent.js';
 import { getProductById, MENU_PRODUCTS } from '../data/products.js';
 import {
@@ -126,6 +128,8 @@ export function initLanguageControls() {
     button.dataset.languageReady = 'true';
     button.addEventListener('click', () => {
       setLanguage(button.dataset.languageNext);
+      updateNavbarTranslations();
+      updateLanguageSwitchers();
     });
   });
 }

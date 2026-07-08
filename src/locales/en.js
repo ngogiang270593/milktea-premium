@@ -1,5 +1,9 @@
 export const en = {
-  nav: {
+  seo: {
+    title: 'MilkTea Premium | Handcrafted Bubble Tea',
+    description: 'MilkTea Premium offers a modern bubble tea experience with handcrafted blends, premium ingredients, and elegant presentation.'
+  },
+  navbar: {
     home: 'Home',
     menu: 'Menu',
     categories: 'Categories',

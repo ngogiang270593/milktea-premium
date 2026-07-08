@@ -1,5 +1,9 @@
 export const vi = {
-  nav: {
+  seo: {
+    title: 'MilkTea Premium - Trà sữa cao cấp',
+    description: 'MilkTea Premium - Trà sữa cao cấp, nguyên liệu tuyển chọn, giao hàng nhanh, trải nghiệm thưởng thức tuyệt hảo.'
+  },
+  navbar: {
     home: 'Trang chủ',
     menu: 'Thực đơn',
     categories: 'Danh mục',

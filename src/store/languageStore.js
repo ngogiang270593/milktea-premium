@@ -1,6 +1,6 @@
 import { DEFAULT_LANGUAGE, LANGUAGES, locales } from '../locales/index.js';
 
-export const LANGUAGE_STORAGE_KEY = 'milktea-premium-language';
+export const LANGUAGE_STORAGE_KEY = 'milktea-language';
 
 const languageCodes = LANGUAGES.map((language) => language.code);
 const subscribers = new Set();
@@ -36,18 +36,18 @@ function updateDocumentLanguage(language) {
 
   document.documentElement.lang = language;
 
-  if (locale.meta?.title) {
-    document.title = locale.meta.title;
+  if (locale.seo?.title) {
+    document.title = locale.seo.title;
   }
 
-  if (locale.meta?.description) {
+  if (locale.seo?.description) {
     document
       .querySelector('meta[name="description"]')
-      ?.setAttribute('content', locale.meta.description);
+      ?.setAttribute('content', locale.seo.description);
   }
 }
 
-function notifySubscribers(language) {
+export function notify(language = currentLanguage) {
   subscribers.forEach((callback) => callback(language));
 }
 
@@ -86,7 +86,7 @@ export function setLanguage(language, options = { persist: true }) {
   }
 
   updateDocumentLanguage(safeLanguage);
-  notifySubscribers(safeLanguage);
+  notify(safeLanguage);
 
   if (canUseBrowserApis()) {
     window.dispatchEvent(new CustomEvent('language:updated', {
