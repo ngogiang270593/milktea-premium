@@ -1,3 +1,8 @@
+import TeaBar01 from '../assets/images/testimonials/tea-bar-01.jpg';
+import TeaBar02 from '../assets/images/testimonials/tea-bar-02.jpg';
+import TeaBar03 from '../assets/images/testimonials/tea-bar-03.jpg';
+import TeaBar04 from '../assets/images/testimonials/tea-bar-04.jpg';
+
 export const BRAND_NAME = 'MilkTea Premium';
 
 export const NAV_LINKS = [
@@ -81,18 +86,18 @@ export const TESTIMONIALS = [
 export const INSTAGRAM_POSTS = [
   {
     label: 'Tokyo-inspired bubble tea',
-    src: 'https://images.unsplash.com/photo-1547592166-3d1b3d8d6616?auto=format&fit=crop&w=800&q=80'
+    src: TeaBar01
   },
   {
     label: 'Refreshing summer flavor',
-    src: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80'
+    src: TeaBar02
   },
   {
     label: 'Minimal premium cafe',
-    src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80'
+    src: TeaBar03
   },
   {
     label: 'Styled tea and pearls',
-    src: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=800&q=80'
+    src: TeaBar04
   }
 ];

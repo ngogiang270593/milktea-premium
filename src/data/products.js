@@ -1,3 +1,16 @@
+import BrownSugar from '../assets/images/products/brown-sugar.jpg';
+import EarlGreyCheesecake from '../assets/images/products/earl-grey-cheesecake.jpg';
+import EspressoBoba from '../assets/images/products/espresso-boba.jpg';
+import HoneyPearl from '../assets/images/products/honey-pearl.jpg';
+import JasmineCloud from '../assets/images/products/jasmine-cloud.jpg';
+import LycheeRose from '../assets/images/products/lychee-rose.jpg';
+import MangoSago from '../assets/images/products/mango-sago.jpg';
+import MatchaDream from '../assets/images/products/matcha-dream.jpg';
+import StrawberryCloud from '../assets/images/products/strawberry-cloud.jpg';
+import TiramisuCoffee from '../assets/images/products/tiramisu-coffee.jpg';
+import TropicalHibiscus from '../assets/images/products/tropical-hibiscus.jpg';
+import YuzuPeach from '../assets/images/products/yuzu-peach.jpg';
+
 export const CATEGORY_PRODUCTS = [
   {
     title: 'Classic Milk Tea',
@@ -35,7 +48,7 @@ export const FEATURED_PRODUCTS = [
     title: 'Midnight Milk Tea',
     description: 'Velvet black tea with brown sugar boba, cream foam, and a subtle caramel note.',
     label: 'classic',
-    image: 'https://images.unsplash.com/photo-1558857563-b371033873b8?auto=format&fit=crop&w=900&q=80',
+    image: BrownSugar,
     rating: 4.9,
     reviews: 428,
     price: 7.5,
@@ -48,7 +61,7 @@ export const FEATURED_PRODUCTS = [
     title: 'Tropical Hibiscus',
     description: 'Bright hibiscus with pineapple, passionfruit, and popping lemonade pearls.',
     label: 'fruit',
-    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80',
+    image: TropicalHibiscus,
     rating: 4.8,
     reviews: 312,
     price: 6.8,
@@ -61,7 +74,7 @@ export const FEATURED_PRODUCTS = [
     title: 'Vanilla Matcha Dream',
     description: 'Silky matcha with house vanilla, oat milk, and a gold dust finish.',
     label: 'matcha',
-    image: 'https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?auto=format&fit=crop&w=900&q=80',
+    image: MatchaDream,
     rating: 5.0,
     reviews: 257,
     price: 8.2,
@@ -74,7 +87,7 @@ export const FEATURED_PRODUCTS = [
     title: 'Strawberry Cloud Smoothie',
     description: 'Fresh strawberry blend with yogurt cream, crystal pearls, and a soft vanilla finish.',
     label: 'smoothie',
-    image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=900&q=80',
+    image: StrawberryCloud,
     rating: 4.9,
     reviews: 189,
     price: 7.9,
@@ -89,7 +102,7 @@ export const MENU_PRODUCTS = [
     id: 'royal-brown-sugar',
     name: 'Royal Brown Sugar Milk Tea',
     category: 'milk-tea',
-    image: 'https://images.unsplash.com/photo-1558857563-b371033873b8?auto=format&fit=crop&w=900&q=80',
+    image: BrownSugar,
     rating: 4.9,
     reviews: 428,
     price: 7.5,
@@ -105,7 +118,7 @@ export const MENU_PRODUCTS = [
     id: 'jasmine-cloud',
     name: 'Jasmine Cloud Milk Tea',
     category: 'milk-tea',
-    image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=900&q=80',
+    image: JasmineCloud,
     rating: 4.8,
     reviews: 286,
     price: 6.9,
@@ -121,7 +134,7 @@ export const MENU_PRODUCTS = [
     id: 'tropical-hibiscus-menu',
     name: 'Tropical Hibiscus Fruit Tea',
     category: 'fruit-tea',
-    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80',
+    image: TropicalHibiscus,
     rating: 4.8,
     reviews: 312,
     price: 6.8,
@@ -137,7 +150,7 @@ export const MENU_PRODUCTS = [
     id: 'yuzu-peach-tea',
     name: 'Yuzu Peach Green Tea',
     category: 'fruit-tea',
-    image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80',
+    image: YuzuPeach,
     rating: 4.7,
     reviews: 198,
     price: 6.4,
@@ -153,7 +166,7 @@ export const MENU_PRODUCTS = [
     id: 'espresso-boba-latte',
     name: 'Espresso Boba Latte',
     category: 'coffee',
-    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=900&q=80',
+    image: EspressoBoba,
     rating: 4.9,
     reviews: 241,
     price: 7.8,
@@ -169,7 +182,7 @@ export const MENU_PRODUCTS = [
     id: 'matcha-vanilla-dream',
     name: 'Vanilla Matcha Dream',
     category: 'milk-tea',
-    image: 'https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?auto=format&fit=crop&w=900&q=80',
+    image: MatchaDream,
     rating: 5,
     reviews: 257,
     price: 8.2,
@@ -185,7 +198,7 @@ export const MENU_PRODUCTS = [
     id: 'strawberry-cloud',
     name: 'Strawberry Cloud Smoothie',
     category: 'smoothie',
-    image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=900&q=80',
+    image: StrawberryCloud,
     rating: 4.9,
     reviews: 189,
     price: 7.9,
@@ -201,7 +214,7 @@ export const MENU_PRODUCTS = [
     id: 'mango-sago',
     name: 'Mango Sago Smoothie',
     category: 'smoothie',
-    image: 'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80',
+    image: MangoSago,
     rating: 4.8,
     reviews: 174,
     price: 7.2,
@@ -217,7 +230,7 @@ export const MENU_PRODUCTS = [
     id: 'earl-grey-cheesecake',
     name: 'Earl Grey Cheesecake',
     category: 'cake',
-    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=80',
+    image: EarlGreyCheesecake,
     rating: 4.7,
     reviews: 132,
     price: 6.5,
@@ -233,7 +246,7 @@ export const MENU_PRODUCTS = [
     id: 'honey-pearl-cup',
     name: 'Honey Pearl Topping Cup',
     category: 'topping',
-    image: 'https://images.unsplash.com/photo-1605209971703-60cda7d3f26f?auto=format&fit=crop&w=900&q=80',
+    image: HoneyPearl,
     rating: 4.6,
     reviews: 96,
     price: 2.2,
@@ -249,7 +262,7 @@ export const MENU_PRODUCTS = [
     id: 'tiramisu-cream-coffee',
     name: 'Tiramisu Cream Coffee',
     category: 'coffee',
-    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=80',
+    image: TiramisuCoffee,
     rating: 4.8,
     reviews: 203,
     price: 8.4,
@@ -265,7 +278,7 @@ export const MENU_PRODUCTS = [
     id: 'lychee-rose-tea',
     name: 'Lychee Rose Fruit Tea',
     category: 'fruit-tea',
-    image: 'https://images.unsplash.com/photo-1523906630133-f6934a1ab2b9?auto=format&fit=crop&w=900&q=80',
+    image: LycheeRose,
     rating: 4.7,
     reviews: 165,
     price: 6.7,
@@ -287,8 +300,8 @@ const normalizeProduct = (product) => ({
   image: product.image,
   gallery: product.gallery || [
     product.image,
-    'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80',
-    'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80'
+    YuzuPeach,
+    TropicalHibiscus
   ],
   rating: product.rating || 4.8,
   reviews: product.reviews || 128,
