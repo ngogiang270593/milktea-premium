@@ -1,4 +1,5 @@
 import { CATEGORIES } from '../utils/constants.js';
+import { t } from '../utils/i18n.js';
 
 const icons = {
   MilkTea: `<svg viewBox="0 0 24 24" class="category-icon h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 7h10l-1 12a2 2 0 0 1-2 1.8h-4A2 2 0 0 1 8 19L7 7Z"></path><path d="M6 7h12"></path><path d="M9 3h6"></path><path d="M10 15h.01M13 17h.01M15 14h.01"></path></svg>`,
@@ -11,21 +12,25 @@ const icons = {
 
 function categoryCard(category, index) {
   const activeClass = index === 0 ? ' is-active' : '';
+  const title = t(`home.categories.items.${category.value}.title`);
+  const description = t(`home.categories.items.${category.value}.description`);
+  const productCount = t('home.categories.productCount', { count: category.count });
+
   return `
-    <button type="button" data-category="${category.value}" class="category-card ripple-button${activeClass}" aria-pressed="${index === 0}" aria-label="${category.label}, ${category.count} products">
+    <button type="button" data-category="${category.value}" class="category-card ripple-button${activeClass}" aria-pressed="${index === 0}" aria-label="${t('home.categories.cardAria', { name: title, count: category.count })}">
       <span class="category-card-glow bg-gradient-to-br ${category.toneClass}" aria-hidden="true"></span>
       <span class="category-icon-wrap bg-gradient-to-br ${category.toneClass}" aria-hidden="true">
         ${icons[category.icon]}
       </span>
       <span class="mt-7 flex items-start justify-between gap-4">
         <span class="text-left">
-          <span class="block text-xl font-semibold text-[#1f1710]">${category.label}</span>
-          <span class="mt-2 block text-sm leading-6 text-[#7b6a5a]">${category.description}</span>
+          <span class="block text-xl font-semibold text-[#1f1710]">${title}</span>
+          <span class="mt-2 block text-sm leading-6 text-[#7b6a5a]">${description}</span>
         </span>
         <span class="category-count">${category.count}</span>
       </span>
       <span class="mt-7 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.22em] text-brand-green">
-        <span aria-hidden="true">${category.count} products</span>
+        <span aria-hidden="true">${productCount}</span>
         <span class="category-arrow" aria-hidden="true">-&gt;</span>
       </span>
     </button>
@@ -41,14 +46,14 @@ export function Categories() {
       <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div class="md:flex md:items-end md:justify-between md:gap-10">
           <div>
-            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">Shop by category</p>
-            <h2 id="categories-title" class="section-heading mt-4">Choose your next premium treat.</h2>
-            <p class="section-copy mt-4">Swipe, tap, or browse our signature families crafted for milk tea lovers, coffee guests, and dessert pairings.</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('home.categories.eyebrow')}</p>
+            <h2 id="categories-title" class="section-heading mt-4">${t('home.categories.title')}</h2>
+            <p class="section-copy mt-4">${t('home.categories.copy')}</p>
           </div>
-          <p class="mt-8 max-w-sm text-sm leading-6 text-[#7b6a5a] md:mt-0">Interactive category cards highlight product depth and make mobile discovery feel as smooth as the first sip.</p>
+          <p class="mt-8 max-w-sm text-sm leading-6 text-[#7b6a5a] md:mt-0">${t('home.categories.sideCopy')}</p>
         </div>
 
-        <div class="category-scroll mt-12" role="group" aria-label="Product categories">
+        <div class="category-scroll mt-12" role="group" aria-label="${t('home.categories.groupAria')}">
           ${CATEGORIES.map(categoryCard).join('')}
         </div>
 
