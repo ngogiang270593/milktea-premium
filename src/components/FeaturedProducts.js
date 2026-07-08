@@ -17,7 +17,7 @@ function featuredCard(product) {
   const label = t(`home.featured.labels.${product.label}`);
 
   return `
-    <article class="product-card group" data-product-card>
+    <article class="product-card group flex h-full flex-col" data-product-card>
       <div class="product-image-wrap">
         <img ${imageAttributes(product.image, {
           alt: title,
@@ -38,10 +38,10 @@ function featuredCard(product) {
         </a>
       </div>
 
-      <div class="p-6">
+      <div class="featured-product-body flex flex-1 flex-col p-6 pt-5">
         <div class="flex items-center justify-between gap-3">
-          <span class="rounded-full bg-brand-mint/60 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-brand-green">${label}</span>
-          <span class="flex items-center gap-1 text-sm font-semibold text-[#6f4329]" aria-label="${t('home.featured.ratingAria', { rating: product.rating })}">
+          <span class="rounded-full bg-brand-mint/60 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-brand-green">${label}</span>
+          <span class="flex shrink-0 items-center gap-1 text-sm font-bold text-[#6f4329]" aria-label="${t('home.featured.ratingAria', { rating: product.rating })}">
             <svg viewBox="0 0 24 24" class="h-4 w-4 fill-brand-gold text-brand-gold" aria-hidden="true">
               <path d="m12 3 2.7 5.47 6.04.88-4.37 4.26 1.03 6.01L12 16.78l-5.4 2.84 1.03-6.01-4.37-4.26 6.04-.88L12 3Z"></path>
             </svg>
@@ -50,13 +50,13 @@ function featuredCard(product) {
           </span>
         </div>
 
-        <h3 class="mt-4 text-xl font-semibold tracking-tight text-[#1f1710]"><a href="/product?id=${product.id}" class="outline-none hover:text-brand-green focus-visible:text-brand-green">${title}</a></h3>
-        <p class="mt-2 min-h-[3rem] text-sm leading-6 text-[#7b6a5a]">${description}</p>
+        <h3 class="mt-4 text-xl font-bold tracking-tight text-[#1f1710]"><a href="/product?id=${product.id}" class="outline-none transition hover:text-brand-green focus-visible:text-brand-green">${title}</a></h3>
+        <p class="mt-2 min-h-[4.5rem] text-sm leading-6 text-[#6f5f51]">${description}</p>
 
-        <div class="mt-5 flex items-end justify-between gap-4">
+        <div class="mt-auto flex items-end justify-between gap-4 pt-5">
           <div>
-            <div class="text-2xl font-semibold text-brand-green">${formatPrice(product.price)}</div>
-            <div class="text-sm text-[#a39080] line-through">${formatPrice(product.oldPrice)}</div>
+            <div class="text-2xl font-extrabold leading-none text-brand-green">${formatPrice(product.price)}</div>
+            <div class="mt-1 text-sm font-medium text-[#8f7d6c] line-through">${formatPrice(product.oldPrice)}</div>
           </div>
           <button type="button" class="add-cart-button ripple-button" aria-label="${t('home.featured.addToCartAria', { title })}" data-add-to-cart="${product.id}">
             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">

@@ -22,10 +22,10 @@ function categoryCard(category, index) {
       <span class="category-icon-wrap bg-gradient-to-br ${category.toneClass}" aria-hidden="true">
         ${icons[category.icon]}
       </span>
-      <span class="mt-7 flex items-start justify-between gap-4">
+      <span class="mt-7 flex flex-1 items-start justify-between gap-4">
         <span class="text-left">
-          <span class="block text-xl font-semibold text-[#1f1710]">${title}</span>
-          <span class="mt-2 block text-sm leading-6 text-[#7b6a5a]">${description}</span>
+          <span class="block text-xl font-bold text-[#1f1710]">${title}</span>
+          <span class="mt-3 block text-sm leading-6 text-[#6f5f51]">${description}</span>
         </span>
         <span class="category-count">${category.count}</span>
       </span>
@@ -48,7 +48,7 @@ export function Categories() {
           <div>
             <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('home.categories.eyebrow')}</p>
             <h2 id="categories-title" class="section-heading mt-4">${t('home.categories.title')}</h2>
-            <p class="section-copy mt-4">${t('home.categories.copy')}</p>
+            <p class="section-copy mt-4 leading-7">${t('home.categories.copy')}</p>
           </div>
           <p class="mt-8 max-w-sm text-sm leading-6 text-[#7b6a5a] md:mt-0">${t('home.categories.sideCopy')}</p>
         </div>

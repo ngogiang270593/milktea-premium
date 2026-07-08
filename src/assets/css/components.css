@@ -196,6 +196,7 @@
 
   .hero-stat-card {
     @apply rounded-3xl border border-white/70 bg-white/60 p-5 shadow-[0_18px_44px_rgba(48,35,24,0.08)] backdrop-blur-xl;
+    min-height: 8.5rem;
   }
 
   .hero-stat-card strong {
@@ -483,6 +484,8 @@
 
   .category-card {
     position: relative;
+    display: flex;
+    flex-direction: column;
     min-height: 17rem;
     overflow: hidden;
     padding: 1.25rem;
@@ -494,7 +497,7 @@
     outline: none;
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
-    transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease, background 260ms ease;
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms ease, border-color 300ms ease, background 300ms ease;
   }
 
   .category-card::after {
@@ -513,7 +516,7 @@
     background: rgba(255, 255, 255, 0.78);
     border-color: rgba(211, 168, 106, 0.72);
     box-shadow: 0 28px 78px rgba(48, 35, 24, 0.14);
-    transform: translateY(-0.45rem);
+    transform: translateY(-0.35rem);
   }
 
   .category-card:hover::after,
@@ -617,6 +620,7 @@
 
   .product-card {
     position: relative;
+    height: 100%;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.66);
     border: 1px solid rgba(255, 255, 255, 0.78);
@@ -626,7 +630,7 @@
     transform-style: preserve-3d;
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
-    transition: transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease, border-color 320ms ease;
   }
 
   .product-card::after {
@@ -643,7 +647,7 @@
   .product-card:focus-within {
     border-color: rgba(211, 168, 106, 0.68);
     box-shadow: 0 30px 88px rgba(48, 35, 24, 0.16);
-    transform: perspective(900px) rotateX(2deg) rotateY(-3deg) translateY(-0.6rem);
+    transform: perspective(900px) rotateX(1.2deg) rotateY(-1.6deg) translateY(-0.45rem);
   }
 
   .product-card:hover::after,
@@ -653,7 +657,8 @@
 
   .product-image-wrap {
     position: relative;
-    height: 17rem;
+    aspect-ratio: 1;
+    height: auto;
     margin: 0.75rem;
     overflow: hidden;
     background:
@@ -773,7 +778,7 @@
     transform: translateY(0.75rem);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    transition: opacity 240ms ease, transform 240ms ease, background 240ms ease;
+    transition: opacity 260ms ease, transform 260ms ease, background 260ms ease;
   }
 
   .product-card:hover .quick-view-button,
@@ -808,6 +813,10 @@
     background: #143f31;
     box-shadow: 0 18px 42px rgba(13, 59, 46, 0.28);
     transform: translateY(-0.12rem);
+  }
+
+  .testimonial-card {
+    min-height: 100%;
   }
 
   .menu-page {
