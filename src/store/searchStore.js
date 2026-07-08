@@ -1,20 +1,18 @@
 import { CART_PRODUCTS } from '../data/products.js';
 import { formatCategoryName } from '../utils/format.js';
+import { escapeHtml } from '../utils/html.js';
+import { readJson, writeJson } from '../utils/storage.js';
 
 const RECENT_SEARCHES_KEY = 'milktea-premium-recent-searches';
 
 export const POPULAR_SEARCHES = ['brown sugar', 'matcha', 'fruit tea', 'coffee', 'smoothie', 'topping'];
 
 function readRecentSearches() {
-  try {
-    return JSON.parse(window.localStorage.getItem(RECENT_SEARCHES_KEY)) || [];
-  } catch {
-    return [];
-  }
+  return readJson(RECENT_SEARCHES_KEY, []);
 }
 
 function writeRecentSearches(searches) {
-  window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches.slice(0, 6)));
+  writeJson(RECENT_SEARCHES_KEY, searches.slice(0, 6));
 }
 
 function normalize(value) {
@@ -60,11 +58,13 @@ export function highlightMatch(value, term) {
   const query = term.trim();
 
   if (!query) {
-    return text;
+    return escapeHtml(text);
   }
 
-  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return text.replace(new RegExp(`(${escapedQuery})`, 'ig'), '<mark>$1</mark>');
+  const escapedText = escapeHtml(text);
+  const escapedQuery = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  return escapedText.replace(new RegExp(`(${escapedQuery})`, 'ig'), '<mark>$1</mark>');
 }
 
 export function searchProducts(term) {

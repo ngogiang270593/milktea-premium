@@ -1,5 +1,6 @@
 import { getWishlist } from '../../store/wishlistStore.js';
 import { formatCategoryName, formatCurrency } from '../../utils/format.js';
+import { escapeAttribute, escapeHtml } from '../../utils/html.js';
 import { imageAttributes } from '../../utils/images.js';
 
 function wishlistItem(item) {
@@ -13,13 +14,13 @@ function wishlistItem(item) {
       })} />
       <div class="min-w-0">
         <span>${formatCategoryName(item.category)}</span>
-        <h2>${item.name}</h2>
+        <h2>${escapeHtml(item.name)}</h2>
         <p aria-label="${item.rating} out of 5 stars">★ ${item.rating}</p>
       </div>
       <div class="wishlist-actions">
         <strong>${formatCurrency(item.price)}</strong>
-        <button type="button" class="btn-primary" data-wishlist-move="${item.id}" aria-label="Move ${item.name} to cart">Move to cart</button>
-        <button type="button" class="cart-remove" data-wishlist-remove="${item.id}" aria-label="Remove ${item.name} from wishlist">Remove</button>
+        <button type="button" class="btn-primary" data-wishlist-move="${escapeAttribute(item.id)}" aria-label="Move ${escapeAttribute(item.name)} to cart">Move to cart</button>
+        <button type="button" class="cart-remove" data-wishlist-remove="${escapeAttribute(item.id)}" aria-label="Remove ${escapeAttribute(item.name)} from wishlist">Remove</button>
       </div>
     </article>
   `;

@@ -1,34 +1,48 @@
-import { Hero } from './components/Hero.js';
-import { Categories } from './components/Categories.js';
-import { FeaturedProducts } from './components/FeaturedProducts.js';
-import { Promotion } from './components/Promotion.js';
-import { Testimonials } from './components/Testimonials.js';
-import { Newsletter } from './components/Newsletter.js';
 import { DefaultLayout } from './layouts/DefaultLayout.js';
-import { CartPage } from './pages/CartPage.js';
-import { MenuPage } from './pages/MenuPage.js';
-import { ProductPage } from './pages/ProductPage.js';
-import { WishlistPage } from './pages/WishlistPage.js';
 
-const app = document.querySelector('#app');
+const routes = {
+  '/cart': () => import('./pages/CartPage.js').then((module) => module.CartPage),
+  '/menu': () => import('./pages/MenuPage.js').then((module) => module.MenuPage),
+  '/product': () => import('./pages/ProductPage.js').then((module) => module.ProductPage),
+  '/wishlist': () => import('./pages/WishlistPage.js').then((module) => module.WishlistPage)
+};
 
-if (app) {
-  const HomePage = `
-      ${Hero()}
-      ${Categories()}
-      ${FeaturedProducts()}
-      ${Promotion()}
-      ${Testimonials()}
-      ${Newsletter()}
+async function renderHomePage() {
+  const [
+    { Hero },
+    { Categories },
+    { FeaturedProducts },
+    { Promotion },
+    { Testimonials },
+    { Newsletter }
+  ] = await Promise.all([
+    import('./components/Hero.js'),
+    import('./components/Categories.js'),
+    import('./components/FeaturedProducts.js'),
+    import('./components/Promotion.js'),
+    import('./components/Testimonials.js'),
+    import('./components/Newsletter.js')
+  ]);
+
+  return `
+    ${Hero()}
+    ${Categories()}
+    ${FeaturedProducts()}
+    ${Promotion()}
+    ${Testimonials()}
+    ${Newsletter()}
   `;
+}
 
-  const routes = {
-    '/cart': CartPage,
-    '/menu': MenuPage,
-    '/product': ProductPage,
-    '/wishlist': WishlistPage
-  };
-  const Page = routes[window.location.pathname];
+export async function renderApp() {
+  const app = document.querySelector('#app');
 
-  app.innerHTML = DefaultLayout(Page ? Page() : HomePage);
+  if (!app) {
+    return;
+  }
+
+  const pageLoader = routes[window.location.pathname];
+  const content = pageLoader ? (await pageLoader())() : await renderHomePage();
+
+  app.innerHTML = DefaultLayout(content);
 }

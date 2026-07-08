@@ -1,5 +1,6 @@
 import { getCart, getDiscount, getShipping, getSubtotal, getTotal } from '../../store/cartStore.js';
 import { formatCurrency } from '../../utils/format.js';
+import { escapeAttribute, escapeHtml } from '../../utils/html.js';
 import { imageAttributes } from '../../utils/images.js';
 
 function cartItem(item) {
@@ -12,15 +13,15 @@ function cartItem(item) {
         sizes: '112px'
       })} />
       <div class="min-w-0">
-        <h2>${item.name}</h2>
-        <p>${item.variant}</p>
+        <h2>${escapeHtml(item.name)}</h2>
+        <p>${escapeHtml(item.variant)}</p>
         <div class="mt-4 flex flex-wrap items-center gap-3">
-          <div class="cart-quantity" aria-label="Quantity for ${item.name}">
-            <button type="button" data-cart-decrease="${item.id}" aria-label="Decrease ${item.name} quantity">-</button>
+          <div class="cart-quantity" aria-label="Quantity for ${escapeAttribute(item.name)}">
+            <button type="button" data-cart-decrease="${escapeAttribute(item.id)}" aria-label="Decrease ${escapeAttribute(item.name)} quantity">-</button>
             <output aria-live="polite">${item.quantity}</output>
-            <button type="button" data-cart-increase="${item.id}" aria-label="Increase ${item.name} quantity">+</button>
+            <button type="button" data-cart-increase="${escapeAttribute(item.id)}" aria-label="Increase ${escapeAttribute(item.name)} quantity">+</button>
           </div>
-          <button type="button" class="cart-remove" data-cart-remove="${item.id}" aria-label="Remove ${item.name} from cart">Remove</button>
+          <button type="button" class="cart-remove" data-cart-remove="${escapeAttribute(item.id)}" aria-label="Remove ${escapeAttribute(item.name)} from cart">Remove</button>
         </div>
       </div>
       <div class="cart-item-price">

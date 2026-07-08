@@ -1,3 +1,5 @@
+import { readJson, writeJson } from '../utils/storage.js';
+
 const CART_KEY = 'milktea-premium-cart';
 const SHIPPING_FEE = 4.99;
 const FREE_SHIPPING_THRESHOLD = 35;
@@ -5,16 +7,13 @@ const FREE_SHIPPING_THRESHOLD = 35;
 let cart = loadCart();
 
 function loadCart() {
-  try {
-    const savedCart = window.localStorage.getItem(CART_KEY);
-    return savedCart ? JSON.parse(savedCart) : [];
-  } catch {
-    return [];
-  }
+  return readJson(CART_KEY, [])
+    .filter((item) => item?.id && item?.name && Number.isFinite(Number(item.price)))
+    .map(normalizeProduct);
 }
 
 function saveCart() {
-  window.localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  writeJson(CART_KEY, cart);
   window.dispatchEvent(new CustomEvent('cart:updated', { detail: getCart() }));
 }
 
@@ -30,7 +29,7 @@ function normalizeProduct(product) {
       product.sugar ? `${product.sugar} sugar` : '50% sugar',
       product.ice || 'Regular ice'
     ].join(' / '),
-    quantity: Number(product.quantity || 1)
+    quantity: Math.max(1, Math.min(99, Number(product.quantity || 1)))
   };
 }
 

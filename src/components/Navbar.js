@@ -38,17 +38,17 @@ export function Navbar() {
 
   return `
     <header id="site-header" class="site-header sticky top-0 z-50 px-4 py-4 transition-all duration-300" data-reveal>
-      <div class="nav-shell mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-3 rounded-full px-4 py-3 transition-all duration-300 md:grid-cols-[1fr_auto_1fr] md:px-5">
-        <a href="/" class="nav-logo group inline-flex items-center gap-3 rounded-full text-sm font-semibold tracking-tight text-brand-green outline-none transition focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">
+      <div class="nav-shell mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full px-4 py-3 transition-all duration-300 md:gap-4 md:px-5">
+        <a href="/" class="nav-logo group inline-flex shrink-0 items-center gap-3 rounded-full text-sm font-semibold tracking-tight text-brand-green outline-none transition focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">
           <span class="grid h-10 w-10 place-items-center rounded-full bg-[#0d3b2e] text-sm font-semibold text-white shadow-[0_10px_30px_rgba(13,59,46,0.24)]">MP</span>
           <span class="hidden sm:inline">${BRAND_NAME}</span>
         </a>
 
-        <nav class="hidden items-center justify-center gap-1 rounded-full bg-white/35 px-2 py-1 md:flex" aria-label="Primary navigation">
+        <nav class="hidden min-w-0 flex-1 items-center justify-center gap-1 rounded-full bg-white/35 px-2 py-1 md:flex" aria-label="Primary navigation">
           ${NAV_LINKS.map((link) => navLink(link, 'nav-link rounded-full px-4 py-2 text-sm font-medium text-[#4d4035] outline-none transition duration-300 hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70')).join('')}
         </nav>
 
-        <div class="hidden items-center justify-end gap-2 md:flex">
+        <div class="nav-actions hidden shrink-0 items-center justify-end gap-2 md:flex">
           ${iconButton('Search products', searchIcon, '', 'data-search-open aria-haspopup="dialog"')}
           ${ThemeToggle()}
           <a href="${window.location.pathname === '/' ? '#newsletter' : '/#newsletter'}" class="nav-login ripple-button rounded-full bg-[#0d3b2e] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,59,46,0.22)] outline-none transition hover:bg-[#143f31] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">Login</a>
@@ -62,7 +62,7 @@ export function Navbar() {
           </a>
         </div>
 
-        <button id="menu-toggle" type="button" class="nav-icon-button ripple-button justify-self-end md:hidden" aria-label="Open navigation menu" aria-controls="mobile-drawer" aria-expanded="false">
+        <button id="menu-toggle" type="button" class="nav-icon-button ripple-button ml-auto md:hidden" aria-label="Open navigation menu" aria-controls="mobile-drawer" aria-expanded="false">
           <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16"></path>
           </svg>

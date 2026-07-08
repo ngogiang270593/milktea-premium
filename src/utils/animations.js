@@ -33,6 +33,7 @@ import {
   THEMES
 } from '../store/themeStore.js';
 import { formatCurrency } from './format.js';
+import { escapeAttribute, escapeHtml } from './html.js';
 import { imageAttributes } from './images.js';
 import { applyProductFilters } from './productFilter.js';
 
@@ -174,7 +175,14 @@ export function initNavigation() {
 
   const setActiveLink = (hash) => {
     navLinks.forEach((link) => {
-      link.classList.toggle('is-active', link.getAttribute('href') === hash);
+      const isActive = link.getAttribute('href') === hash;
+
+      link.classList.toggle('is-active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
     });
   };
 
@@ -188,6 +196,11 @@ export function initNavigation() {
     .filter(Boolean);
 
   const updateActiveSection = () => {
+    if (!sections.length) {
+      setActiveLink(window.location.pathname);
+      return;
+    }
+
     const current = sections
       .filter((section) => section.getBoundingClientRect().top <= 140)
       .at(-1);
@@ -493,6 +506,8 @@ export function initWishlistPage() {
 }
 
 function searchResultItem(product, term) {
+  const tags = product.tags?.slice(0, 3).map((tag) => highlightMatch(tag, term)).join(', ');
+
   return `
     <a href="/product?id=${product.id}" class="search-result-item" role="option">
       <img ${imageAttributes(product.image, {
@@ -503,7 +518,7 @@ function searchResultItem(product, term) {
       })} />
       <span>
         <strong>${highlightMatch(product.name, term)}</strong>
-        <small>${highlightMatch(product.category.replaceAll('-', ' '), term)} · ${product.tags?.slice(0, 3).map((tag) => highlightMatch(tag, term)).join(', ')}</small>
+        <small>${highlightMatch(product.category.replaceAll('-', ' '), term)} &middot; ${tags}</small>
       </span>
     </a>
   `;
@@ -529,7 +544,7 @@ export function initSearchOverlay() {
   const renderRecentSearches = () => {
     const recentSearches = getRecentSearches();
     recentList.innerHTML = recentSearches.length
-      ? recentSearches.map((term) => `<button type="button" class="search-chip" data-search-term="${term}" data-search-recent>${term}</button>`).join('')
+      ? recentSearches.map((term) => `<button type="button" class="search-chip" data-search-term="${escapeAttribute(term)}" data-search-recent>${escapeHtml(term)}</button>`).join('')
       : '<p class="text-sm text-[#7b6a5a]">No recent searches yet.</p>';
   };
 

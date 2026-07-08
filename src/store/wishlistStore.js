@@ -1,18 +1,17 @@
+import { readJson, writeJson } from '../utils/storage.js';
+
 const WISHLIST_KEY = 'milktea-premium-wishlist';
 
 let wishlist = loadWishlist();
 
 function loadWishlist() {
-  try {
-    const savedWishlist = window.localStorage.getItem(WISHLIST_KEY);
-    return savedWishlist ? JSON.parse(savedWishlist) : [];
-  } catch {
-    return [];
-  }
+  return readJson(WISHLIST_KEY, [])
+    .filter((item) => item?.id && item?.name && Number.isFinite(Number(item.price)))
+    .map(normalizeProduct);
 }
 
 function saveWishlist() {
-  window.localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+  writeJson(WISHLIST_KEY, wishlist);
   window.dispatchEvent(new CustomEvent('wishlist:updated', { detail: getWishlist() }));
 }
 
