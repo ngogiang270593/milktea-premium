@@ -1,4 +1,5 @@
-import { getProductById } from '../data/products.js';
+import { MenuProductCard } from '../components/menu/MenuProductCard.js';
+import { getProductById, MENU_PRODUCTS } from '../data/products.js';
 import { formatCategoryName, formatCurrency } from '../utils/format.js';
 import { escapeImageAttribute, imageAttributes, imageSourceSet, resizeImageUrl } from '../utils/images.js';
 
@@ -9,7 +10,7 @@ const TOPPINGS = ['Brown sugar pearls', 'Crystal boba', 'Cream foam', 'Aloe jell
 
 function optionButton(name, value, active = false) {
   return `
-    <button type="button" class="product-option${active ? ' is-active' : ''}" data-product-option="${name}" data-option-value="${value}" aria-pressed="${active}">
+    <button type="button" class="product-option${active ? ' is-active' : ''}" data-product-option="${name}" data-option-value="${value}" aria-pressed="${active}" aria-label="Choose ${value} ${name}">
       ${value}
     </button>
   `;
@@ -31,6 +32,17 @@ function accordion(title, content, open = false) {
       <p>${content}</p>
     </details>
   `;
+}
+
+function getSoldCount(product) {
+  return product.reviews * 8 + product.discount;
+}
+
+function getRelatedProducts(product) {
+  return MENU_PRODUCTS
+    .filter((item) => item.id !== product.id && item.category === product.category)
+    .concat(MENU_PRODUCTS.filter((item) => item.id !== product.id && item.category !== product.category))
+    .slice(0, 4);
 }
 
 function notFound() {
@@ -57,6 +69,8 @@ export function ProductPage() {
 
   const gallery = product.gallery?.length ? product.gallery : [product.image];
   const title = product.name || product.title;
+  const relatedProducts = getRelatedProducts(product);
+  const soldCount = getSoldCount(product);
 
   return `
     <section class="product-page" aria-labelledby="product-title" data-product-detail="${product.id}">
@@ -70,7 +84,7 @@ export function ProductPage() {
         </nav>
 
         <div class="product-detail-layout">
-          <section class="product-gallery" aria-label="${title} gallery" data-reveal>
+          <section class="product-gallery" aria-label="${title} image gallery" data-reveal>
             <div class="product-main-image" data-product-zoom>
               <img ${imageAttributes(gallery[0], {
                 alt: title,
@@ -82,7 +96,7 @@ export function ProductPage() {
                 extra: 'data-gallery-main'
               })} />
             </div>
-            <div class="product-thumbnails" aria-label="Product images">
+            <div class="product-thumbnails" aria-label="Product images" role="group">
               ${gallery.map((image, index) => `
                 <button
                   type="button"
@@ -90,6 +104,7 @@ export function ProductPage() {
                   data-gallery-thumb="${escapeImageAttribute(resizeImageUrl(image, 1000))}"
                   data-gallery-srcset="${imageSourceSet(image, 1000)}"
                   aria-label="View image ${index + 1}"
+                  aria-pressed="${index === 0}"
                 >
                   <img ${imageAttributes(image, {
                     alt: '',
@@ -115,11 +130,13 @@ export function ProductPage() {
               <span aria-hidden="true">★★★★★</span>
               <strong>${product.rating}</strong>
               <small>${product.reviews} reviews</small>
+              <small>${soldCount.toLocaleString()} sold</small>
+              <small class="product-stock-pill">${product.availability || 'Available now'}</small>
             </div>
 
             <div class="mt-6 flex items-end gap-3">
-              <strong class="text-4xl font-semibold text-brand-green">${formatCurrency(product.price)}</strong>
-              <span class="pb-1 text-lg text-[#a39080] line-through">${formatCurrency(product.oldPrice)}</span>
+              <strong class="product-detail-price">${formatCurrency(product.price)}</strong>
+              <span class="product-detail-old-price">${formatCurrency(product.oldPrice)}</span>
               <span class="product-detail-discount">-${product.discount}%</span>
             </div>
 
@@ -151,8 +168,8 @@ export function ProductPage() {
                 <output data-detail-quantity-value aria-live="polite">1</output>
                 <button type="button" data-detail-quantity="increase" aria-label="Increase quantity">+</button>
               </div>
-              <button type="button" class="btn-primary ripple-button flex-1" data-detail-add="${product.id}">Add to Cart</button>
-              <button type="button" class="btn-secondary ripple-button flex-1 bg-white/60" data-detail-buy="${product.id}">Buy Now</button>
+              <button type="button" class="btn-primary ripple-button flex-1 product-cart-action" data-detail-add="${product.id}">Add to Cart</button>
+              <button type="button" class="btn-secondary ripple-button flex-1 bg-white/60 product-buy-action" data-detail-buy="${product.id}">Buy Now</button>
             </div>
 
             <div class="product-accordions">
@@ -163,6 +180,19 @@ export function ProductPage() {
             </div>
           </aside>
         </div>
+
+        <section class="product-related" aria-labelledby="related-products-title" data-reveal>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">You may also like</p>
+              <h2 id="related-products-title" class="section-heading mt-4">Related products</h2>
+            </div>
+            <a href="/menu" class="btn-secondary">View all products</a>
+          </div>
+          <div class="product-related-grid">
+            ${relatedProducts.map(MenuProductCard).join('')}
+          </div>
+        </section>
       </div>
 
       <div class="mobile-product-bar" data-mobile-product-bar>
@@ -170,7 +200,7 @@ export function ProductPage() {
           <span>${title}</span>
           <strong>${formatCurrency(product.price)}</strong>
         </div>
-        <button type="button" class="btn-primary ripple-button" data-detail-add="${product.id}">Add</button>
+        <button type="button" class="btn-primary ripple-button product-cart-action" data-detail-add="${product.id}">Add</button>
       </div>
     </section>
   `;

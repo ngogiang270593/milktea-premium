@@ -785,12 +785,29 @@ export function initProductDetail() {
 
   detail.querySelectorAll('[data-gallery-thumb]').forEach((thumb) => {
     thumb.addEventListener('click', () => {
+      if (thumb.classList.contains('is-active')) {
+        return;
+      }
+
+      const revealImage = () => {
+        mainImage.classList.remove('is-switching');
+      };
+
+      mainImage.classList.add('is-switching');
+      mainImage.addEventListener('load', revealImage, { once: true });
       mainImage.src = thumb.dataset.galleryThumb;
       mainImage.srcset = thumb.dataset.gallerySrcset;
       mainImage.sizes = '(min-width: 1024px) 48vw, 92vw';
       detail.querySelectorAll('[data-gallery-thumb]').forEach((item) => {
-        item.classList.toggle('is-active', item === thumb);
+        const isActive = item === thumb;
+
+        item.classList.toggle('is-active', isActive);
+        item.setAttribute('aria-pressed', String(isActive));
       });
+
+      if (mainImage.complete) {
+        window.requestAnimationFrame(revealImage);
+      }
     });
   });
 
@@ -838,6 +855,9 @@ export function initProductDetail() {
       addItem(product);
       updateCartBadges();
       showToast(`${product.name} added to cart`);
+      button.classList.remove('cart-pop');
+      window.requestAnimationFrame(() => button.classList.add('cart-pop'));
+      button.addEventListener('animationend', () => button.classList.remove('cart-pop'), { once: true });
 
       if (button.dataset.detailBuy) {
         window.location.href = '/cart';
