@@ -1,8 +1,7 @@
 import { gsap } from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -216,6 +215,10 @@ export function initSmoothScroll() {
   window.smoothScrollReady = true;
 
   document.addEventListener('click', (event) => {
+    if (event.defaultPrevented) {
+      return;
+    }
+
     const link = event.target.closest('a[href^="#"], a[href^="/#"]');
 
     if (!link) {
@@ -224,28 +227,19 @@ export function initSmoothScroll() {
 
     const href = link.getAttribute('href');
     const hash = href.startsWith('/#') ? href.slice(1) : href;
-    const target = document.querySelector(hash);
+    const target = document.getElementById(hash.slice(1));
 
     if (!target || (href.startsWith('/#') && window.location.pathname !== '/')) {
       return;
     }
 
     event.preventDefault();
-
-    if (prefersReducedMotion()) {
-      target.scrollIntoView({ block: 'start' });
-      return;
-    }
-
-    gsap.to(window, {
-      duration: 0.8,
-      ease: 'power3.inOut',
-      scrollTo: {
-        y: target,
-        offsetY: 96,
-        autoKill: true
-      }
+    target.scrollIntoView({
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      block: 'start'
     });
+    window.history.replaceState(null, '', hash);
+
   });
 }
 
