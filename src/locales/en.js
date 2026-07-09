@@ -404,6 +404,126 @@ export const en = {
       submit: 'Subscribe'
     }
   },
+  cart: {
+    breadcrumb: 'Cart',
+    eyebrow: 'Shopping Cart',
+    title: 'Review your order.',
+    itemCount: 'items',
+    itemsRegion: 'Cart items',
+    emptyAria: 'Empty cart',
+    emptyTitle: 'Your cart is ready for a treat.',
+    emptyCopy: 'Add premium milk tea, cakes, or toppings from the menu and they will appear here.',
+    browseMenu: 'Browse Menu',
+    quantityFor: 'Quantity for {name}',
+    decreaseQuantity: 'Decrease {name} quantity',
+    increaseQuantity: 'Increase {name} quantity',
+    removeItem: 'Remove {name} from cart',
+    remove: 'Remove',
+    each: '{price} each',
+    summaryTitle: 'Order summary',
+    summaryNote: 'Review discounts, delivery, and your final total before checkout.',
+    couponAria: 'Apply coupon',
+    couponLabel: 'Coupon code',
+    couponPlaceholder: 'MILKTEA10',
+    applyCoupon: 'Apply',
+    shippingEstimateTitle: 'Shipping estimate',
+    shippingEstimateCopy: 'Free delivery for orders over $35. Estimated arrival is 25-40 minutes.',
+    subtotal: 'Subtotal',
+    itemDiscount: 'Item discount',
+    shipping: 'Shipping',
+    freeShipping: 'Free',
+    total: 'Total',
+    clearCart: 'Clear cart',
+    checkoutDisabled: 'No items yet'
+  },
+  wishlist: {
+    breadcrumb: 'Wishlist',
+    eyebrow: 'Wishlist',
+    title: 'Saved favorites.',
+    savedCount: 'saved',
+    itemsRegion: 'Wishlist items',
+    emptyAria: 'Empty wishlist',
+    emptyTitle: 'Your wishlist is waiting.',
+    emptyCopy: 'Tap the heart on any product to save your premium tea favorites here.',
+    browseMenu: 'Browse Menu',
+    ratingAria: '{rating} out of 5 stars',
+    moveToCart: 'Move to cart',
+    moveToCartAria: 'Move {name} to cart',
+    remove: 'Remove',
+    removeAria: 'Remove {name} from wishlist'
+  },
+  checkout: {
+    eyebrow: 'Checkout',
+    title: 'Complete your premium tea experience.',
+    formAria: 'Checkout form',
+    customerInfo: 'Customer Information',
+    shippingAddress: 'Shipping Address',
+    deliveryMethod: 'Delivery Method',
+    paymentMethod: 'Payment Method',
+    orderSummary: 'Order Summary',
+    coupon: 'Coupon',
+    notes: 'Notes',
+    fullName: 'Full name',
+    email: 'Email',
+    phone: 'Phone',
+    address: 'Address',
+    city: 'City',
+    district: 'District',
+    ward: 'Ward',
+    couponPlaceholder: 'Enter coupon code',
+    applyCoupon: 'Apply',
+    notesPlaceholder: 'Add sweetness notes, pickup timing, or delivery instructions...',
+    placeOrder: 'Place order',
+    securePayment: 'Payment details are prepared safely for gateway integration.',
+    delivery: {
+      standard: {
+        title: 'Standard Delivery',
+        description: '25-40 minutes, ideal for everyday orders.'
+      },
+      express: {
+        title: 'Express Delivery',
+        description: '15-25 minutes for nearby delivery areas.'
+      },
+      pickup: {
+        title: 'Store Pickup',
+        description: 'Order ahead and collect quickly at the counter.'
+      }
+    },
+    payment: {
+      cash: {
+        title: 'Cash',
+        description: 'Pay when your order arrives.'
+      },
+      bankTransfer: {
+        title: 'Bank Transfer',
+        description: 'Ready for bank payment integration.'
+      },
+      momo: {
+        title: 'Momo',
+        description: 'Prepared for Momo wallet integration.'
+      },
+      vnpay: {
+        title: 'VNPay',
+        description: 'Prepared for VNPay gateway integration.'
+      },
+      stripe: {
+        title: 'Stripe',
+        description: 'Ready for international card payments.'
+      },
+      paypal: {
+        title: 'Paypal',
+        description: 'Ready for Paypal checkout.'
+      }
+    }
+  },
+  orderSuccess: {
+    eyebrow: 'Order Success',
+    title: 'Thank you for choosing MilkTea Premium.',
+    orderNumber: 'Order number: MT-2026-001',
+    copy: 'This frontend order state is ready for backend integration. Live order numbers and status updates can be connected later.',
+    continueShopping: 'Continue Shopping',
+    backToCart: 'Back to Cart'
+  },
   footer: {
     label: 'Site footer',
     explore: 'Explore',

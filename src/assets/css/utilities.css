@@ -227,6 +227,21 @@
     display: grid;
   }
 
+  .checkout-grid,
+  .checkout-form-grid,
+  .checkout-option-grid,
+  .checkout-payment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary-panel {
+    position: static;
+  }
+
+  .checkout-coupon-row {
+    grid-template-columns: 1fr;
+  }
+
   .wishlist-item {
     grid-template-columns: 5.5rem minmax(0, 1fr);
     gap: 1rem;
@@ -312,6 +327,18 @@
   }
 
   .cart-summary {
+    position: static;
+  }
+
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-payment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .checkout-summary-panel {
     position: static;
   }
 

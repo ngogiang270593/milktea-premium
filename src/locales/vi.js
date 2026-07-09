@@ -404,6 +404,126 @@ export const vi = {
       submit: 'Đăng ký'
     }
   },
+  cart: {
+    breadcrumb: 'Giỏ hàng',
+    eyebrow: 'Giỏ hàng',
+    title: 'Kiểm tra đơn hàng của bạn.',
+    itemCount: 'sản phẩm',
+    itemsRegion: 'Sản phẩm trong giỏ hàng',
+    emptyAria: 'Giỏ hàng trống',
+    emptyTitle: 'Giỏ hàng đang chờ món ngon đầu tiên.',
+    emptyCopy: 'Thêm trà sữa cao cấp, bánh ngọt hoặc topping yêu thích từ thực đơn và chúng sẽ xuất hiện tại đây.',
+    browseMenu: 'Khám phá thực đơn',
+    quantityFor: 'Số lượng của {name}',
+    decreaseQuantity: 'Giảm số lượng {name}',
+    increaseQuantity: 'Tăng số lượng {name}',
+    removeItem: 'Xóa {name} khỏi giỏ hàng',
+    remove: 'Xóa',
+    each: '{price} mỗi món',
+    summaryTitle: 'Tóm tắt đơn hàng',
+    summaryNote: 'Kiểm tra ưu đãi, phí giao hàng và tổng tiền trước khi thanh toán.',
+    couponAria: 'Áp dụng mã ưu đãi',
+    couponLabel: 'Mã ưu đãi',
+    couponPlaceholder: 'MILKTEA10',
+    applyCoupon: 'Áp dụng',
+    shippingEstimateTitle: 'Ước tính giao hàng',
+    shippingEstimateCopy: 'Miễn phí giao hàng cho đơn từ 35 USD. Thời gian dự kiến 25-40 phút.',
+    subtotal: 'Tạm tính',
+    itemDiscount: 'Giảm giá sản phẩm',
+    shipping: 'Phí giao hàng',
+    freeShipping: 'Miễn phí',
+    total: 'Tổng cộng',
+    clearCart: 'Xóa giỏ hàng',
+    checkoutDisabled: 'Chưa có sản phẩm'
+  },
+  wishlist: {
+    breadcrumb: 'Yêu thích',
+    eyebrow: 'Yêu thích',
+    title: 'Những món bạn đã lưu.',
+    savedCount: 'đã lưu',
+    itemsRegion: 'Danh sách yêu thích',
+    emptyAria: 'Danh sách yêu thích trống',
+    emptyTitle: 'Danh sách yêu thích đang chờ bạn.',
+    emptyCopy: 'Chạm vào biểu tượng trái tim trên bất kỳ sản phẩm nào để lưu lại những món trà cao cấp bạn muốn thử.',
+    browseMenu: 'Khám phá thực đơn',
+    ratingAria: '{rating} trên 5 sao',
+    moveToCart: 'Thêm vào giỏ',
+    moveToCartAria: 'Chuyển {name} vào giỏ hàng',
+    remove: 'Xóa',
+    removeAria: 'Xóa {name} khỏi danh sách yêu thích'
+  },
+  checkout: {
+    eyebrow: 'Thanh toán',
+    title: 'Hoàn tất trải nghiệm trà cao cấp.',
+    formAria: 'Biểu mẫu thanh toán',
+    customerInfo: 'Thông tin khách hàng',
+    shippingAddress: 'Địa chỉ giao hàng',
+    deliveryMethod: 'Phương thức giao hàng',
+    paymentMethod: 'Phương thức thanh toán',
+    orderSummary: 'Tóm tắt đơn hàng',
+    coupon: 'Mã ưu đãi',
+    notes: 'Ghi chú',
+    fullName: 'Họ và tên',
+    email: 'Email',
+    phone: 'Số điện thoại',
+    address: 'Địa chỉ',
+    city: 'Tỉnh / Thành phố',
+    district: 'Quận / Huyện',
+    ward: 'Phường / Xã',
+    couponPlaceholder: 'Nhập mã ưu đãi',
+    applyCoupon: 'Áp dụng',
+    notesPlaceholder: 'Ghi chú về mức ngọt, thời gian nhận hàng hoặc hướng dẫn giao hàng...',
+    placeOrder: 'Đặt hàng',
+    securePayment: 'Thông tin thanh toán được chuẩn bị an toàn cho bước tích hợp cổng thanh toán.',
+    delivery: {
+      standard: {
+        title: 'Giao tiêu chuẩn',
+        description: '25-40 phút, phù hợp cho đơn hàng hằng ngày.'
+      },
+      express: {
+        title: 'Giao nhanh',
+        description: '15-25 phút cho khu vực gần cửa hàng.'
+      },
+      pickup: {
+        title: 'Nhận tại cửa hàng',
+        description: 'Đặt trước và nhận nhanh tại quầy.'
+      }
+    },
+    payment: {
+      cash: {
+        title: 'Tiền mặt',
+        description: 'Thanh toán khi nhận hàng.'
+      },
+      bankTransfer: {
+        title: 'Chuyển khoản',
+        description: 'Chuẩn bị cho thanh toán qua ngân hàng.'
+      },
+      momo: {
+        title: 'Momo',
+        description: 'Sẵn sàng tích hợp ví Momo.'
+      },
+      vnpay: {
+        title: 'VNPay',
+        description: 'Sẵn sàng tích hợp cổng VNPay.'
+      },
+      stripe: {
+        title: 'Stripe',
+        description: 'Sẵn sàng cho thẻ quốc tế.'
+      },
+      paypal: {
+        title: 'Paypal',
+        description: 'Sẵn sàng cho thanh toán Paypal.'
+      }
+    }
+  },
+  orderSuccess: {
+    eyebrow: 'Đặt hàng thành công',
+    title: 'Cảm ơn bạn đã chọn MilkTea Premium.',
+    orderNumber: 'Mã đơn hàng: MT-2026-001',
+    copy: 'Đơn hàng mẫu đã được ghi nhận trên giao diện. Khi tích hợp backend, trạng thái và mã đơn sẽ được cập nhật tự động.',
+    continueShopping: 'Tiếp tục mua sắm',
+    backToCart: 'Quay lại giỏ hàng'
+  },
   footer: {
     label: 'Chân trang',
     explore: 'Khám phá',
