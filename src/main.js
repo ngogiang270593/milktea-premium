@@ -2,12 +2,13 @@ import './assets/css/base.css';
 import './assets/css/components.css';
 import './assets/css/utilities.css';
 history.scrollRestoration = 'manual';
+import { APP_ROUTES } from './constants/routes.js';
 import { renderApp } from './App.js';
 import { applyLanguage } from './store/languageStore.js';
 import { initAppInteractions } from './utils/animations.js';
 import { registerServiceWorker, updateDocumentMeta } from './utils/seo.js';
 
-const appRoutes = new Set(['/', '/admin', '/cart', '/menu', '/product', '/wishlist']);
+const appRoutes = new Set(APP_ROUTES);
 
 function scrollToHashAfterRender() {
   const hash = window.location.hash;

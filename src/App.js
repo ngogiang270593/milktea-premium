@@ -1,11 +1,12 @@
 import { DefaultLayout } from './layouts/DefaultLayout.js';
+import { ROUTES } from './constants/routes.js';
 
 const routes = {
-  '/admin': () => import('./pages/AdminPage.js').then((module) => module.AdminPage),
-  '/cart': () => import('./pages/CartPage.js').then((module) => module.CartPage),
-  '/menu': () => import('./pages/MenuPage.js').then((module) => module.MenuPage),
-  '/product': () => import('./pages/ProductPage.js').then((module) => module.ProductPage),
-  '/wishlist': () => import('./pages/WishlistPage.js').then((module) => module.WishlistPage)
+  [ROUTES.ADMIN]: () => import('./pages/AdminPage.js').then((module) => module.AdminPage),
+  [ROUTES.CART]: () => import('./pages/CartPage.js').then((module) => module.CartPage),
+  [ROUTES.MENU]: () => import('./pages/MenuPage.js').then((module) => module.MenuPage),
+  [ROUTES.PRODUCT]: () => import('./pages/ProductPage.js').then((module) => module.ProductPage),
+  [ROUTES.WISHLIST]: () => import('./pages/WishlistPage.js').then((module) => module.WishlistPage)
 };
 
 async function renderHomePage() {

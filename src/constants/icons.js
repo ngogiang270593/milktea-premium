@@ -1,0 +1,8 @@
+export const CATEGORY_ICONS = {
+  MilkTea: '<svg viewBox="0 0 24 24" class="category-icon h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 7h10l-1 12a2 2 0 0 1-2 1.8h-4A2 2 0 0 1 8 19L7 7Z"></path><path d="M6 7h12"></path><path d="M9 3h6"></path><path d="M10 15h.01M13 17h.01M15 14h.01"></path></svg>',
+  FruitTea: '<svg viewBox="0 0 24 24" class="category-icon h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 8c4 0 7 3 7 7a7 7 0 0 1-14 0c0-4 3-7 7-7Z"></path><path d="M12 8c0-2 1-4 4-5"></path><path d="M8 6c2 0 4 .6 4 2"></path><path d="M10 13h.01M14 16h.01M9 17h.01"></path></svg>',
+  Coffee: '<svg viewBox="0 0 24 24" class="category-icon h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 8h11v6a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5V8Z"></path><path d="M16 10h1a3 3 0 0 1 0 6h-1"></path><path d="M8 4v2M12 4v2"></path></svg>',
+  Smoothie: '<svg viewBox="0 0 24 24" class="category-icon h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m9 3 2 5"></path><path d="M7 8h10l-1.2 11a2 2 0 0 1-2 1.8H10.2a2 2 0 0 1-2-1.8L7 8Z"></path><path d="M8 12h8"></path><path d="M10 16h.01M14 18h.01"></path></svg>',
+  Cake: '<svg viewBox="0 0 24 24" class="category-icon h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11h16v8H4v-8Z"></path><path d="M4 15h16"></path><path d="M8 11V8a2 2 0 1 1 4 0v3"></path><path d="M15 11V7"></path><path d="M14 7h2"></path></svg>',
+  Topping: '<svg viewBox="0 0 24 24" class="category-icon h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="8" cy="9" r="3"></circle><circle cx="15" cy="14" r="4"></circle><path d="M7 18h.01M18 7h.01M12 4h.01"></path></svg>'
+};

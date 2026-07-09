@@ -1,5 +1,5 @@
 import { getSiteConfig } from '../config/siteConfig.js';
-import { NAV_LINKS } from '../utils/constants.js';
+import { NAV_LINKS } from '../constants/navigation.js';
 import { LanguageSwitcher } from './LanguageSwitcher.js';
 import { ThemeToggle } from './ThemeToggle.js';
 import { getCartQuantity } from '../store/cartStore.js';
