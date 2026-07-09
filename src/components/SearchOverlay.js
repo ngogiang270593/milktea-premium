@@ -1,9 +1,17 @@
 import { getSiteContent } from '../config/siteConfig.js';
+import { Chip } from './ui/index.js';
 import { getLanguage } from '../store/languageStore.js';
 import { POPULAR_SEARCHES } from '../store/searchStore.js';
 
 function searchChip(term, type) {
-  return `<button type="button" class="search-chip" data-search-term="${term}" data-search-${type}>${term}</button>`;
+  return Chip({
+    children: term,
+    className: 'search-chip',
+    attributes: {
+      'data-search-term': term,
+      [`data-search-${type}`]: true
+    }
+  });
 }
 
 export function SearchOverlay() {

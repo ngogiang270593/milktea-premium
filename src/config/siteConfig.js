@@ -7,6 +7,8 @@ import {
   SETTINGS_STORAGE_KEY,
   setSettingsOverrides
 } from '../services/SettingsService.js';
+import { interpolate, readPath } from '../utils/format.js';
+import { isPlainObject } from '../utils/validation.js';
 
 export const DEFAULT_SITE_LANGUAGE = 'vi';
 export const SITE_CONFIG_STORAGE_KEY = SETTINGS_STORAGE_KEY;
@@ -413,29 +415,8 @@ export const siteConfig = {
   }
 };
 
-function readPath(source, path) {
-  return path
-    .split('.')
-    .reduce((value, key) => (value && Object.prototype.hasOwnProperty.call(value, key) ? value[key] : undefined), source);
-}
-
-function interpolate(value, params = {}) {
-  if (typeof value !== 'string') {
-    return value;
-  }
-
-  return Object.entries(params).reduce(
-    (text, [key, replacement]) => text.replaceAll(`{${key}}`, String(replacement)),
-    value
-  );
-}
-
-function isObject(value) {
-  return value && typeof value === 'object' && !Array.isArray(value);
-}
-
 function mergeConfig(base, override) {
-  if (!isObject(base) || !isObject(override)) {
+  if (!isPlainObject(base) || !isPlainObject(override)) {
     return override ?? base;
   }
 
@@ -443,7 +424,7 @@ function mergeConfig(base, override) {
     const baseValue = base[key];
     const overrideValue = override[key];
 
-    result[key] = isObject(baseValue) && isObject(overrideValue)
+    result[key] = isPlainObject(baseValue) && isPlainObject(overrideValue)
       ? mergeConfig(baseValue, overrideValue)
       : overrideValue ?? baseValue;
 

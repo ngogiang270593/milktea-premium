@@ -1,6 +1,7 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '../locales/index.js';
 import { THEME_STORAGE_KEY, THEMES } from '../constants/theme.js';
-import { getItem, readJson, setItem, writeJson } from '../services/StorageService.js';
+import { getItem, readJson, setItem, writeJson } from '../utils/storage.js';
+import { canUseDOM } from '../utils/dom.js';
 
 export const SETTINGS_STORAGE_KEY = 'milktea-preferences';
 export const LANGUAGE_STORAGE_KEY = 'milktea-language';
@@ -46,10 +47,6 @@ const validators = {
 const subscribers = new Set();
 let currentSettings = loadSettings();
 
-function canUseBrowserApis() {
-  return typeof window !== 'undefined';
-}
-
 function normalizeSettings(settings = {}) {
   return Object.entries(DEFAULT_SETTINGS).reduce((normalized, [key, fallback]) => {
     const value = settings[key];
@@ -92,7 +89,7 @@ export function notify(settings = currentSettings) {
 
   subscribers.forEach((callback) => callback(snapshot));
 
-  if (canUseBrowserApis()) {
+  if (canUseDOM()) {
     window.dispatchEvent(new CustomEvent('settings:updated', {
       detail: {
         settings: snapshot

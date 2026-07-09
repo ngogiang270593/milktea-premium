@@ -1,14 +1,18 @@
 import { MENU_CATEGORIES, MENU_FILTERS } from '../../repositories/CategoryRepository.js';
+import { Checkbox } from '../ui/index.js';
 import { t } from '../../utils/i18n.js';
 
 function checkbox(name, value, label, count = null) {
-  return `
-    <label class="menu-filter-option">
-      <input type="checkbox" name="${name}" value="${value}" data-menu-filter />
-      <span>${label}</span>
-      ${count === null ? '' : `<small>${count}</small>`}
-    </label>
-  `;
+  return Checkbox({
+    name,
+    value,
+    label,
+    count,
+    className: 'menu-filter-option',
+    inputAttributes: {
+      'data-menu-filter': true
+    }
+  });
 }
 
 function filterGroup(title, content) {

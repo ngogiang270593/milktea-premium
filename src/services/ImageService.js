@@ -19,18 +19,19 @@ export function imageAttributes(src, {
   width = 800,
   height = 800,
   sizes = '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw',
-  loading = 'lazy',
+  loading,
   fetchPriority,
   className,
   extra = ''
 } = {}) {
+  const loadingStrategy = loading || (fetchPriority === 'high' ? 'eager' : 'lazy');
   const srcset = imageSourceSet(src, width);
   const attributes = [
     `src="${escapeImageAttribute(resizeImageUrl(src))}"`,
     srcset ? `srcset="${srcset}"` : '',
     `sizes="${escapeImageAttribute(sizes)}"`,
     `alt="${escapeImageAttribute(alt)}"`,
-    `loading="${loading}"`,
+    `loading="${loadingStrategy}"`,
     'decoding="async"',
     `width="${width}"`,
     `height="${height}"`,

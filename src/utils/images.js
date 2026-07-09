@@ -3,4 +3,4 @@ export {
   imageAttributes,
   imageSourceSet,
   resizeImageUrl
-} from '../services/ImageService.js';
+} from './image.js';

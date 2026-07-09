@@ -1,7 +1,8 @@
 import { MenuProductCard } from '../components/menu/MenuProductCard.js';
+import { Accordion } from '../components/ui/index.js';
 import { getProductById, MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { formatCurrency } from '../utils/format.js';
-import { escapeImageAttribute, imageAttributes, imageSourceSet, resizeImageUrl } from '../services/ImageService.js';
+import { escapeImageAttribute, imageAttributes, imageSourceSet, resizeImageUrl } from '../utils/image.js';
 import { t } from '../utils/i18n.js';
 
 const SIZES = ['Regular', 'Large'];
@@ -45,12 +46,7 @@ function toppingOption(value) {
 }
 
 function accordion(title, content, open = false) {
-  return `
-    <details class="product-accordion" ${open ? 'open' : ''}>
-      <summary>${title}</summary>
-      <p>${content}</p>
-    </details>
-  `;
+  return Accordion({ title, children: content, open });
 }
 
 function getSoldCount(product) {

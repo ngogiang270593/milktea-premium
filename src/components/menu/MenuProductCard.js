@@ -1,5 +1,5 @@
 import { formatCategoryName, formatCurrency } from '../../utils/format.js';
-import { imageAttributes } from '../../services/ImageService.js';
+import { imageAttributes } from '../../utils/image.js';
 import { t } from '../../utils/i18n.js';
 
 function getProductBadge(product) {

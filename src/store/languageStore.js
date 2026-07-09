@@ -4,6 +4,7 @@ import {
   LANGUAGE_STORAGE_KEY,
   setStoredLanguage
 } from '../services/LanguageService.js';
+import { canUseDOM } from '../utils/dom.js';
 
 export { LANGUAGE_STORAGE_KEY };
 
@@ -11,16 +12,12 @@ const languageCodes = LANGUAGES.map((language) => language.code);
 const subscribers = new Set();
 let currentLanguage = loadLanguage();
 
-function canUseBrowserApis() {
-  return typeof window !== 'undefined' && typeof document !== 'undefined';
-}
-
 function isValidLanguage(language) {
   return languageCodes.includes(language);
 }
 
 function loadLanguage() {
-  if (!canUseBrowserApis()) {
+  if (!canUseDOM()) {
     return DEFAULT_LANGUAGE;
   }
 
@@ -33,7 +30,7 @@ function loadLanguage() {
 }
 
 function updateDocumentLanguage(language) {
-  if (!canUseBrowserApis()) {
+  if (!canUseDOM()) {
     return;
   }
 
@@ -110,7 +107,7 @@ export function setLanguage(language, options = { persist: true }) {
 
   currentLanguage = safeLanguage;
 
-  if (canUseBrowserApis() && options.persist !== false) {
+  if (canUseDOM() && options.persist !== false) {
     try {
       setStoredLanguage(safeLanguage);
     } catch {
@@ -121,7 +118,7 @@ export function setLanguage(language, options = { persist: true }) {
   updateDocumentLanguage(safeLanguage);
   notify(safeLanguage);
 
-  if (canUseBrowserApis()) {
+  if (canUseDOM()) {
     window.dispatchEvent(new CustomEvent('language:updated', {
       detail: {
         language: safeLanguage

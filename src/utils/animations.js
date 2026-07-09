@@ -3,6 +3,7 @@ import { updateLanguageSwitchers } from '../components/LanguageSwitcher.js';
 import { updateNavbarTranslations } from '../components/Navbar.js';
 import { ThemeProvider } from '../components/ThemeProvider.js';
 import { updateThemeSwitchers } from '../components/ThemeSwitcher.js';
+import { Toast } from '../components/ui/index.js';
 import { WishlistContent } from '../components/wishlist/WishlistContent.js';
 import {
   getSiteConfigOverrides,
@@ -42,17 +43,17 @@ import {
   THEMES
 } from '../store/themeStore.js';
 import { getLanguage, setLanguage } from '../store/languageStore.js';
+import { debounce, prefersReducedMotion, rafThrottle } from './animation.js';
+import { trapFocus } from './accessibility.js';
+import { setAttributeIfChanged, setTextIfChanged } from './dom.js';
 import { formatCurrency } from './format.js';
 import { escapeAttribute, escapeHtml } from './html.js';
-import { imageAttributes } from '../services/ImageService.js';
+import { imageAttributes } from './image.js';
 import { applyProductFilters } from './productFilter.js';
+import { getScrollBehavior } from './scroll.js';
 import { updateDocumentMeta } from './seo.js';
 
 let motionModulePromise;
-
-function getScrollBehavior() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-}
 
 function loadMotionModule() {
   motionModulePromise ||= import('./motion.js');
@@ -60,7 +61,7 @@ function loadMotionModule() {
 }
 
 function scheduleMotionInit() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (prefersReducedMotion()) {
     document.documentElement.classList.add('reduced-motion');
     document.querySelectorAll('[data-reveal], .fade-up').forEach((element) => {
       element.classList.add('is-visible');
@@ -80,7 +81,7 @@ function scheduleMotionInit() {
 }
 
 function animateCards(cards, options) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (prefersReducedMotion()) {
     return;
   }
 
@@ -171,8 +172,15 @@ export function initNavigation() {
     return;
   }
 
+  let isHeaderScrolled = null;
+
   const updateHeaderState = () => {
-    header.classList.toggle('is-scrolled', window.scrollY > 40);
+    const nextScrolled = window.scrollY > 40;
+
+    if (nextScrolled !== isHeaderScrolled) {
+      isHeaderScrolled = nextScrolled;
+      header.classList.toggle('is-scrolled', nextScrolled);
+    }
   };
 
   const closeDrawer = () => {
@@ -237,6 +245,7 @@ export function initNavigation() {
     .map((id) => document.getElementById(id))
     .filter(Boolean);
 
+  let activeHref = '';
   const updateActiveSection = () => {
     if (!sections.length) {
       setActiveLink(window.location.pathname);
@@ -247,20 +256,24 @@ export function initNavigation() {
       .filter((section) => section.getBoundingClientRect().top <= 140)
       .at(-1);
 
-    if (current) {
-      setActiveLink(`#${current.id}`);
-    } else {
-      setActiveLink('#categories');
+    const nextHref = current ? `#${current.id}` : '#categories';
+
+    if (nextHref !== activeHref) {
+      activeHref = nextHref;
+      setActiveLink(nextHref);
     }
   };
+  const updateOnScroll = rafThrottle(() => {
+    updateHeaderState();
+    updateActiveSection();
+  });
 
   updateHeaderState();
   updateActiveSection();
 
-  window.addEventListener('scroll', () => {
-    updateHeaderState();
-    updateActiveSection();
-  }, { passive: true });
+  window.navScrollCleanup?.();
+  window.addEventListener('scroll', updateOnScroll, { passive: true });
+  window.navScrollCleanup = () => window.removeEventListener('scroll', updateOnScroll);
 
   mobileToggle?.addEventListener('click', openDrawer);
   mobileClose?.addEventListener('click', closeDrawer);
@@ -270,7 +283,8 @@ export function initNavigation() {
     link.addEventListener('click', closeDrawer);
   });
 
-  document.addEventListener('keydown', (event) => {
+  window.navKeydownCleanup?.();
+  const handleNavigationKeydown = (event) => {
     if (event.key === 'Escape') {
       closeDrawer();
     }
@@ -279,24 +293,10 @@ export function initNavigation() {
       return;
     }
 
-    const focusableElements = drawer.querySelectorAll(
-      'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    );
-    const firstFocusable = focusableElements[0];
-    const lastFocusable = focusableElements[focusableElements.length - 1];
-
-    if (!firstFocusable || !lastFocusable) {
-      return;
-    }
-
-    if (event.shiftKey && document.activeElement === firstFocusable) {
-      event.preventDefault();
-      lastFocusable.focus();
-    } else if (!event.shiftKey && document.activeElement === lastFocusable) {
-      event.preventDefault();
-      firstFocusable.focus();
-    }
-  });
+    trapFocus(event, drawer);
+  };
+  document.addEventListener('keydown', handleNavigationKeydown);
+  window.navKeydownCleanup = () => document.removeEventListener('keydown', handleNavigationKeydown);
 }
 
 export function initRippleButtons() {
@@ -326,12 +326,12 @@ function updateCartBadges() {
   const quantity = getCartQuantity();
 
   document.querySelectorAll('[data-cart-count]').forEach((badge) => {
-    badge.textContent = String(quantity);
-    badge.setAttribute('aria-label', `${quantity} items in cart`);
+    setTextIfChanged(badge, String(quantity));
+    setAttributeIfChanged(badge, 'aria-label', `${quantity} items in cart`);
   });
 
   document.querySelectorAll('[data-cart-page-count]').forEach((count) => {
-    count.textContent = String(quantity);
+    setTextIfChanged(count, String(quantity));
   });
 }
 
@@ -339,12 +339,12 @@ function updateWishlistBadges() {
   const quantity = getWishlistCount();
 
   document.querySelectorAll('[data-wishlist-count]').forEach((badge) => {
-    badge.textContent = String(quantity);
-    badge.setAttribute('aria-label', `${quantity} saved wishlist items`);
+    setTextIfChanged(badge, String(quantity));
+    setAttributeIfChanged(badge, 'aria-label', `${quantity} saved wishlist items`);
   });
 
   document.querySelectorAll('[data-wishlist-page-count]').forEach((count) => {
-    count.textContent = String(quantity);
+    setTextIfChanged(count, String(quantity));
   });
 }
 
@@ -352,12 +352,8 @@ function showToast(message) {
   let toast = document.querySelector('[data-toast]');
 
   if (!toast) {
-    toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.dataset.toast = '';
-    toast.setAttribute('role', 'status');
-    toast.setAttribute('aria-live', 'polite');
-    document.body.append(toast);
+    document.body.insertAdjacentHTML('beforeend', Toast());
+    toast = document.querySelector('[data-toast]');
   }
 
   toast.textContent = message;
@@ -367,15 +363,6 @@ function showToast(message) {
   showToast.timeout = window.setTimeout(() => {
     toast.classList.remove('is-visible');
   }, 2400);
-}
-
-function debounce(callback, delay = 300) {
-  let timeout;
-
-  return (...args) => {
-    window.clearTimeout(timeout);
-    timeout = window.setTimeout(() => callback(...args), delay);
-  };
 }
 
 function cloneConfig(value) {
@@ -471,7 +458,7 @@ export function initCategoryFilters() {
 export function initHeroParallax() {
   const scene = document.querySelector('[data-parallax-scene]');
 
-  if (!scene || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (!scene || prefersReducedMotion()) {
     return;
   }
 
@@ -982,6 +969,7 @@ export function initMenuPage() {
   const filterOverlay = document.querySelector('[data-filter-overlay]');
   const viewButtons = document.querySelectorAll('[data-view-mode]');
   const products = [...grid.querySelectorAll('[data-menu-product]')];
+  const productElementsById = new Map(products.map((product) => [product.dataset.productId, product]));
   const pageSize = 8;
   let currentPage = 1;
   let filteredProducts = [...MENU_PRODUCTS];
@@ -1030,7 +1018,7 @@ export function initMenuPage() {
     });
 
     filteredProducts.forEach((product) => {
-      const element = products.find((item) => item.dataset.productId === product.id);
+      const element = productElementsById.get(product.id);
 
       if (element) {
         grid.append(element);
@@ -1038,7 +1026,7 @@ export function initMenuPage() {
     });
 
     if (count) {
-      count.textContent = String(filteredProducts.length);
+      setTextIfChanged(count, String(filteredProducts.length));
     }
 
     if (empty) {

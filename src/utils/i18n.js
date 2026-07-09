@@ -1,22 +1,6 @@
 import { DEFAULT_LANGUAGE, locales } from '../locales/index.js';
 import { getLanguage } from '../store/languageStore.js';
-
-function readPath(source, path) {
-  return path
-    .split('.')
-    .reduce((value, key) => (value && Object.prototype.hasOwnProperty.call(value, key) ? value[key] : undefined), source);
-}
-
-function interpolate(value, params = {}) {
-  if (typeof value !== 'string') {
-    return value;
-  }
-
-  return Object.entries(params).reduce(
-    (text, [key, replacement]) => text.replaceAll(`{${key}}`, String(replacement)),
-    value
-  );
-}
+import { interpolate, readPath } from './format.js';
 
 /**
  * Resolves a localized string by dot-path and interpolates named parameters.

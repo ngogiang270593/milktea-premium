@@ -1,7 +1,7 @@
 import { getWishlist } from '../../store/wishlistStore.js';
 import { formatCurrency } from '../../utils/format.js';
 import { escapeAttribute, escapeHtml } from '../../utils/html.js';
-import { imageAttributes } from '../../services/ImageService.js';
+import { imageAttributes } from '../../utils/image.js';
 import { t } from '../../utils/i18n.js';
 
 function translatedProductName(item) {

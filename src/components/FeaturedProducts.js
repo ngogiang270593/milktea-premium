@@ -1,7 +1,7 @@
 import { getSiteContent } from '../config/siteConfig.js';
 import { FEATURED_PRODUCTS } from '../repositories/ProductRepository.js';
 import { getLanguage } from '../store/languageStore.js';
-import { imageAttributes } from '../services/ImageService.js';
+import { imageAttributes } from '../utils/image.js';
 import { t } from '../utils/i18n.js';
 
 function formatPrice(price) {

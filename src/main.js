@@ -3,31 +3,15 @@ import './assets/css/components.css';
 import './assets/css/utilities.css';
 history.scrollRestoration = 'manual';
 import { APP_ROUTES } from './constants/routes.js';
-import { renderApp } from './App.js';
+import { preloadRoute, renderApp } from './App.js';
 import { applyLanguage } from './store/languageStore.js';
 import { initAppInteractions } from './utils/animations.js';
+import { prefetchRoute, prefetchRoutes } from './utils/prefetch.js';
+import { isPlainLeftClick, routeToString, shouldHandleLink } from './utils/router.js';
+import { scrollToHashAfterRender } from './utils/scroll.js';
 import { registerServiceWorker, updateDocumentMeta } from './utils/seo.js';
 
 const appRoutes = new Set(APP_ROUTES);
-
-function scrollToHashAfterRender() {
-  const hash = window.location.hash;
-
-  requestAnimationFrame(() => {
-    if (hash) {
-      document.querySelector(hash)?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    } else {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'instant'
-      });
-    }
-  });
-}
 
 async function renderCurrentRoute() {
   applyLanguage();
@@ -35,19 +19,6 @@ async function renderCurrentRoute() {
   updateDocumentMeta();
   initAppInteractions();
   scrollToHashAfterRender();
-}
-
-function isPlainLeftClick(event) {
-  return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
-}
-
-function shouldHandleLink(link, url) {
-  return (
-    link.target !== '_blank' &&
-    !link.hasAttribute('download') &&
-    url.origin === window.location.origin &&
-    appRoutes.has(url.pathname)
-  );
 }
 
 document.addEventListener('click', (event) => {
@@ -63,14 +34,14 @@ document.addEventListener('click', (event) => {
 
   const url = new URL(link.href, window.location.href);
 
-  if (!shouldHandleLink(link, url)) {
+  if (!shouldHandleLink(link, url, appRoutes)) {
     return;
   }
 
   event.preventDefault();
 
-  const nextUrl = `${url.pathname}${url.search}${url.hash}`;
-  const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const nextUrl = routeToString(url);
+  const currentUrl = routeToString(window.location);
   const isSameRoute = url.pathname === window.location.pathname && url.search === window.location.search;
 
   if (nextUrl !== currentUrl) {
@@ -90,3 +61,18 @@ window.addEventListener('site-config:updated', renderCurrentRoute);
 
 registerServiceWorker();
 renderCurrentRoute();
+prefetchRoutes(['/menu', '/product', '/cart', '/wishlist'], preloadRoute);
+
+document.addEventListener('pointerover', (event) => {
+  const link = event.target.closest('a[href]');
+
+  if (!link) {
+    return;
+  }
+
+  const url = new URL(link.href, window.location.href);
+
+  if (shouldHandleLink(link, url, appRoutes)) {
+    prefetchRoute(url.pathname, preloadRoute);
+  }
+}, { passive: true });

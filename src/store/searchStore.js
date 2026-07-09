@@ -1,7 +1,7 @@
 import { CART_PRODUCTS } from '../repositories/ProductRepository.js';
 import { formatCategoryName } from '../utils/format.js';
 import { escapeHtml } from '../utils/html.js';
-import { readJson, writeJson } from '../services/StorageService.js';
+import { readJson, writeJson } from '../utils/storage.js';
 
 const RECENT_SEARCHES_KEY = 'milktea-premium-recent-searches';
 

@@ -5,6 +5,7 @@ import {
   THEMES
 } from '../constants/theme.js';
 import { getStoredTheme, setStoredTheme } from '../services/ThemeService.js';
+import { canUseDOM } from '../utils/dom.js';
 
 export {
   THEME_DEFINITIONS,
@@ -15,12 +16,8 @@ export {
 const THEME_VALUES = Object.values(THEMES);
 let systemThemeQuery = null;
 
-function canUseBrowserApis() {
-  return typeof window !== 'undefined' && typeof document !== 'undefined';
-}
-
 function getThemeQuery() {
-  if (!canUseBrowserApis() || typeof window.matchMedia !== 'function') {
+  if (!canUseDOM() || typeof window.matchMedia !== 'function') {
     return null;
   }
 
@@ -65,7 +62,7 @@ export function getSystemTheme() {
  * @returns {string} Stored theme preference.
  */
 export function getThemePreference() {
-  if (!canUseBrowserApis()) {
+  if (!canUseDOM()) {
     return THEMES.GREEN_TEA;
   }
 
@@ -115,7 +112,7 @@ function applyThemeVariables(root, theme) {
  * @returns {{preference: string, resolvedTheme: string, theme?: Record<string, *>}} Applied theme details.
  */
 export function applyTheme(preference = getThemePreference(), options = {}) {
-  if (!canUseBrowserApis()) {
+  if (!canUseDOM()) {
     return {
       preference,
       resolvedTheme: getResolvedTheme(preference)
@@ -168,7 +165,7 @@ export function applyTheme(preference = getThemePreference(), options = {}) {
 export function setThemePreference(preference, options = { persist: true, animate: true }) {
   const safePreference = isValidTheme(preference) ? preference : THEMES.GREEN_TEA;
 
-  if (canUseBrowserApis() && options.persist !== false) {
+  if (canUseDOM() && options.persist !== false) {
     try {
       setStoredTheme(safePreference);
     } catch {

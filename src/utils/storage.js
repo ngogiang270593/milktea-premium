@@ -1,1 +1,8 @@
-export { readJson, writeJson } from '../services/StorageService.js';
+export {
+  canUseStorage,
+  getItem,
+  readJson,
+  removeItem,
+  setItem,
+  writeJson
+} from '../services/StorageService.js';

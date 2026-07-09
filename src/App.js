@@ -9,6 +9,17 @@ const routes = {
   [ROUTES.WISHLIST]: () => import('./pages/WishlistPage.js').then((module) => module.WishlistPage)
 };
 
+function loadHomeComponents() {
+  return Promise.all([
+    import('./components/Hero.js'),
+    import('./components/Categories.js'),
+    import('./components/FeaturedProducts.js'),
+    import('./components/Promotion.js'),
+    import('./components/Testimonials.js'),
+    import('./components/Newsletter.js')
+  ]);
+}
+
 async function renderHomePage() {
   const [
     { Hero },
@@ -17,14 +28,7 @@ async function renderHomePage() {
     { Promotion },
     { Testimonials },
     { Newsletter }
-  ] = await Promise.all([
-    import('./components/Hero.js'),
-    import('./components/Categories.js'),
-    import('./components/FeaturedProducts.js'),
-    import('./components/Promotion.js'),
-    import('./components/Testimonials.js'),
-    import('./components/Newsletter.js')
-  ]);
+  ] = await loadHomeComponents();
 
   return `
     ${Hero()}
@@ -34,6 +38,24 @@ async function renderHomePage() {
     ${Testimonials()}
     ${Newsletter()}
   `;
+}
+
+/**
+ * Prefetches the module graph for a route without rendering it.
+ *
+ * @param {string} pathname Route pathname.
+ * @returns {Promise<unknown>|undefined} Module preload promise.
+ */
+export function preloadRoute(pathname) {
+  if (routes[pathname]) {
+    return routes[pathname]();
+  }
+
+  if (pathname === ROUTES.HOME) {
+    return loadHomeComponents();
+  }
+
+  return undefined;
 }
 
 /**
