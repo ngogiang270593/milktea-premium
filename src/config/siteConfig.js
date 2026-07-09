@@ -2,9 +2,14 @@ import TeaBar01 from '../assets/images/testimonials/tea-bar-01.jpg';
 import TeaBar02 from '../assets/images/testimonials/tea-bar-02.jpg';
 import TeaBar03 from '../assets/images/testimonials/tea-bar-03.jpg';
 import TeaBar04 from '../assets/images/testimonials/tea-bar-04.jpg';
+import {
+  getSettingsOverrides,
+  SETTINGS_STORAGE_KEY,
+  setSettingsOverrides
+} from '../services/SettingsService.js';
 
 export const DEFAULT_SITE_LANGUAGE = 'vi';
-export const SITE_CONFIG_STORAGE_KEY = 'milktea-site-config';
+export const SITE_CONFIG_STORAGE_KEY = SETTINGS_STORAGE_KEY;
 
 export const siteConfig = {
   brand: {
@@ -446,27 +451,13 @@ function mergeConfig(base, override) {
   }, {});
 }
 
-function canUseStorage() {
-  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
-}
-
 /**
  * Reads user-edited storefront configuration from localStorage.
  *
  * @returns {Record<string, *>} Stored configuration overrides.
  */
 export function getSiteConfigOverrides() {
-  if (!canUseStorage()) {
-    return {};
-  }
-
-  try {
-    const overrides = JSON.parse(window.localStorage.getItem(SITE_CONFIG_STORAGE_KEY) || '{}');
-
-    return isObject(overrides) ? overrides : {};
-  } catch {
-    return {};
-  }
+  return getSettingsOverrides();
 }
 
 /**
@@ -476,16 +467,7 @@ export function getSiteConfigOverrides() {
  * @returns {Record<string, *>} The saved overrides.
  */
 export function setSiteConfigOverrides(overrides) {
-  if (canUseStorage()) {
-    window.localStorage.setItem(SITE_CONFIG_STORAGE_KEY, JSON.stringify(overrides));
-    window.dispatchEvent(new CustomEvent('site-config:updated', {
-      detail: {
-        overrides
-      }
-    }));
-  }
-
-  return overrides;
+  return setSettingsOverrides(overrides);
 }
 
 /**

@@ -44,7 +44,7 @@ import {
 import { getLanguage, setLanguage } from '../store/languageStore.js';
 import { formatCurrency } from './format.js';
 import { escapeAttribute, escapeHtml } from './html.js';
-import { imageAttributes } from './images.js';
+import { imageAttributes } from '../services/ImageService.js';
 import { applyProductFilters } from './productFilter.js';
 import { updateDocumentMeta } from './seo.js';
 

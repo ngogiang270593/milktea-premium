@@ -3,7 +3,7 @@ import { OrderSuccess } from '../checkout/OrderSuccess.js';
 import { getCart, getDiscount, getShipping, getSubtotal, getTotal } from '../../store/cartStore.js';
 import { formatCurrency } from '../../utils/format.js';
 import { escapeAttribute, escapeHtml } from '../../utils/html.js';
-import { imageAttributes } from '../../utils/images.js';
+import { imageAttributes } from '../../services/ImageService.js';
 import { t } from '../../utils/i18n.js';
 
 function translatedProductName(item) {

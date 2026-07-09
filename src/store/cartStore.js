@@ -1,19 +1,18 @@
-import { readJson, writeJson } from '../utils/storage.js';
+import { readCartItems, writeCartItems } from '../services/CartService.js';
 
-const CART_KEY = 'milktea-premium-cart';
 const SHIPPING_FEE = 4.99;
 const FREE_SHIPPING_THRESHOLD = 35;
 
 let cart = loadCart();
 
 function loadCart() {
-  return readJson(CART_KEY, [])
+  return readCartItems()
     .filter((item) => item?.id && item?.name && Number.isFinite(Number(item.price)))
     .map(normalizeProduct);
 }
 
 function saveCart() {
-  writeJson(CART_KEY, cart);
+  writeCartItems(cart);
   window.dispatchEvent(new CustomEvent('cart:updated', { detail: getCart() }));
 }
 

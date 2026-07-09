@@ -1,6 +1,11 @@
 import { DEFAULT_LANGUAGE, LANGUAGES, locales } from '../locales/index.js';
+import {
+  getStoredLanguage,
+  LANGUAGE_STORAGE_KEY,
+  setStoredLanguage
+} from '../services/LanguageService.js';
 
-export const LANGUAGE_STORAGE_KEY = 'milktea-language';
+export { LANGUAGE_STORAGE_KEY };
 
 const languageCodes = LANGUAGES.map((language) => language.code);
 const subscribers = new Set();
@@ -20,7 +25,7 @@ function loadLanguage() {
   }
 
   try {
-    const storedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    const storedLanguage = getStoredLanguage();
     return isValidLanguage(storedLanguage) ? storedLanguage : DEFAULT_LANGUAGE;
   } catch {
     return DEFAULT_LANGUAGE;
@@ -107,7 +112,7 @@ export function setLanguage(language, options = { persist: true }) {
 
   if (canUseBrowserApis() && options.persist !== false) {
     try {
-      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, safeLanguage);
+      setStoredLanguage(safeLanguage);
     } catch {
       // Storage can be blocked; language still updates for the current session.
     }

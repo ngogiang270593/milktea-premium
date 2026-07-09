@@ -1,17 +1,15 @@
-import { readJson, writeJson } from '../utils/storage.js';
-
-const WISHLIST_KEY = 'milktea-premium-wishlist';
+import { readWishlistItems, writeWishlistItems } from '../services/WishlistService.js';
 
 let wishlist = loadWishlist();
 
 function loadWishlist() {
-  return readJson(WISHLIST_KEY, [])
+  return readWishlistItems()
     .filter((item) => item?.id && item?.name && Number.isFinite(Number(item.price)))
     .map(normalizeProduct);
 }
 
 function saveWishlist() {
-  writeJson(WISHLIST_KEY, wishlist);
+  writeWishlistItems(wishlist);
   window.dispatchEvent(new CustomEvent('wishlist:updated', { detail: getWishlist() }));
 }
 

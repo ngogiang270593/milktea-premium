@@ -1,6 +1,6 @@
 import { getSiteConfig, getSiteContent } from '../config/siteConfig.js';
 import { getLanguage } from '../store/languageStore.js';
-import { imageAttributes } from '../utils/images.js';
+import { imageAttributes } from '../services/ImageService.js';
 import { t } from '../utils/i18n.js';
 
 function testimonialCard({ name, quote, rating }) {

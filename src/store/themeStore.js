@@ -4,6 +4,7 @@ import {
   THEME_STORAGE_KEY,
   THEMES
 } from '../constants/theme.js';
+import { getStoredTheme, setStoredTheme } from '../services/ThemeService.js';
 
 export {
   THEME_DEFINITIONS,
@@ -69,7 +70,7 @@ export function getThemePreference() {
   }
 
   try {
-    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    const storedTheme = getStoredTheme();
     return isValidTheme(storedTheme) ? storedTheme : THEMES.GREEN_TEA;
   } catch {
     return THEMES.GREEN_TEA;
@@ -169,7 +170,7 @@ export function setThemePreference(preference, options = { persist: true, animat
 
   if (canUseBrowserApis() && options.persist !== false) {
     try {
-      window.localStorage.setItem(THEME_STORAGE_KEY, safePreference);
+      setStoredTheme(safePreference);
     } catch {
       // Storage can be blocked in private contexts; the UI still updates for the session.
     }
