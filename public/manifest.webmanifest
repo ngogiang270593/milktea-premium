@@ -1,0 +1,34 @@
+{
+  "name": "MilkTea Premium",
+  "short_name": "MilkTea",
+  "description": "Premium bubble tea, handcrafted drinks, and fast checkout in a polished storefront experience.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fffdf8",
+  "theme_color": "#0D3B2E",
+  "categories": ["food", "shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/og-image.jpg",
+      "sizes": "800x800",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ]
+}

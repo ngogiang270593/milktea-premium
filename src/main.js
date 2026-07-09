@@ -3,10 +3,11 @@ import './assets/css/components.css';
 import './assets/css/utilities.css';
 history.scrollRestoration = 'manual';
 import { renderApp } from './App.js';
-import { applyLanguage, subscribe } from './store/languageStore.js';
+import { applyLanguage } from './store/languageStore.js';
 import { initAppInteractions } from './utils/animations.js';
+import { registerServiceWorker, updateDocumentMeta } from './utils/seo.js';
 
-const appRoutes = new Set(['/', '/cart', '/menu', '/product', '/wishlist']);
+const appRoutes = new Set(['/', '/admin', '/cart', '/menu', '/product', '/wishlist']);
 
 function scrollToHashAfterRender() {
   const hash = window.location.hash;
@@ -30,6 +31,7 @@ function scrollToHashAfterRender() {
 async function renderCurrentRoute() {
   applyLanguage();
   await renderApp();
+  updateDocumentMeta();
   initAppInteractions();
   scrollToHashAfterRender();
 }
@@ -83,6 +85,7 @@ document.addEventListener('click', (event) => {
 });
 
 window.addEventListener('popstate', renderCurrentRoute);
-subscribe(renderCurrentRoute);
+window.addEventListener('site-config:updated', renderCurrentRoute);
 
+registerServiceWorker();
 renderCurrentRoute();

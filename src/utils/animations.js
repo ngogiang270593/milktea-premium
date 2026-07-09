@@ -1,5 +1,13 @@
 import { CartContent } from '../components/cart/CartContent.js';
+import { updateLanguageSwitchers } from '../components/LanguageSwitcher.js';
+import { updateNavbarTranslations } from '../components/Navbar.js';
+import { ThemeProvider } from '../components/ThemeProvider.js';
+import { updateThemeSwitchers } from '../components/ThemeSwitcher.js';
 import { WishlistContent } from '../components/wishlist/WishlistContent.js';
+import {
+  getSiteConfigOverrides,
+  setSiteConfigOverrides
+} from '../config/siteConfig.js';
 import { getProductById, MENU_PRODUCTS } from '../data/products.js';
 import {
   clearRecentSearches,
@@ -29,14 +37,16 @@ import {
   getThemeLabel,
   getThemePreference,
   getResolvedTheme,
+  setThemePreference,
   subscribeToSystemTheme,
   THEMES
 } from '../store/themeStore.js';
-import { setLanguage } from '../store/languageStore.js';
+import { getLanguage, setLanguage } from '../store/languageStore.js';
 import { formatCurrency } from './format.js';
 import { escapeAttribute, escapeHtml } from './html.js';
 import { imageAttributes } from './images.js';
 import { applyProductFilters } from './productFilter.js';
+import { updateDocumentMeta } from './seo.js';
 
 let motionModulePromise;
 
@@ -92,10 +102,12 @@ function updateThemeControls() {
   document.querySelectorAll('[data-theme-label]').forEach((element) => {
     element.textContent = label;
   });
+
+  updateThemeSwitchers();
 }
 
 export function initThemeSystem() {
-  applyTheme();
+  ThemeProvider();
   updateThemeControls();
 
   if (window.themeSystemReady !== true) {
@@ -115,6 +127,19 @@ export function initThemeSystem() {
       showToast(`Theme set to ${getThemeLabel(preference)}`);
     });
   });
+
+  document.querySelectorAll('[data-theme-switcher]').forEach((select) => {
+    if (select.dataset.themeReady === 'true') {
+      return;
+    }
+
+    select.dataset.themeReady = 'true';
+    select.addEventListener('change', () => {
+      const { preference } = setThemePreference(select.value);
+      updateThemeControls();
+      showToast(`Theme set to ${getThemeLabel(preference)}`);
+    });
+  });
 }
 
 export function initLanguageControls() {
@@ -126,6 +151,9 @@ export function initLanguageControls() {
     button.dataset.languageReady = 'true';
     button.addEventListener('click', () => {
       setLanguage(button.dataset.languageNext);
+      updateNavbarTranslations();
+      updateLanguageSwitchers();
+      updateDocumentMeta();
     });
   });
 }
@@ -348,6 +376,77 @@ function debounce(callback, delay = 300) {
     window.clearTimeout(timeout);
     timeout = window.setTimeout(() => callback(...args), delay);
   };
+}
+
+function cloneConfig(value) {
+  return JSON.parse(JSON.stringify(value || {}));
+}
+
+function setNestedConfigValue(source, path, value) {
+  const blockedKeys = new Set(['__proto__', 'constructor', 'prototype']);
+  const keys = path.split('.').filter(Boolean);
+
+  if (!keys.length || keys.some((key) => blockedKeys.has(key))) {
+    return source;
+  }
+
+  keys.reduce((target, key, index) => {
+    if (index === keys.length - 1) {
+      target[key] = value;
+      return target[key];
+    }
+
+    target[key] = target[key] && typeof target[key] === 'object' && !Array.isArray(target[key])
+      ? target[key]
+      : {};
+
+    return target[key];
+  }, source);
+
+  return source;
+}
+
+export function initAdminPanel() {
+  const form = document.querySelector('[data-admin-config-form]');
+
+  if (!form || form.dataset.adminReady === 'true') {
+    return;
+  }
+
+  form.dataset.adminReady = 'true';
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const status = form.querySelector('[data-admin-config-status]');
+    const data = new FormData(form);
+    const selectedTheme = data.get('adminTheme');
+    const selectedLanguage = data.get('adminLanguage') || getLanguage();
+    const overrides = cloneConfig(getSiteConfigOverrides());
+
+    data.forEach((value, key) => {
+      if (key.startsWith('admin')) {
+        return;
+      }
+
+      setNestedConfigValue(overrides, key, String(value).trim());
+    });
+
+    if (selectedTheme) {
+      setThemePreference(String(selectedTheme));
+    }
+
+    setLanguage(String(selectedLanguage));
+    setSiteConfigOverrides(overrides);
+    updateThemeControls();
+    updateLanguageSwitchers();
+    updateDocumentMeta();
+
+    if (status) {
+      status.textContent = 'Configuration saved locally. The storefront preview has been updated.';
+    }
+
+    showToast('Configuration saved');
+  });
 }
 
 export function initCategoryFilters() {
@@ -781,12 +880,29 @@ export function initProductDetail() {
 
   detail.querySelectorAll('[data-gallery-thumb]').forEach((thumb) => {
     thumb.addEventListener('click', () => {
+      if (thumb.classList.contains('is-active')) {
+        return;
+      }
+
+      const revealImage = () => {
+        mainImage.classList.remove('is-switching');
+      };
+
+      mainImage.classList.add('is-switching');
+      mainImage.addEventListener('load', revealImage, { once: true });
       mainImage.src = thumb.dataset.galleryThumb;
       mainImage.srcset = thumb.dataset.gallerySrcset;
       mainImage.sizes = '(min-width: 1024px) 48vw, 92vw';
       detail.querySelectorAll('[data-gallery-thumb]').forEach((item) => {
-        item.classList.toggle('is-active', item === thumb);
+        const isActive = item === thumb;
+
+        item.classList.toggle('is-active', isActive);
+        item.setAttribute('aria-pressed', String(isActive));
       });
+
+      if (mainImage.complete) {
+        window.requestAnimationFrame(revealImage);
+      }
     });
   });
 
@@ -834,6 +950,9 @@ export function initProductDetail() {
       addItem(product);
       updateCartBadges();
       showToast(`${product.name} added to cart`);
+      button.classList.remove('cart-pop');
+      window.requestAnimationFrame(() => button.classList.add('cart-pop'));
+      button.addEventListener('animationend', () => button.classList.remove('cart-pop'), { once: true });
 
       if (button.dataset.detailBuy) {
         window.location.href = '/cart';
@@ -1062,6 +1181,7 @@ export function initAppInteractions() {
   initCartPage();
   initWishlistPage();
   initProductDetail();
+  initAdminPanel();
   scheduleMotionInit();
 
   window.addEventListener('cart:updated', updateCartBadges);

@@ -1,6 +1,6 @@
 import { DEFAULT_LANGUAGE, LANGUAGES, locales } from '../locales/index.js';
 
-export const LANGUAGE_STORAGE_KEY = 'milktea-premium-language';
+export const LANGUAGE_STORAGE_KEY = 'milktea-language';
 
 const languageCodes = LANGUAGES.map((language) => language.code);
 const subscribers = new Set();
@@ -36,29 +36,50 @@ function updateDocumentLanguage(language) {
 
   document.documentElement.lang = language;
 
-  if (locale.meta?.title) {
-    document.title = locale.meta.title;
+  if (locale.seo?.title) {
+    document.title = locale.seo.title;
   }
 
-  if (locale.meta?.description) {
+  if (locale.seo?.description) {
     document
       .querySelector('meta[name="description"]')
-      ?.setAttribute('content', locale.meta.description);
+      ?.setAttribute('content', locale.seo.description);
   }
 }
 
-function notifySubscribers(language) {
+/**
+ * Notifies all language subscribers without changing the current language.
+ *
+ * @param {string} [language] Language code sent to subscribers.
+ */
+export function notify(language = currentLanguage) {
   subscribers.forEach((callback) => callback(language));
 }
 
+/**
+ * Returns the active language code.
+ *
+ * @returns {string} Active language code.
+ */
 export function getLanguage() {
   return currentLanguage;
 }
 
+/**
+ * Returns configured languages for selectors and admin controls.
+ *
+ * @returns {{code: string, labelKey: string}[]} Available language metadata.
+ */
 export function getAvailableLanguages() {
   return [...LANGUAGES];
 }
 
+/**
+ * Applies a language to document metadata without persisting it.
+ *
+ * @param {string} [language] Language code.
+ * @returns {string} Applied language code.
+ */
 export function applyLanguage(language = currentLanguage) {
   const safeLanguage = isValidLanguage(language) ? language : DEFAULT_LANGUAGE;
 
@@ -68,6 +89,13 @@ export function applyLanguage(language = currentLanguage) {
   return safeLanguage;
 }
 
+/**
+ * Updates the active language, persists it by default, and notifies subscribers.
+ *
+ * @param {string} language Requested language code.
+ * @param {{persist?: boolean}} [options] Persistence options.
+ * @returns {string} Active language code.
+ */
 export function setLanguage(language, options = { persist: true }) {
   const safeLanguage = isValidLanguage(language) ? language : DEFAULT_LANGUAGE;
 
@@ -86,7 +114,7 @@ export function setLanguage(language, options = { persist: true }) {
   }
 
   updateDocumentLanguage(safeLanguage);
-  notifySubscribers(safeLanguage);
+  notify(safeLanguage);
 
   if (canUseBrowserApis()) {
     window.dispatchEvent(new CustomEvent('language:updated', {
@@ -99,6 +127,12 @@ export function setLanguage(language, options = { persist: true }) {
   return safeLanguage;
 }
 
+/**
+ * Subscribes to language changes.
+ *
+ * @param {(language: string) => void} callback Listener invoked after language changes.
+ * @returns {() => void} Unsubscribe function.
+ */
 export function subscribe(callback) {
   subscribers.add(callback);
 

@@ -16,6 +16,7 @@ export function LanguageSwitcher({ mobile = false } = {}) {
         type="button"
         class="${className}"
         data-language-switcher
+        data-language-mobile="true"
         data-language-next="${nextLanguage}"
         aria-label="${t('language.current', { label: currentLabel })}"
       >
@@ -29,10 +30,26 @@ export function LanguageSwitcher({ mobile = false } = {}) {
       type="button"
       class="${className}"
       data-language-switcher
+      data-language-mobile="false"
       data-language-next="${nextLanguage}"
       aria-label="${t('language.current', { label: currentLabel })}"
     >
       <span aria-hidden="true">${shortLabel}</span>
     </button>
   `;
+}
+
+export function updateLanguageSwitchers(scope = document) {
+  const currentLanguage = getLanguage();
+  const currentLabel = t(currentLanguage === 'vi' ? 'common.vietnamese' : 'common.english');
+  const nextLanguage = currentLanguage === 'vi' ? 'en' : 'vi';
+  const shortLabel = currentLanguage === 'vi' ? '🇻🇳 VI' : '🇺🇸 EN';
+
+  scope.querySelectorAll('[data-language-switcher]').forEach((button) => {
+    button.dataset.languageNext = nextLanguage;
+    button.setAttribute('aria-label', t('language.current', { label: currentLabel }));
+    button.innerHTML = button.dataset.languageMobile === 'true'
+      ? `${shortLabel} · ${t('common.language')}: ${currentLabel}`
+      : `<span aria-hidden="true">${shortLabel}</span>`;
+  });
 }

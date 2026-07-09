@@ -1,47 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="MilkTea Premium offers a modern bubble tea experience with handcrafted blends, premium ingredients, and elegant presentation." />
-    <meta name="keywords" content="bubble tea, premium milk tea, matcha, fruit tea, tea shop, artisanal drinks" />
+    <meta name="description" content="MilkTea Premium - Trà sữa cao cấp, nguyên liệu tuyển chọn, giao hàng nhanh, trải nghiệm thưởng thức tuyệt hảo." />
+    <meta name="keywords" content="trà sữa cao cấp, bubble tea, premium milk tea, matcha, fruit tea, tea shop, artisanal drinks" />
     <meta name="author" content="MilkTea Premium" />
     <meta name="theme-color" content="#0D3B2E" />
     <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="MilkTea Premium" />
-    <meta property="og:description" content="Discover premium bubble tea crafted for a modern taste." />
+    <meta name="application-name" content="MilkTea Premium" />
+    <meta name="apple-mobile-web-app-title" content="MilkTea Premium" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="canonical" href="https://milktea-premium.example/" />
+
+    <meta property="og:site_name" content="MilkTea Premium" />
+    <meta property="og:title" content="MilkTea Premium - Trà sữa cao cấp" />
+    <meta property="og:description" content="Trà sữa cao cấp, nguyên liệu tuyển chọn, giao hàng nhanh và trải nghiệm thưởng thức tinh tế." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://milktea-premium.example/" />
+    <meta property="og:image" content="https://milktea-premium.example/assets/og-image.jpg" />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:locale" content="vi_VN" />
+
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MilkTea Premium - Trà sữa cao cấp" />
+    <meta name="twitter:description" content="Trà sữa cao cấp, nguyên liệu tuyển chọn, giao hàng nhanh và trải nghiệm thưởng thức tinh tế." />
+    <meta name="twitter:image" content="https://milktea-premium.example/assets/og-image.jpg" />
+
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/icon.svg" />
+    <link rel="preload" href="/assets/hero-preload.jpg" as="image" fetchpriority="high" />
+    <link rel="prefetch" href="/menu" />
+    <link rel="prefetch" href="/product" />
+    <link rel="prefetch" href="/cart" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" /></noscript>
     <script>
       (() => {
         const storageKey = 'milktea-premium-theme';
-        const validThemes = ['light', 'dark', 'system'];
+        const themes = {
+          'green-tea': {
+            scheme: 'light',
+            meta: '#0D3B2E',
+            vars: {
+              '--color-bg': '#fffdf8',
+              '--color-bg-soft': '#f8f5ee',
+              '--color-surface': 'rgba(255, 255, 255, 0.72)',
+              '--color-surface-strong': 'rgba(255, 255, 255, 0.92)',
+              '--color-border': 'rgba(216, 200, 184, 0.78)',
+              '--color-text': '#1f1710',
+              '--color-text-soft': '#4d4035',
+              '--color-muted': '#7b6a5a',
+              '--color-brand': '#0d3b2e',
+              '--color-brand-hover': '#143f31',
+              '--color-gold': '#d3a86a',
+              '--color-mint': '#cdebf6',
+              '--color-peach': '#f8c3b6',
+              '--shadow-soft': '0 18px 50px rgba(48, 35, 24, 0.1)',
+              '--shadow-strong': '0 30px 90px rgba(48, 35, 24, 0.16)',
+              '--page-gradient': 'radial-gradient(circle at 14% 10%, rgba(205, 237, 246, 0.42), transparent 24rem), radial-gradient(circle at 88% 18%, rgba(211, 168, 106, 0.2), transparent 24rem), linear-gradient(180deg, #fffdf8 0%, #f8f5ee 100%)'
+            }
+          },
+          dark: {
+            scheme: 'dark',
+            meta: '#101512',
+            vars: {
+              '--color-bg': '#101512',
+              '--color-bg-soft': '#17201b',
+              '--color-surface': 'rgba(22, 30, 26, 0.76)',
+              '--color-surface-strong': 'rgba(22, 30, 26, 0.94)',
+              '--color-border': 'rgba(205, 237, 246, 0.16)',
+              '--color-text': '#f7f5ee',
+              '--color-text-soft': '#e4d8cc',
+              '--color-muted': '#c7b8aa',
+              '--color-brand': '#9fe0c4',
+              '--color-brand-hover': '#cdebf6',
+              '--color-gold': '#e2bc7c',
+              '--color-mint': '#234a43',
+              '--color-peach': '#7f4c47',
+              '--shadow-soft': '0 18px 54px rgba(0, 0, 0, 0.32)',
+              '--shadow-strong': '0 30px 100px rgba(0, 0, 0, 0.42)',
+              '--page-gradient': 'radial-gradient(circle at 12% 12%, rgba(35, 74, 67, 0.58), transparent 24rem), radial-gradient(circle at 88% 20%, rgba(226, 188, 124, 0.16), transparent 24rem), linear-gradient(180deg, #101512 0%, #17201b 100%)'
+            }
+          }
+        };
 
         try {
-          const preference = validThemes.includes(localStorage.getItem(storageKey))
-            ? localStorage.getItem(storageKey)
-            : 'system';
-          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          const resolvedTheme = preference === 'system' ? systemTheme : preference;
+          const stored = localStorage.getItem(storageKey);
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const preference = stored || 'green-tea';
+          const resolved = preference === 'system' ? (prefersDark ? 'dark' : 'green-tea') : preference;
+          const theme = themes[resolved] || themes['green-tea'];
           const root = document.documentElement;
 
-          root.dataset.theme = resolvedTheme;
+          Object.entries(theme.vars).forEach(([property, value]) => root.style.setProperty(property, value));
+          root.dataset.theme = theme.scheme === 'dark' ? 'dark' : 'light';
+          root.dataset.themeName = resolved;
           root.dataset.themePreference = preference;
-          root.style.colorScheme = resolvedTheme;
-          document
-            .querySelector('meta[name="theme-color"]')
-            ?.setAttribute('content', resolvedTheme === 'dark' ? '#101512' : '#0D3B2E');
+          root.style.colorScheme = theme.scheme;
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme.meta);
         } catch {
           document.documentElement.dataset.theme = 'light';
-          document.documentElement.dataset.themePreference = 'system';
+          document.documentElement.dataset.themeName = 'green-tea';
+          document.documentElement.dataset.themePreference = 'green-tea';
         }
       })();
     </script>
-    <link rel="icon" href="favicon.svg" />
-    <title>MilkTea Premium | Handcrafted Bubble Tea</title>
+    <title>MilkTea Premium - Trà sữa cao cấp</title>
   </head>
   <body class="antialiased">
-    <a href="#main-content" class="skip-link">Skip to content</a>
+    <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
