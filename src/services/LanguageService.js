@@ -1,11 +1,15 @@
-import { getItem, setItem } from './StorageService.js';
+import {
+  getSetting,
+  LANGUAGE_STORAGE_KEY,
+  setSetting
+} from '../store/settingsStore.js';
 
-export const LANGUAGE_STORAGE_KEY = 'milktea-language';
+export { LANGUAGE_STORAGE_KEY };
 
 export function getStoredLanguage(fallback) {
-  return getItem(LANGUAGE_STORAGE_KEY, fallback);
+  return getSetting('language') || fallback;
 }
 
 export function setStoredLanguage(language) {
-  return setItem(LANGUAGE_STORAGE_KEY, language);
+  return Boolean(setSetting('language', language, { persist: true, notify: false }));
 }

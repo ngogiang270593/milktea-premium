@@ -43,7 +43,8 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" /></noscript>
     <script>
       (() => {
-        const storageKey = 'milktea-premium-theme';
+        const storageKey = 'milktea-preferences';
+        const legacyThemeKey = 'milktea-premium-theme';
         const themes = {
           'green-tea': {
             scheme: 'light',
@@ -92,7 +93,8 @@
         };
 
         try {
-          const stored = localStorage.getItem(storageKey);
+          const storedSettings = JSON.parse(localStorage.getItem(storageKey) || '{}');
+          const stored = storedSettings.theme || localStorage.getItem(legacyThemeKey);
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           const preference = stored || 'green-tea';
           const resolved = preference === 'system' ? (prefersDark ? 'dark' : 'green-tea') : preference;

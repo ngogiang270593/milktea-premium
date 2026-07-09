@@ -1,10 +1,9 @@
-import { THEME_STORAGE_KEY } from '../constants/theme.js';
-import { getItem, setItem } from './StorageService.js';
+import { getSetting, setSetting } from '../store/settingsStore.js';
 
 export function getStoredTheme(fallback) {
-  return getItem(THEME_STORAGE_KEY, fallback);
+  return getSetting('theme') || fallback;
 }
 
 export function setStoredTheme(theme) {
-  return setItem(THEME_STORAGE_KEY, theme);
+  return Boolean(setSetting('theme', theme, { persist: true, notify: false }));
 }

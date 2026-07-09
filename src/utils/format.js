@@ -1,8 +1,12 @@
+import { CURRENCIES, getSetting } from '../store/settingsStore.js';
+
 export function formatCurrency(value) {
+  const currency = getSetting('currency');
+
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2
+    currency,
+    minimumFractionDigits: currency === CURRENCIES.VND ? 0 : 2
   }).format(value);
 }
 
