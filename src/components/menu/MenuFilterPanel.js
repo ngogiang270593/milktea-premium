@@ -1,4 +1,4 @@
-import { MENU_CATEGORIES, MENU_FILTERS } from '../../data/categories.js';
+import { MENU_CATEGORIES, MENU_FILTERS } from '../../repositories/CategoryRepository.js';
 import { t } from '../../utils/i18n.js';
 
 function checkbox(name, value, label, count = null) {

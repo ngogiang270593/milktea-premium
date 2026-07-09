@@ -1,5 +1,5 @@
 import { getSiteContent } from '../config/siteConfig.js';
-import { FEATURED_PRODUCTS } from '../data/products.js';
+import { FEATURED_PRODUCTS } from '../repositories/ProductRepository.js';
 import { getLanguage } from '../store/languageStore.js';
 import { imageAttributes } from '../services/ImageService.js';
 import { t } from '../utils/i18n.js';

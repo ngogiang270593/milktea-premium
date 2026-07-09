@@ -1,4 +1,4 @@
-import { SORT_OPTIONS } from '../../data/categories.js';
+import { SORT_OPTIONS } from '../../repositories/CategoryRepository.js';
 import { t } from '../../utils/i18n.js';
 
 export function MenuToolbar() {

@@ -8,7 +8,7 @@ import {
   getSiteConfigOverrides,
   setSiteConfigOverrides
 } from '../config/siteConfig.js';
-import { getProductById, MENU_PRODUCTS } from '../data/products.js';
+import { getProductById, MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import {
   clearRecentSearches,
   getRecentSearches,

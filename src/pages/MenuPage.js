@@ -2,7 +2,7 @@ import { MenuFilterPanel } from '../components/menu/MenuFilterPanel.js';
 import { MenuPagination } from '../components/menu/MenuPagination.js';
 import { MenuProductCard } from '../components/menu/MenuProductCard.js';
 import { MenuToolbar } from '../components/menu/MenuToolbar.js';
-import { MENU_PRODUCTS } from '../data/products.js';
+import { MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { t } from '../utils/i18n.js';
 
 export function MenuPage() {

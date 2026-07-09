@@ -1,4 +1,4 @@
-import { CART_PRODUCTS } from '../data/products.js';
+import { CART_PRODUCTS } from '../repositories/ProductRepository.js';
 import { formatCategoryName } from '../utils/format.js';
 import { escapeHtml } from '../utils/html.js';
 import { readJson, writeJson } from '../services/StorageService.js';

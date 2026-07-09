@@ -1,5 +1,5 @@
 import { MenuProductCard } from '../components/menu/MenuProductCard.js';
-import { getProductById, MENU_PRODUCTS } from '../data/products.js';
+import { getProductById, MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { formatCurrency } from '../utils/format.js';
 import { escapeImageAttribute, imageAttributes, imageSourceSet, resizeImageUrl } from '../services/ImageService.js';
 import { t } from '../utils/i18n.js';
