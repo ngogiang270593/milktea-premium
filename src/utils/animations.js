@@ -4,6 +4,10 @@ import { updateNavbarTranslations } from '../components/Navbar.js';
 import { ThemeProvider } from '../components/ThemeProvider.js';
 import { updateThemeSwitchers } from '../components/ThemeSwitcher.js';
 import { WishlistContent } from '../components/wishlist/WishlistContent.js';
+import {
+  getSiteConfigOverrides,
+  setSiteConfigOverrides
+} from '../config/siteConfig.js';
 import { getProductById, MENU_PRODUCTS } from '../data/products.js';
 import {
   clearRecentSearches,
@@ -37,7 +41,7 @@ import {
   subscribeToSystemTheme,
   THEMES
 } from '../store/themeStore.js';
-import { setLanguage } from '../store/languageStore.js';
+import { getLanguage, setLanguage } from '../store/languageStore.js';
 import { formatCurrency } from './format.js';
 import { escapeAttribute, escapeHtml } from './html.js';
 import { imageAttributes } from './images.js';
@@ -372,6 +376,77 @@ function debounce(callback, delay = 300) {
     window.clearTimeout(timeout);
     timeout = window.setTimeout(() => callback(...args), delay);
   };
+}
+
+function cloneConfig(value) {
+  return JSON.parse(JSON.stringify(value || {}));
+}
+
+function setNestedConfigValue(source, path, value) {
+  const blockedKeys = new Set(['__proto__', 'constructor', 'prototype']);
+  const keys = path.split('.').filter(Boolean);
+
+  if (!keys.length || keys.some((key) => blockedKeys.has(key))) {
+    return source;
+  }
+
+  keys.reduce((target, key, index) => {
+    if (index === keys.length - 1) {
+      target[key] = value;
+      return target[key];
+    }
+
+    target[key] = target[key] && typeof target[key] === 'object' && !Array.isArray(target[key])
+      ? target[key]
+      : {};
+
+    return target[key];
+  }, source);
+
+  return source;
+}
+
+export function initAdminPanel() {
+  const form = document.querySelector('[data-admin-config-form]');
+
+  if (!form || form.dataset.adminReady === 'true') {
+    return;
+  }
+
+  form.dataset.adminReady = 'true';
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const status = form.querySelector('[data-admin-config-status]');
+    const data = new FormData(form);
+    const selectedTheme = data.get('adminTheme');
+    const selectedLanguage = data.get('adminLanguage') || getLanguage();
+    const overrides = cloneConfig(getSiteConfigOverrides());
+
+    data.forEach((value, key) => {
+      if (key.startsWith('admin')) {
+        return;
+      }
+
+      setNestedConfigValue(overrides, key, String(value).trim());
+    });
+
+    if (selectedTheme) {
+      setThemePreference(String(selectedTheme));
+    }
+
+    setLanguage(String(selectedLanguage));
+    setSiteConfigOverrides(overrides);
+    updateThemeControls();
+    updateLanguageSwitchers();
+    updateDocumentMeta();
+
+    if (status) {
+      status.textContent = 'Configuration saved locally. The storefront preview has been updated.';
+    }
+
+    showToast('Configuration saved');
+  });
 }
 
 export function initCategoryFilters() {
@@ -1106,6 +1181,7 @@ export function initAppInteractions() {
   initCartPage();
   initWishlistPage();
   initProductDetail();
+  initAdminPanel();
   scheduleMotionInit();
 
   window.addEventListener('cart:updated', updateCartBadges);

@@ -1,4 +1,4 @@
-import { siteConfig } from '../config/siteConfig.js';
+import { getSiteConfig } from '../config/siteConfig.js';
 import { getLanguage } from '../store/languageStore.js';
 import { t } from './i18n.js';
 
@@ -7,24 +7,34 @@ const DEFAULT_IMAGE = `${SITE_URL}/assets/og-image.jpg`;
 
 const routeMeta = {
   '/': {
-    title: () => siteConfig.seo[getLanguage()]?.title || siteConfig.seo.vi.title,
-    description: () => siteConfig.seo[getLanguage()]?.description || siteConfig.seo.vi.description
+    title: () => {
+      const siteConfig = getSiteConfig();
+      return siteConfig.seo[getLanguage()]?.title || siteConfig.seo.vi.title;
+    },
+    description: () => {
+      const siteConfig = getSiteConfig();
+      return siteConfig.seo[getLanguage()]?.description || siteConfig.seo.vi.description;
+    }
   },
   '/menu': {
-    title: () => `${t('navbar.menu')} | ${siteConfig.brand.name}`,
+    title: () => `${t('navbar.menu')} | ${getSiteConfig().brand.name}`,
     description: () => t('menu.title')
   },
   '/product': {
-    title: () => `${t('productDetail.relatedTitle')} | ${siteConfig.brand.name}`,
+    title: () => `${t('productDetail.relatedTitle')} | ${getSiteConfig().brand.name}`,
     description: () => t('productDetail.defaults.ingredients')
   },
   '/cart': {
-    title: () => `${t('cart.breadcrumb')} | ${siteConfig.brand.name}`,
+    title: () => `${t('cart.breadcrumb')} | ${getSiteConfig().brand.name}`,
     description: () => t('cart.emptyCopy')
   },
   '/wishlist': {
-    title: () => `${t('wishlist.breadcrumb')} | ${siteConfig.brand.name}`,
+    title: () => `${t('wishlist.breadcrumb')} | ${getSiteConfig().brand.name}`,
     description: () => t('wishlist.emptyCopy')
+  },
+  '/admin': {
+    title: () => `Admin | ${getSiteConfig().brand.name}`,
+    description: () => 'Configure editable storefront content for MilkTea Premium.'
   }
 };
 

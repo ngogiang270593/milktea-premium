@@ -7,7 +7,7 @@ import { applyLanguage } from './store/languageStore.js';
 import { initAppInteractions } from './utils/animations.js';
 import { registerServiceWorker, updateDocumentMeta } from './utils/seo.js';
 
-const appRoutes = new Set(['/', '/cart', '/menu', '/product', '/wishlist']);
+const appRoutes = new Set(['/', '/admin', '/cart', '/menu', '/product', '/wishlist']);
 
 function scrollToHashAfterRender() {
   const hash = window.location.hash;
@@ -85,6 +85,7 @@ document.addEventListener('click', (event) => {
 });
 
 window.addEventListener('popstate', renderCurrentRoute);
+window.addEventListener('site-config:updated', renderCurrentRoute);
 
 registerServiceWorker();
 renderCurrentRoute();

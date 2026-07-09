@@ -1,4 +1,4 @@
-import { siteConfig } from '../config/siteConfig.js';
+import { getSiteConfig } from '../config/siteConfig.js';
 import { NAV_LINKS } from '../utils/constants.js';
 import { LanguageSwitcher } from './LanguageSwitcher.js';
 import { ThemeToggle } from './ThemeToggle.js';
@@ -20,6 +20,7 @@ function iconButton(label, icon, extraClass = '', attributes = '') {
 }
 
 export function Navbar() {
+  const siteConfig = getSiteConfig();
   const searchIcon = `
     <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
       <path d="m21 21-4.35-4.35"></path>

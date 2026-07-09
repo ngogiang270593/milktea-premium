@@ -70,6 +70,7 @@ export function Input({
 export function Textarea({
   id,
   name,
+  value,
   placeholder = '',
   rows = 4,
   className = '',
@@ -83,7 +84,7 @@ export function Textarea({
       placeholder="${escapeAttribute(placeholder)}"
       class="${classNames('w-full rounded-3xl border border-gray-200 bg-gray-50 px-5 py-4 text-sm font-medium text-gray-800 outline-none transition focus:border-brand-green focus:bg-white focus:ring-2 focus:ring-brand-mint/50', className)}"
       ${attrs(attributes)}
-    ></textarea>
+    >${value !== undefined ? escapeHtml(value) : ''}</textarea>
   `;
 }
 

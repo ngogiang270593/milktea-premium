@@ -1,9 +1,10 @@
-import { getSiteContent, siteConfig } from '../config/siteConfig.js';
+import { getSiteConfig, getSiteContent } from '../config/siteConfig.js';
 import { getLanguage } from '../store/languageStore.js';
 import { t } from '../utils/i18n.js';
 
 export function Footer() {
   const language = getLanguage();
+  const siteConfig = getSiteConfig();
   const footer = getSiteContent(language).footer;
 
   return `

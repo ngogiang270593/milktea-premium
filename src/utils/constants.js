@@ -1,6 +1,8 @@
-import { siteConfig } from '../config/siteConfig.js';
+import { getSiteConfig } from '../config/siteConfig.js';
 
-export const BRAND_NAME = siteConfig.brand.name;
+const config = getSiteConfig();
+
+export const BRAND_NAME = config.brand.name;
 
 export const NAV_LINKS = [
   { label: 'Menu', labelKey: 'navbar.menu', href: '/menu' },
@@ -11,6 +13,6 @@ export const NAV_LINKS = [
   { label: 'Newsletter', labelKey: 'navbar.newsletter', href: '#newsletter' }
 ];
 
-export const CATEGORIES = siteConfig.content.en.home.categories.items;
-export const TESTIMONIALS = siteConfig.content.en.home.testimonials.items;
-export const INSTAGRAM_POSTS = siteConfig.content.en.home.instagram.items;
+export const CATEGORIES = config.content.en.home.categories.items;
+export const TESTIMONIALS = config.content.en.home.testimonials.items;
+export const INSTAGRAM_POSTS = config.content.en.home.instagram.items;

@@ -4,6 +4,7 @@ import TeaBar03 from '../assets/images/testimonials/tea-bar-03.jpg';
 import TeaBar04 from '../assets/images/testimonials/tea-bar-04.jpg';
 
 export const DEFAULT_SITE_LANGUAGE = 'vi';
+export const SITE_CONFIG_STORAGE_KEY = 'milktea-site-config';
 
 export const siteConfig = {
   brand: {
@@ -424,8 +425,66 @@ function interpolate(value, params = {}) {
   );
 }
 
+function isObject(value) {
+  return value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function mergeConfig(base, override) {
+  if (!isObject(base) || !isObject(override)) {
+    return override ?? base;
+  }
+
+  return Object.keys({ ...base, ...override }).reduce((result, key) => {
+    const baseValue = base[key];
+    const overrideValue = override[key];
+
+    result[key] = isObject(baseValue) && isObject(overrideValue)
+      ? mergeConfig(baseValue, overrideValue)
+      : overrideValue ?? baseValue;
+
+    return result;
+  }, {});
+}
+
+function canUseStorage() {
+  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+}
+
+export function getSiteConfigOverrides() {
+  if (!canUseStorage()) {
+    return {};
+  }
+
+  try {
+    const overrides = JSON.parse(window.localStorage.getItem(SITE_CONFIG_STORAGE_KEY) || '{}');
+
+    return isObject(overrides) ? overrides : {};
+  } catch {
+    return {};
+  }
+}
+
+export function setSiteConfigOverrides(overrides) {
+  if (canUseStorage()) {
+    window.localStorage.setItem(SITE_CONFIG_STORAGE_KEY, JSON.stringify(overrides));
+    window.dispatchEvent(new CustomEvent('site-config:updated', {
+      detail: {
+        overrides
+      }
+    }));
+  }
+
+  return overrides;
+}
+
+export function getSiteConfig() {
+  return mergeConfig(siteConfig, getSiteConfigOverrides());
+}
+
 export function getSiteContent(language = DEFAULT_SITE_LANGUAGE) {
-  return siteConfig.content[language] || siteConfig.content[DEFAULT_SITE_LANGUAGE];
+  const config = getSiteConfig();
+
+  return config.content[language] || config.content[DEFAULT_SITE_LANGUAGE];
 }
 
 export function siteText(path, language = DEFAULT_SITE_LANGUAGE, params = {}) {

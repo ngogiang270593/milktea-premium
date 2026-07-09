@@ -1,6 +1,7 @@
 import { DefaultLayout } from './layouts/DefaultLayout.js';
 
 const routes = {
+  '/admin': () => import('./pages/AdminPage.js').then((module) => module.AdminPage),
   '/cart': () => import('./pages/CartPage.js').then((module) => module.CartPage),
   '/menu': () => import('./pages/MenuPage.js').then((module) => module.MenuPage),
   '/product': () => import('./pages/ProductPage.js').then((module) => module.ProductPage),
