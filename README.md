@@ -1,75 +1,123 @@
 # MilkTea Premium
 
-Premium milk tea eCommerce template built with Vite, Tailwind CSS, and vanilla JavaScript.
+MilkTea Premium is a commercial-ready milk tea eCommerce storefront template built with Vite, Tailwind CSS, and vanilla JavaScript. It includes a polished homepage, menu filtering, product detail flow, cart, wishlist, checkout, multilingual support, dynamic themes, SEO/PWA setup, and a lightweight admin configuration panel.
 
-## Highlights
+## Features
 
-- Vanilla JavaScript SPA with lightweight route-based code splitting.
-- Tailwind CSS design language with reusable UI primitives.
-- Localized Vietnamese and English content.
-- CMS-ready `siteConfig` layer with local admin overrides.
-- Product listing, product detail, cart, wishlist, checkout, and order success flows.
-- Dynamic theme engine, SEO metadata, PWA manifest, and service worker fallback.
-- GSAP-powered motion that respects `prefers-reduced-motion`.
+- Premium responsive storefront for desktop, tablet, and mobile.
+- Vanilla JavaScript SPA routing with Vite build tooling.
+- Tailwind CSS styling with reusable design system primitives.
+- Homepage sections for hero, categories, featured products, promotion, testimonials, Instagram, and newsletter.
+- Menu page with search, sort, filters, grid/list view, mobile filter drawer, and pagination.
+- Product detail page with gallery, thumbnails, options, toppings, quantity controls, related products, and sticky mobile add-to-cart.
+- Cart, wishlist, checkout, and order success flows.
+- Vietnamese and English localization with persistent language preference.
+- Dynamic theme engine with multiple visual themes and localStorage persistence.
+- CMS-ready `siteConfig` layer for editable brand, content, contact, and social information.
+- `/admin` configuration panel for local storefront customization.
+- SEO metadata, Open Graph tags, Twitter cards, sitemap, robots file, PWA manifest, and offline fallback.
+- GSAP animations with reduced-motion support.
 
-## Requirements
+## Tech Stack
 
-- Node.js 18 or newer.
-- npm 9 or newer.
+- Vite
+- Vanilla JavaScript ES modules
+- Tailwind CSS
+- GSAP
+- localStorage persistence
+- PWA-ready public assets
 
-## Getting Started
+## Screenshots
+
+Add your final product screenshots to your marketplace listing or documentation package:
+
+| View | Recommended Image |
+| --- | --- |
+| Homepage | `screenshots/homepage-desktop.jpg` |
+| Mobile Homepage | `screenshots/homepage-mobile.jpg` |
+| Menu Page | `screenshots/menu-page.jpg` |
+| Product Detail | `screenshots/product-detail.jpg` |
+| Cart and Checkout | `screenshots/checkout-flow.jpg` |
+| Admin Panel | `screenshots/admin-panel.jpg` |
+
+## Installation
 
 ```bash
 npm install
-npm run dev
 ```
 
-The Vite development server will print the local URL.
-
-## Scripts
+## Development
 
 ```bash
 npm run dev
-npm run build
-npm run preview
 ```
 
-This project does not currently include an ESLint script. Production validation is performed with `npm run build`.
+Vite will print the local development URL in the terminal.
 
-## Project Structure
+## Build
+
+```bash
+npm run build
+```
+
+The production output is generated in `dist/`.
+
+## Folder Structure
 
 ```text
 src/
-  assets/       Static CSS and local image assets
+  assets/       CSS, images, icons, and visual assets
   components/   Reusable UI and feature components
   config/       CMS-ready site configuration
-  data/         Product, category, and review data
+  data/         Products, categories, and reviews
   design/       Design tokens
-  layouts/      Shared page layout
-  locales/      i18n dictionaries
+  layouts/      Shared layout shell
+  locales/      Translation dictionaries
   pages/        Route-level page modules
-  store/        Local persistence and preference stores
-  utils/        Shared helpers, animation, SEO, and filters
+  store/        Client-side persistence stores
+  utils/        Shared helpers, filters, SEO, images, and animation utilities
 ```
 
-## Admin Configuration
+See [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) for the full architecture guide.
 
-Open `/admin` to edit local storefront content:
+## Customization
 
-- Brand name and logo text
-- Hero title and subtitle
-- Contact information
-- Social links
-- Theme
-- Language
-- Homepage banner
+- Brand and editable business content: `src/config/siteConfig.js`
+- Themes: `src/store/themeStore.js`
+- Translations: `src/locales/vi.js` and `src/locales/en.js`
+- Products: `src/data/products.js`
+- Categories: `src/data/categories.js`
+- Images: `src/assets/images/`
+- Admin panel: `/admin`
 
-Changes are saved to `localStorage` under `milktea-site-config` and merged with `src/config/siteConfig.js`. This keeps the app ready for a future API or CMS response without changing component code.
+See [CUSTOMIZATION.md](CUSTOMIZATION.md) for detailed instructions.
 
-## Production Build
+## FAQ
 
-```bash
-npm run build
-```
+**Does this template require a backend?**  
+No. The current version is frontend-only and stores cart, wishlist, language, theme, and admin configuration in `localStorage`.
 
-The compiled application is emitted to `dist/`.
+**Can I connect it to a CMS later?**  
+Yes. The `siteConfig` shape is designed so a CMS/API response can replace local configuration without changing component markup.
+
+**Can I add more languages?**  
+Yes. Add a locale file in `src/locales/`, register it in `src/locales/index.js`, and add translated keys matching the existing dictionaries.
+
+**Can I change the color palette?**  
+Yes. Add or adjust theme definitions in `src/store/themeStore.js`.
+
+**Is this installable as a PWA?**  
+Yes. The project includes a manifest, icons, service worker registration, and offline fallback page.
+
+## Documentation
+
+- [INSTALL.md](INSTALL.md)
+- [CUSTOMIZATION.md](CUSTOMIZATION.md)
+- [DEPLOYMENT.md](DEPLOYMENT.md)
+- [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
+- [CHANGELOG.md](CHANGELOG.md)
+- [LICENSE](LICENSE)
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
