@@ -1,6 +1,8 @@
 import { CartContent } from '../components/cart/CartContent.js';
 import { updateLanguageSwitchers } from '../components/LanguageSwitcher.js';
 import { updateNavbarTranslations } from '../components/Navbar.js';
+import { ThemeProvider } from '../components/ThemeProvider.js';
+import { updateThemeSwitchers } from '../components/ThemeSwitcher.js';
 import { WishlistContent } from '../components/wishlist/WishlistContent.js';
 import { getProductById, MENU_PRODUCTS } from '../data/products.js';
 import {
@@ -31,6 +33,7 @@ import {
   getThemeLabel,
   getThemePreference,
   getResolvedTheme,
+  setThemePreference,
   subscribeToSystemTheme,
   THEMES
 } from '../store/themeStore.js';
@@ -94,10 +97,12 @@ function updateThemeControls() {
   document.querySelectorAll('[data-theme-label]').forEach((element) => {
     element.textContent = label;
   });
+
+  updateThemeSwitchers();
 }
 
 export function initThemeSystem() {
-  applyTheme();
+  ThemeProvider();
   updateThemeControls();
 
   if (window.themeSystemReady !== true) {
@@ -114,6 +119,19 @@ export function initThemeSystem() {
     button.dataset.themeReady = 'true';
     button.addEventListener('click', () => {
       const { preference } = cycleThemePreference();
+      showToast(`Theme set to ${getThemeLabel(preference)}`);
+    });
+  });
+
+  document.querySelectorAll('[data-theme-switcher]').forEach((select) => {
+    if (select.dataset.themeReady === 'true') {
+      return;
+    }
+
+    select.dataset.themeReady = 'true';
+    select.addEventListener('change', () => {
+      const { preference } = setThemePreference(select.value);
+      updateThemeControls();
       showToast(`Theme set to ${getThemeLabel(preference)}`);
     });
   });
