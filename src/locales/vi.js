@@ -33,7 +33,11 @@ export const vi = {
     viewCart: 'Xem giỏ hàng',
     close: 'Đóng',
     open: 'Mở',
-    viewMore: 'Xem thêm'
+    viewMore: 'Xem thêm',
+    view: 'Xem',
+    add: 'Thêm',
+    previous: 'Trước',
+    next: 'Sau'
   },
   common: {
     brand: 'MilkTea Premium',
@@ -42,6 +46,110 @@ export const vi = {
     language: 'Ngôn ngữ',
     english: 'Tiếng Anh',
     vietnamese: 'Tiếng Việt'
+  },
+  menu: {
+    breadcrumbAria: 'Đường dẫn',
+    eyebrow: 'Thực đơn cao cấp',
+    title: 'Khám phá thức uống thủ công của chúng tôi.',
+    productCountPrefix: 'Có',
+    productCountSuffix: 'sản phẩm',
+    controlsAria: 'Bộ điều khiển thực đơn',
+    searchLabel: 'Tìm trong thực đơn',
+    searchPlaceholder: 'Tìm trà sữa, cà phê, topping...',
+    viewSwitchAria: 'Chọn kiểu hiển thị sản phẩm',
+    gridView: 'Lưới',
+    listView: 'Danh sách',
+    gridViewAria: 'Hiển thị sản phẩm dạng lưới',
+    listViewAria: 'Hiển thị sản phẩm dạng danh sách',
+    emptyState: 'Không có sản phẩm phù hợp với bộ lọc.',
+    loadingState: 'Đang tải sản phẩm...',
+    paginationAria: 'Phân trang thực đơn',
+    previousPageAria: 'Trang trước',
+    nextPageAria: 'Trang sau'
+  },
+  products: {
+    resultsAria: 'Kết quả sản phẩm',
+    discountAria: 'Giảm {discount} phần trăm',
+    addWishlistAria: 'Thêm {name} vào danh sách yêu thích',
+    ratingAria: '{rating} trên 5 sao từ {reviews} đánh giá',
+    reviewCount: '{count} đánh giá',
+    soldCount: 'Đã bán {count}',
+    viewDetailsAria: 'Xem chi tiết {name}',
+    addCartAria: 'Thêm {name} vào giỏ hàng',
+    items: {
+      'royal-brown-sugar': { name: 'Trà sữa Đường nâu Hoàng gia' },
+      'jasmine-cloud': { name: 'Trà sữa Lài Mây' },
+      'tropical-hibiscus-menu': { name: 'Trà trái cây Hibiscus Nhiệt đới' },
+      'yuzu-peach-tea': { name: 'Trà xanh Yuzu Đào' },
+      'espresso-boba-latte': { name: 'Latte Espresso Trân châu' },
+      'matcha-vanilla-dream': { name: 'Vanilla Matcha Mơ màng' },
+      'strawberry-cloud': { name: 'Smoothie Dâu Mây' },
+      'mango-sago': { name: 'Smoothie Xoài Sago' },
+      'earl-grey-cheesecake': { name: 'Cheesecake Earl Grey' },
+      'honey-pearl-cup': { name: 'Ly trân châu mật ong' },
+      'tiramisu-cream-coffee': { name: 'Cà phê Kem Tiramisu' },
+      'lychee-rose-tea': { name: 'Trà Vải Hoa hồng' }
+    }
+  },
+  filters: {
+    title: 'Bộ lọc',
+    openAria: 'Mở bộ lọc thực đơn',
+    closeAria: 'Đóng bộ lọc',
+    desktopAria: 'Bộ lọc thực đơn',
+    desktopRegionAria: 'Bộ lọc trên máy tính',
+    mobileAria: 'Bộ lọc trên di động',
+    categories: 'Danh mục',
+    priceRange: 'Khoảng giá',
+    maximumPrice: 'Giá tối đa',
+    size: 'Kích cỡ',
+    rating: 'Đánh giá',
+    sugarLevel: 'Mức đường',
+    iceLevel: 'Mức đá',
+    availability: 'Tình trạng',
+    sugarValue: '{value} đường',
+    categoryOptions: {
+      'milk-tea': 'Trà sữa',
+      'fruit-tea': 'Trà trái cây',
+      coffee: 'Cà phê',
+      smoothie: 'Smoothie',
+      cake: 'Bánh ngọt',
+      topping: 'Topping'
+    },
+    sizeOptions: {
+      Regular: 'Vừa',
+      Large: 'Lớn'
+    },
+    ratingOptions: {
+      '4_8': 'Từ 4.8 trở lên',
+      '4_7': 'Từ 4.7 trở lên',
+      '4_5': 'Từ 4.5 trở lên'
+    },
+    iceOptions: {
+      'No ice': 'Không đá',
+      'Less ice': 'Ít đá',
+      'Regular ice': 'Đá thường'
+    },
+    availabilityOptions: {
+      'Available now': 'Đang có sẵn',
+      Seasonal: 'Theo mùa',
+      'Pickup only': 'Chỉ nhận tại cửa hàng'
+    }
+  },
+  sort: {
+    label: 'Sắp xếp sản phẩm',
+    options: {
+      featured: 'Nổi bật',
+      popular: 'Phổ biến nhất',
+      'rating-desc': 'Đánh giá cao nhất',
+      'price-asc': 'Giá: thấp đến cao',
+      'price-desc': 'Giá: cao đến thấp',
+      newest: 'Mới nhất'
+    }
+  },
+  badges: {
+    new: 'Mới',
+    hot: 'Hot',
+    bestSeller: 'Bán chạy'
   },
   home: {
     hero: {

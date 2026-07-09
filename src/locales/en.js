@@ -33,7 +33,11 @@ export const en = {
     viewCart: 'View Cart',
     close: 'Close',
     open: 'Open',
-    viewMore: 'View More'
+    viewMore: 'View More',
+    view: 'View',
+    add: 'Add',
+    previous: 'Prev',
+    next: 'Next'
   },
   common: {
     brand: 'MilkTea Premium',
@@ -42,6 +46,110 @@ export const en = {
     language: 'Language',
     english: 'English',
     vietnamese: 'Vietnamese'
+  },
+  menu: {
+    breadcrumbAria: 'Breadcrumb',
+    eyebrow: 'Premium Menu',
+    title: 'Explore our handcrafted drinks.',
+    productCountPrefix: '',
+    productCountSuffix: 'products available',
+    controlsAria: 'Menu controls',
+    searchLabel: 'Search menu',
+    searchPlaceholder: 'Search milk tea, coffee, toppings...',
+    viewSwitchAria: 'Choose product view',
+    gridView: 'Grid',
+    listView: 'List',
+    gridViewAria: 'Show products as grid',
+    listViewAria: 'Show products as list',
+    emptyState: 'No products match those filters.',
+    loadingState: 'Loading menu products...',
+    paginationAria: 'Menu pagination',
+    previousPageAria: 'Previous page',
+    nextPageAria: 'Next page'
+  },
+  products: {
+    resultsAria: 'Product results',
+    discountAria: '{discount} percent discount',
+    addWishlistAria: 'Add {name} to wishlist',
+    ratingAria: '{rating} out of 5 stars from {reviews} reviews',
+    reviewCount: '{count} reviews',
+    soldCount: '{count} sold',
+    viewDetailsAria: 'View details for {name}',
+    addCartAria: 'Add {name} to cart',
+    items: {
+      'royal-brown-sugar': { name: 'Royal Brown Sugar Milk Tea' },
+      'jasmine-cloud': { name: 'Jasmine Cloud Milk Tea' },
+      'tropical-hibiscus-menu': { name: 'Tropical Hibiscus Fruit Tea' },
+      'yuzu-peach-tea': { name: 'Yuzu Peach Green Tea' },
+      'espresso-boba-latte': { name: 'Espresso Boba Latte' },
+      'matcha-vanilla-dream': { name: 'Vanilla Matcha Dream' },
+      'strawberry-cloud': { name: 'Strawberry Cloud Smoothie' },
+      'mango-sago': { name: 'Mango Sago Smoothie' },
+      'earl-grey-cheesecake': { name: 'Earl Grey Cheesecake' },
+      'honey-pearl-cup': { name: 'Honey Pearl Topping Cup' },
+      'tiramisu-cream-coffee': { name: 'Tiramisu Cream Coffee' },
+      'lychee-rose-tea': { name: 'Lychee Rose Fruit Tea' }
+    }
+  },
+  filters: {
+    title: 'Filters',
+    openAria: 'Open menu filters',
+    closeAria: 'Close filters',
+    desktopAria: 'Menu filters',
+    desktopRegionAria: 'Desktop filters',
+    mobileAria: 'Mobile filters',
+    categories: 'Categories',
+    priceRange: 'Price range',
+    maximumPrice: 'Maximum price',
+    size: 'Size',
+    rating: 'Rating',
+    sugarLevel: 'Sugar level',
+    iceLevel: 'Ice level',
+    availability: 'Availability',
+    sugarValue: '{value} sugar',
+    categoryOptions: {
+      'milk-tea': 'Milk Tea',
+      'fruit-tea': 'Fruit Tea',
+      coffee: 'Coffee',
+      smoothie: 'Smoothie',
+      cake: 'Cake',
+      topping: 'Topping'
+    },
+    sizeOptions: {
+      Regular: 'Regular',
+      Large: 'Large'
+    },
+    ratingOptions: {
+      '4_8': '4.8 and up',
+      '4_7': '4.7 and up',
+      '4_5': '4.5 and up'
+    },
+    iceOptions: {
+      'No ice': 'No ice',
+      'Less ice': 'Less ice',
+      'Regular ice': 'Regular ice'
+    },
+    availabilityOptions: {
+      'Available now': 'Available now',
+      Seasonal: 'Seasonal',
+      'Pickup only': 'Pickup only'
+    }
+  },
+  sort: {
+    label: 'Sort products',
+    options: {
+      featured: 'Featured',
+      popular: 'Most popular',
+      'rating-desc': 'Highest rated',
+      'price-asc': 'Price: Low to high',
+      'price-desc': 'Price: High to low',
+      newest: 'Newest'
+    }
+  },
+  badges: {
+    new: 'New',
+    hot: 'Hot',
+    bestSeller: 'Best Seller'
   },
   home: {
     hero: {
