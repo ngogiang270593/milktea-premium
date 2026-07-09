@@ -1,8 +1,9 @@
-import { INSTAGRAM_POSTS, TESTIMONIALS } from '../utils/constants.js';
+import { getSiteContent, siteConfig } from '../config/siteConfig.js';
+import { getLanguage } from '../store/languageStore.js';
 import { imageAttributes } from '../utils/images.js';
 import { t } from '../utils/i18n.js';
 
-function testimonialCard({ name, rating }, index) {
+function testimonialCard({ name, quote, rating }) {
   const initials = name
     .split(' ')
     .map((part) => part.at(0))
@@ -12,7 +13,7 @@ function testimonialCard({ name, rating }, index) {
   return `
     <article class="testimonial-card rounded-[2rem] border border-gray-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <div class="mb-6 text-5xl leading-none text-brand-gold" aria-hidden="true">&ldquo;</div>
-      <p class="text-base leading-8 text-gray-700">${t(`home.testimonials.items.${index}.quote`)}</p>
+      <p class="text-base leading-8 text-gray-700">${quote}</p>
       <div class="mt-8 flex items-center justify-between gap-4 text-sm text-gray-500">
         <span class="flex min-w-0 items-center gap-3">
           <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-mint/70 text-sm font-extrabold text-brand-green" aria-hidden="true">${initials}</span>
@@ -27,9 +28,7 @@ function testimonialCard({ name, rating }, index) {
   `;
 }
 
-function instagramImage({ src }, index) {
-  const label = t(`home.instagram.items.${index}.label`);
-
+function instagramImage({ label, src }) {
   return `
     <figure class="group overflow-hidden rounded-[2rem] bg-gray-100 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <img ${imageAttributes(src, {
@@ -45,26 +44,28 @@ function instagramImage({ src }, index) {
 }
 
 export function Testimonials() {
+  const { testimonials, instagram } = getSiteContent(getLanguage()).home;
+
   return `
     <section id="testimonials" class="mx-auto max-w-7xl px-6 py-20 lg:px-8" aria-labelledby="testimonials-title" data-reveal>
       <div class="text-center">
-        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('home.testimonials.eyebrow')}</p>
-        <h2 id="testimonials-title" class="section-heading mt-4">${t('home.testimonials.title')}</h2>
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${testimonials.eyebrow}</p>
+        <h2 id="testimonials-title" class="section-heading mt-4">${testimonials.title}</h2>
       </div>
       <div class="mt-12 grid gap-6 lg:grid-cols-3">
-        ${TESTIMONIALS.map(testimonialCard).join('')}
+        ${testimonials.items.map(testimonialCard).join('')}
       </div>
     </section>
     <section id="instagram" class="mx-auto max-w-7xl px-6 py-20 lg:px-8" aria-labelledby="instagram-title" data-reveal>
       <div class="md:flex md:items-end md:justify-between md:gap-10">
         <div>
-          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('home.instagram.eyebrow')}</p>
-          <h2 id="instagram-title" class="section-heading mt-4">${t('home.instagram.title')}</h2>
+          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${instagram.eyebrow}</p>
+          <h2 id="instagram-title" class="section-heading mt-4">${instagram.title}</h2>
         </div>
-        <a href="https://www.instagram.com" target="_blank" rel="noreferrer" class="btn-secondary mt-6 min-h-12 px-8 focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2 md:mt-0" aria-label="${t('home.instagram.followAria')}">${t('home.instagram.follow')}</a>
+        <a href="${siteConfig.social.instagram}" target="_blank" rel="noreferrer" class="btn-secondary mt-6 min-h-12 px-8 focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2 md:mt-0" aria-label="${instagram.followAria}">${instagram.follow}</a>
       </div>
       <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        ${INSTAGRAM_POSTS.map(instagramImage).join('')}
+        ${instagram.items.map(instagramImage).join('')}
       </div>
     </section>
   `;

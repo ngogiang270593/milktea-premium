@@ -1,3 +1,5 @@
+import { getSiteContent } from '../config/siteConfig.js';
+import { getLanguage } from '../store/languageStore.js';
 import { POPULAR_SEARCHES } from '../store/searchStore.js';
 
 function searchChip(term, type) {
@@ -5,6 +7,8 @@ function searchChip(term, type) {
 }
 
 export function SearchOverlay() {
+  const search = getSiteContent(getLanguage()).search;
+
   return `
     <div class="search-overlay" data-search-overlay hidden aria-hidden="true">
       <div class="search-scrim" data-search-close></div>
@@ -25,7 +29,7 @@ export function SearchOverlay() {
             <path d="m21 21-4.35-4.35"></path>
             <circle cx="11" cy="11" r="7"></circle>
           </svg>
-          <input id="global-search" type="search" placeholder="Search milk tea, matcha, coffee..." autocomplete="off" data-search-input />
+          <input id="global-search" type="search" placeholder="${search.placeholder}" autocomplete="off" data-search-input />
         </div>
 
         <div class="search-meta" data-search-meta>
@@ -47,7 +51,7 @@ export function SearchOverlay() {
         <div class="search-results" data-search-results role="listbox" aria-label="Search results" aria-live="polite"></div>
         <div class="search-empty" data-search-empty hidden>
           <h3>No results found</h3>
-          <p>Try searching for milk tea, matcha, fruit tea, coffee, or toppings.</p>
+          <p>${search.emptyCopy}</p>
         </div>
       </section>
     </div>

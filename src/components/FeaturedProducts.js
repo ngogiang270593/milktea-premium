@@ -1,4 +1,6 @@
+import { getSiteContent } from '../config/siteConfig.js';
 import { FEATURED_PRODUCTS } from '../data/products.js';
+import { getLanguage } from '../store/languageStore.js';
 import { imageAttributes } from '../utils/images.js';
 import { t } from '../utils/i18n.js';
 
@@ -6,15 +8,12 @@ function formatPrice(price) {
   return `$${price.toFixed(2)}`;
 }
 
-function productText(product, key) {
-  return t(`home.featured.items.${product.id}.${key}`);
-}
-
-function featuredCard(product) {
-  const title = productText(product, 'title');
-  const description = productText(product, 'description');
-  const badge = productText(product, 'badge');
-  const label = t(`home.featured.labels.${product.label}`);
+function featuredCard(product, featuredContent) {
+  const productContent = featuredContent.items[product.id];
+  const title = productContent.title;
+  const description = productContent.description;
+  const badge = productContent.badge;
+  const label = featuredContent.labels[product.label];
 
   return `
     <article class="product-card group flex h-full flex-col" data-product-card>
@@ -73,6 +72,8 @@ function featuredCard(product) {
 }
 
 export function FeaturedProducts() {
+  const featured = getSiteContent(getLanguage()).home.featured;
+
   return `
     <section id="order" class="featured-products-section relative overflow-hidden py-20 lg:py-24" aria-labelledby="featured-title" data-reveal>
       <div class="pointer-events-none absolute left-[-8rem] top-20 h-72 w-72 rounded-full bg-brand-peach/30 blur-3xl" aria-hidden="true"></div>
@@ -80,14 +81,14 @@ export function FeaturedProducts() {
 
       <div id="featured" class="relative mx-auto max-w-7xl px-6 lg:flex lg:items-end lg:justify-between lg:gap-10 lg:px-8">
         <div>
-          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('home.featured.eyebrow')}</p>
-          <h2 id="featured-title" class="section-heading mt-4">${t('home.featured.title')}</h2>
+          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${featured.eyebrow}</p>
+          <h2 id="featured-title" class="section-heading mt-4">${featured.title}</h2>
         </div>
-        <p class="section-copy mt-6 max-w-xl text-gray-600 lg:mt-0">${t('home.featured.copy')}</p>
+        <p class="section-copy mt-6 max-w-xl text-gray-600 lg:mt-0">${featured.copy}</p>
       </div>
 
       <div class="relative mx-auto mt-12 grid max-w-7xl gap-6 px-6 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
-        ${FEATURED_PRODUCTS.map(featuredCard).join('')}
+        ${FEATURED_PRODUCTS.map((product) => featuredCard(product, featured)).join('')}
       </div>
     </section>
   `;

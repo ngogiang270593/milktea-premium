@@ -1,4 +1,5 @@
-import { CATEGORIES } from '../utils/constants.js';
+import { getSiteContent } from '../config/siteConfig.js';
+import { getLanguage } from '../store/languageStore.js';
 import { t } from '../utils/i18n.js';
 
 const icons = {
@@ -12,20 +13,18 @@ const icons = {
 
 function categoryCard(category, index) {
   const activeClass = index === 0 ? ' is-active' : '';
-  const title = t(`home.categories.items.${category.value}.title`);
-  const description = t(`home.categories.items.${category.value}.description`);
   const productCount = t('home.categories.productCount', { count: category.count });
 
   return `
-    <button type="button" data-category="${category.value}" class="category-card ripple-button${activeClass}" aria-pressed="${index === 0}" aria-label="${t('home.categories.cardAria', { name: title, count: category.count })}">
+    <button type="button" data-category="${category.value}" class="category-card ripple-button${activeClass}" aria-pressed="${index === 0}" aria-label="${t('home.categories.cardAria', { name: category.title, count: category.count })}">
       <span class="category-card-glow bg-gradient-to-br ${category.toneClass}" aria-hidden="true"></span>
       <span class="category-icon-wrap bg-gradient-to-br ${category.toneClass}" aria-hidden="true">
         ${icons[category.icon]}
       </span>
       <span class="mt-7 flex flex-1 items-start justify-between gap-4">
         <span class="text-left">
-          <span class="block text-xl font-bold text-[#1f1710]">${title}</span>
-          <span class="mt-3 block text-sm leading-6 text-[#6f5f51]">${description}</span>
+          <span class="block text-xl font-bold text-[#1f1710]">${category.title}</span>
+          <span class="mt-3 block text-sm leading-6 text-[#6f5f51]">${category.description}</span>
         </span>
         <span class="category-count">${category.count}</span>
       </span>
@@ -38,6 +37,8 @@ function categoryCard(category, index) {
 }
 
 export function Categories() {
+  const categories = getSiteContent(getLanguage()).home.categories;
+
   return `
     <section id="categories" class="category-section relative overflow-hidden py-20 lg:py-24" aria-labelledby="categories-title" data-reveal>
       <div class="pointer-events-none absolute left-[-8rem] top-10 h-72 w-72 rounded-full bg-brand-mint/50 blur-3xl" aria-hidden="true"></div>
@@ -46,19 +47,19 @@ export function Categories() {
       <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div class="md:flex md:items-end md:justify-between md:gap-10">
           <div>
-            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('home.categories.eyebrow')}</p>
-            <h2 id="categories-title" class="section-heading mt-4">${t('home.categories.title')}</h2>
-            <p class="section-copy mt-4 leading-7">${t('home.categories.copy')}</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${categories.eyebrow}</p>
+            <h2 id="categories-title" class="section-heading mt-4">${categories.title}</h2>
+            <p class="section-copy mt-4 leading-7">${categories.copy}</p>
           </div>
-          <p class="mt-8 max-w-sm text-sm leading-6 text-[#7b6a5a] md:mt-0">${t('home.categories.sideCopy')}</p>
+          <p class="mt-8 max-w-sm text-sm leading-6 text-[#7b6a5a] md:mt-0">${categories.sideCopy}</p>
         </div>
 
         <div class="category-scroll mt-12" role="group" aria-label="${t('home.categories.groupAria')}">
-          ${CATEGORIES.map(categoryCard).join('')}
+          ${categories.items.map(categoryCard).join('')}
         </div>
 
         <div class="mt-6 flex justify-center gap-2 md:hidden" aria-hidden="true">
-          ${CATEGORIES.map((_, index) => `<span class="category-scroll-dot${index === 0 ? ' is-active' : ''}"></span>`).join('')}
+          ${categories.items.map((_, index) => `<span class="category-scroll-dot${index === 0 ? ' is-active' : ''}"></span>`).join('')}
         </div>
       </div>
     </section>

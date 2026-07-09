@@ -1,8 +1,7 @@
+import { siteConfig } from '../config/siteConfig.js';
+
 export const vi = {
-  seo: {
-    title: 'MilkTea Premium - Trà sữa cao cấp',
-    description: 'MilkTea Premium - Trà sữa cao cấp, nguyên liệu tuyển chọn, giao hàng nhanh, trải nghiệm thưởng thức tuyệt hảo.'
-  },
+  seo: siteConfig.seo.vi,
   navbar: {
     home: 'Trang chủ',
     menu: 'Thực đơn',
@@ -43,7 +42,7 @@ export const vi = {
     share: 'Chia sẻ'
   },
   common: {
-    brand: 'MilkTea Premium',
+    brand: siteConfig.brand.name,
     loading: 'Đang tải...',
     noData: 'Không có dữ liệu',
     language: 'Ngôn ngữ',
@@ -518,9 +517,9 @@ export const vi = {
   },
   orderSuccess: {
     eyebrow: 'Đặt hàng thành công',
-    title: 'Cảm ơn bạn đã chọn MilkTea Premium.',
-    orderNumber: 'Mã đơn hàng: MT-2026-001',
-    copy: 'Đơn hàng mẫu đã được ghi nhận trên giao diện. Khi tích hợp backend, trạng thái và mã đơn sẽ được cập nhật tự động.',
+    title: siteConfig.content.vi.orderSuccess.title,
+    orderNumber: siteConfig.content.vi.orderSuccess.orderNumber,
+    copy: siteConfig.content.vi.orderSuccess.copy,
     continueShopping: 'Tiếp tục mua sắm',
     backToCart: 'Quay lại giỏ hàng'
   },
