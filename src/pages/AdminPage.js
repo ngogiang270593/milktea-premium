@@ -4,7 +4,7 @@ import { getAvailableLanguages, getLanguage } from '../store/languageStore.js';
 import { getSelectableThemes, getResolvedTheme, getThemePreference } from '../store/themeStore.js';
 import { t } from '../utils/i18n.js';
 
-function field({ label, name, value = '', type = 'text', autocomplete, required = false }) {
+function renderInputField({ label, name, value = '', type = 'text', autocomplete, required = false }) {
   return `
     <label class="grid gap-2">
       <span class="text-sm font-bold text-[#1f1710]">${label}</span>
@@ -22,7 +22,7 @@ function field({ label, name, value = '', type = 'text', autocomplete, required 
   `;
 }
 
-function textField({ label, name, value = '', rows = 4 }) {
+function renderTextareaField({ label, name, value = '', rows = 4 }) {
   return `
     <label class="grid gap-2">
       <span class="text-sm font-bold text-[#1f1710]">${label}</span>
@@ -38,7 +38,7 @@ function textField({ label, name, value = '', rows = 4 }) {
   `;
 }
 
-function selectField({ label, name, value, options }) {
+function renderSelectField({ label, name, value, options }) {
   return `
     <label class="grid gap-2">
       <span class="text-sm font-bold text-[#1f1710]">${label}</span>
@@ -54,7 +54,7 @@ function selectField({ label, name, value, options }) {
   `;
 }
 
-function section({ title, description, children }) {
+function renderAdminSection({ title, description, children }) {
   return Card({
     as: 'section',
     className: 'p-6 md:p-8',
@@ -70,6 +70,11 @@ function section({ title, description, children }) {
   });
 }
 
+/**
+ * Renders the local configuration panel used to preview CMS-ready storefront content.
+ *
+ * @returns {string} Admin page markup.
+ */
 export function AdminPage() {
   const language = getLanguage();
   const siteConfig = getSiteConfig();
@@ -105,63 +110,63 @@ export function AdminPage() {
         </div>
 
         <form class="mt-10 grid gap-6" data-admin-config-form>
-          ${section({
+          ${renderAdminSection({
             title: 'Brand',
             description: 'Editable brand identity used across the storefront.',
             children: `
-              ${field({ label: 'Brand Name', name: 'brand.name', value: siteConfig.brand.name, required: true })}
-              ${field({ label: 'Logo Text', name: 'brand.logoText', value: siteConfig.brand.logoText, required: true })}
+              ${renderInputField({ label: 'Brand Name', name: 'brand.name', value: siteConfig.brand.name, required: true })}
+              ${renderInputField({ label: 'Logo Text', name: 'brand.logoText', value: siteConfig.brand.logoText, required: true })}
             `
           })}
 
-          ${section({
+          ${renderAdminSection({
             title: 'Homepage Hero',
             description: `Content for the currently active language: ${language.toUpperCase()}.`,
             children: `
-              ${field({ label: 'Hero Title', name: `content.${language}.home.hero.title`, value: hero.title, required: true })}
-              ${textField({ label: 'Hero Subtitle', name: `content.${language}.home.hero.subtitle`, value: hero.subtitle, rows: 5 })}
+              ${renderInputField({ label: 'Hero Title', name: `content.${language}.home.hero.title`, value: hero.title, required: true })}
+              ${renderTextareaField({ label: 'Hero Subtitle', name: `content.${language}.home.hero.subtitle`, value: hero.subtitle, rows: 5 })}
             `
           })}
 
-          ${section({
+          ${renderAdminSection({
             title: 'Homepage Banner',
             description: 'Promotion banner copy shown on the homepage.',
             children: `
-              ${field({ label: 'Banner Label', name: `content.${language}.home.promotion.eyebrow`, value: promotion.eyebrow })}
-              ${field({ label: 'Banner Title', name: `content.${language}.home.promotion.title`, value: promotion.title })}
-              ${textField({ label: 'Banner Description', name: `content.${language}.home.promotion.copy`, value: promotion.copy, rows: 4 })}
-              ${field({ label: 'Banner CTA', name: `content.${language}.home.promotion.cta`, value: promotion.cta })}
+              ${renderInputField({ label: 'Banner Label', name: `content.${language}.home.promotion.eyebrow`, value: promotion.eyebrow })}
+              ${renderInputField({ label: 'Banner Title', name: `content.${language}.home.promotion.title`, value: promotion.title })}
+              ${renderTextareaField({ label: 'Banner Description', name: `content.${language}.home.promotion.copy`, value: promotion.copy, rows: 4 })}
+              ${renderInputField({ label: 'Banner CTA', name: `content.${language}.home.promotion.cta`, value: promotion.cta })}
             `
           })}
 
-          ${section({
+          ${renderAdminSection({
             title: 'Contact Information',
             description: 'Customer-facing store contact details.',
             children: `
-              ${field({ label: 'Email', name: 'business.email', type: 'email', value: siteConfig.business.email, autocomplete: 'email' })}
-              ${field({ label: 'Phone', name: 'business.phone', type: 'tel', value: siteConfig.business.phone, autocomplete: 'tel' })}
-              ${field({ label: 'Address', name: `business.address.${language}`, value: siteConfig.business.address[language] || '' })}
-              ${field({ label: 'Opening Hours', name: `business.openingHours.${language}`, value: siteConfig.business.openingHours[language] || '' })}
+              ${renderInputField({ label: 'Email', name: 'business.email', type: 'email', value: siteConfig.business.email, autocomplete: 'email' })}
+              ${renderInputField({ label: 'Phone', name: 'business.phone', type: 'tel', value: siteConfig.business.phone, autocomplete: 'tel' })}
+              ${renderInputField({ label: 'Address', name: `business.address.${language}`, value: siteConfig.business.address[language] || '' })}
+              ${renderInputField({ label: 'Opening Hours', name: `business.openingHours.${language}`, value: siteConfig.business.openingHours[language] || '' })}
             `
           })}
 
-          ${section({
+          ${renderAdminSection({
             title: 'Social Links',
             description: 'External links used by the footer and social sections.',
             children: `
-              ${field({ label: 'Facebook', name: 'social.facebook', type: 'url', value: siteConfig.social.facebook })}
-              ${field({ label: 'Instagram', name: 'social.instagram', type: 'url', value: siteConfig.social.instagram })}
-              ${field({ label: 'TikTok', name: 'social.tiktok', type: 'url', value: siteConfig.social.tiktok })}
-              ${field({ label: 'YouTube', name: 'social.youtube', type: 'url', value: siteConfig.social.youtube })}
+              ${renderInputField({ label: 'Facebook', name: 'social.facebook', type: 'url', value: siteConfig.social.facebook })}
+              ${renderInputField({ label: 'Instagram', name: 'social.instagram', type: 'url', value: siteConfig.social.instagram })}
+              ${renderInputField({ label: 'TikTok', name: 'social.tiktok', type: 'url', value: siteConfig.social.tiktok })}
+              ${renderInputField({ label: 'YouTube', name: 'social.youtube', type: 'url', value: siteConfig.social.youtube })}
             `
           })}
 
-          ${section({
+          ${renderAdminSection({
             title: 'Preferences',
             description: 'Preview storefront theme and language without a page reload.',
             children: `
-              ${selectField({ label: 'Theme', name: 'adminTheme', value: activeTheme, options: themeOptions })}
-              ${selectField({ label: 'Language', name: 'adminLanguage', value: language, options: languageOptions })}
+              ${renderSelectField({ label: 'Theme', name: 'adminTheme', value: activeTheme, options: themeOptions })}
+              ${renderSelectField({ label: 'Language', name: 'adminLanguage', value: language, options: languageOptions })}
             `
           })}
 

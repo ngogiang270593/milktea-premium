@@ -27,6 +27,12 @@ function normalizeProduct(product) {
   };
 }
 
+/**
+ * Adds a product to the persisted wishlist when it is not already present.
+ *
+ * @param {Record<string, *>} product Product-like object.
+ * @returns {Record<string, *>[]} Updated wishlist snapshot.
+ */
 export function addWishlistItem(product) {
   const item = normalizeProduct(product);
 
@@ -38,12 +44,24 @@ export function addWishlistItem(product) {
   return getWishlist();
 }
 
+/**
+ * Removes a product from the persisted wishlist.
+ *
+ * @param {string} id Product id.
+ * @returns {Record<string, *>[]} Updated wishlist snapshot.
+ */
 export function removeWishlistItem(id) {
   wishlist = wishlist.filter((item) => item.id !== id);
   saveWishlist();
   return getWishlist();
 }
 
+/**
+ * Toggles a product in the wishlist.
+ *
+ * @param {Record<string, *>} product Product-like object.
+ * @returns {{active: boolean, wishlist: Record<string, *>[]}} Toggle state and snapshot.
+ */
 export function toggleWishlistItem(product) {
   if (isWishlistItem(product.id)) {
     removeWishlistItem(product.id);
@@ -54,20 +72,41 @@ export function toggleWishlistItem(product) {
   return { active: true, wishlist: getWishlist() };
 }
 
+/**
+ * Clears all wishlist items.
+ *
+ * @returns {Record<string, *>[]} Empty wishlist snapshot.
+ */
 export function clearWishlist() {
   wishlist = [];
   saveWishlist();
   return getWishlist();
 }
 
+/**
+ * Returns an immutable wishlist snapshot.
+ *
+ * @returns {Record<string, *>[]} Wishlist snapshot.
+ */
 export function getWishlist() {
   return wishlist.map((item) => ({ ...item }));
 }
 
+/**
+ * Checks whether a product is currently saved.
+ *
+ * @param {string} id Product id.
+ * @returns {boolean} True when saved.
+ */
 export function isWishlistItem(id) {
   return wishlist.some((item) => item.id === id);
 }
 
+/**
+ * Counts wishlist items.
+ *
+ * @returns {number} Wishlist item count.
+ */
 export function getWishlistCount() {
   return wishlist.length;
 }

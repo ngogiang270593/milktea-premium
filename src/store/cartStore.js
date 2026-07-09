@@ -33,6 +33,12 @@ function normalizeProduct(product) {
   };
 }
 
+/**
+ * Adds a product or product variant to the persisted cart.
+ *
+ * @param {Record<string, *>} product Product-like object.
+ * @returns {Record<string, *>[]} Updated cart snapshot.
+ */
 export function addItem(product) {
   const item = normalizeProduct(product);
   const existingItem = cart.find((cartItem) => cartItem.id === item.id && cartItem.variant === item.variant);
@@ -47,12 +53,24 @@ export function addItem(product) {
   return getCart();
 }
 
+/**
+ * Removes all cart entries with the provided product id.
+ *
+ * @param {string} id Product id.
+ * @returns {Record<string, *>[]} Updated cart snapshot.
+ */
 export function removeItem(id) {
   cart = cart.filter((item) => item.id !== id);
   saveCart();
   return getCart();
 }
 
+/**
+ * Increases the quantity for matching cart entries.
+ *
+ * @param {string} id Product id.
+ * @returns {Record<string, *>[]} Updated cart snapshot.
+ */
 export function increaseQuantity(id) {
   cart = cart.map((item) => (
     item.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -61,6 +79,12 @@ export function increaseQuantity(id) {
   return getCart();
 }
 
+/**
+ * Decreases quantity and removes entries that reach zero.
+ *
+ * @param {string} id Product id.
+ * @returns {Record<string, *>[]} Updated cart snapshot.
+ */
 export function decreaseQuantity(id) {
   cart = cart
     .map((item) => (
@@ -71,33 +95,68 @@ export function decreaseQuantity(id) {
   return getCart();
 }
 
+/**
+ * Clears the persisted cart.
+ *
+ * @returns {Record<string, *>[]} Empty cart snapshot.
+ */
 export function clearCart() {
   cart = [];
   saveCart();
   return getCart();
 }
 
+/**
+ * Returns an immutable snapshot of cart items.
+ *
+ * @returns {Record<string, *>[]} Cart snapshot.
+ */
 export function getCart() {
   return cart.map((item) => ({ ...item }));
 }
 
+/**
+ * Calculates the cart subtotal before shipping.
+ *
+ * @returns {number} Subtotal amount.
+ */
 export function getSubtotal() {
   return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 }
 
+/**
+ * Calculates savings from old prices.
+ *
+ * @returns {number} Discount amount.
+ */
 export function getDiscount() {
   return cart.reduce((total, item) => total + Math.max(0, item.oldPrice - item.price) * item.quantity, 0);
 }
 
+/**
+ * Calculates shipping fee from the current subtotal.
+ *
+ * @returns {number} Shipping amount.
+ */
 export function getShipping() {
   const subtotal = getSubtotal();
   return subtotal === 0 || subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
 }
 
+/**
+ * Calculates the current order total.
+ *
+ * @returns {number} Total amount.
+ */
 export function getTotal() {
   return getSubtotal() + getShipping();
 }
 
+/**
+ * Counts all units in the cart.
+ *
+ * @returns {number} Total cart quantity.
+ */
 export function getCartQuantity() {
   return cart.reduce((total, item) => total + item.quantity, 0);
 }

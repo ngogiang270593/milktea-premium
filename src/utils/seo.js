@@ -67,6 +67,9 @@ function getCanonical() {
   return canonical;
 }
 
+/**
+ * Updates route-aware document metadata and social sharing tags.
+ */
 export function updateDocumentMeta() {
   if (typeof document === 'undefined') {
     return;
@@ -94,6 +97,9 @@ export function updateDocumentMeta() {
   setMeta('meta[name="twitter:image"]', { name: 'twitter:image' }, DEFAULT_IMAGE);
 }
 
+/**
+ * Registers the production service worker after the app shell has loaded.
+ */
 export function registerServiceWorker() {
   if (!('serviceWorker' in navigator) || import.meta.env.DEV) {
     return;

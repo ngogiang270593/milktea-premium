@@ -47,18 +47,39 @@ function updateDocumentLanguage(language) {
   }
 }
 
+/**
+ * Notifies all language subscribers without changing the current language.
+ *
+ * @param {string} [language] Language code sent to subscribers.
+ */
 export function notify(language = currentLanguage) {
   subscribers.forEach((callback) => callback(language));
 }
 
+/**
+ * Returns the active language code.
+ *
+ * @returns {string} Active language code.
+ */
 export function getLanguage() {
   return currentLanguage;
 }
 
+/**
+ * Returns configured languages for selectors and admin controls.
+ *
+ * @returns {{code: string, labelKey: string}[]} Available language metadata.
+ */
 export function getAvailableLanguages() {
   return [...LANGUAGES];
 }
 
+/**
+ * Applies a language to document metadata without persisting it.
+ *
+ * @param {string} [language] Language code.
+ * @returns {string} Applied language code.
+ */
 export function applyLanguage(language = currentLanguage) {
   const safeLanguage = isValidLanguage(language) ? language : DEFAULT_LANGUAGE;
 
@@ -68,6 +89,13 @@ export function applyLanguage(language = currentLanguage) {
   return safeLanguage;
 }
 
+/**
+ * Updates the active language, persists it by default, and notifies subscribers.
+ *
+ * @param {string} language Requested language code.
+ * @param {{persist?: boolean}} [options] Persistence options.
+ * @returns {string} Active language code.
+ */
 export function setLanguage(language, options = { persist: true }) {
   const safeLanguage = isValidLanguage(language) ? language : DEFAULT_LANGUAGE;
 
@@ -99,6 +127,12 @@ export function setLanguage(language, options = { persist: true }) {
   return safeLanguage;
 }
 
+/**
+ * Subscribes to language changes.
+ *
+ * @param {(language: string) => void} callback Listener invoked after language changes.
+ * @returns {() => void} Unsubscribe function.
+ */
 export function subscribe(callback) {
   subscribers.add(callback);
 

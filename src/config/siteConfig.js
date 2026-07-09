@@ -450,6 +450,11 @@ function canUseStorage() {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 }
 
+/**
+ * Reads user-edited storefront configuration from localStorage.
+ *
+ * @returns {Record<string, *>} Stored configuration overrides.
+ */
 export function getSiteConfigOverrides() {
   if (!canUseStorage()) {
     return {};
@@ -464,6 +469,12 @@ export function getSiteConfigOverrides() {
   }
 }
 
+/**
+ * Persists user-edited storefront configuration and notifies the SPA shell.
+ *
+ * @param {Record<string, *>} overrides Configuration values keyed by siteConfig shape.
+ * @returns {Record<string, *>} The saved overrides.
+ */
 export function setSiteConfigOverrides(overrides) {
   if (canUseStorage()) {
     window.localStorage.setItem(SITE_CONFIG_STORAGE_KEY, JSON.stringify(overrides));
@@ -477,16 +488,35 @@ export function setSiteConfigOverrides(overrides) {
   return overrides;
 }
 
+/**
+ * Returns the effective storefront configuration by merging defaults and overrides.
+ *
+ * @returns {typeof siteConfig} Effective site configuration.
+ */
 export function getSiteConfig() {
   return mergeConfig(siteConfig, getSiteConfigOverrides());
 }
 
+/**
+ * Returns localized editable content with Vietnamese as the fallback language.
+ *
+ * @param {string} [language] Locale code.
+ * @returns {Record<string, *>} Localized content branch.
+ */
 export function getSiteContent(language = DEFAULT_SITE_LANGUAGE) {
   const config = getSiteConfig();
 
   return config.content[language] || config.content[DEFAULT_SITE_LANGUAGE];
 }
 
+/**
+ * Reads a localized site content value by path and interpolates parameters.
+ *
+ * @param {string} path Dot-path within the localized content object.
+ * @param {string} [language] Locale code.
+ * @param {Record<string, string|number>} [params] Named replacements.
+ * @returns {*} Resolved content value or the path when missing.
+ */
 export function siteText(path, language = DEFAULT_SITE_LANGUAGE, params = {}) {
   const value = readPath(getSiteContent(language), path) ?? path;
 

@@ -35,6 +35,11 @@ async function renderHomePage() {
   `;
 }
 
+/**
+ * Renders the active SPA route into the application shell.
+ *
+ * @returns {Promise<void>}
+ */
 export async function renderApp() {
   const app = document.querySelector('#app');
 
