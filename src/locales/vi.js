@@ -37,7 +37,10 @@ export const vi = {
     view: 'Xem',
     add: 'Thêm',
     previous: 'Trước',
-    next: 'Sau'
+    next: 'Sau',
+    back: 'Quay lại',
+    continueShopping: 'Tiếp tục mua sắm',
+    share: 'Chia sẻ'
   },
   common: {
     brand: 'MilkTea Premium',
@@ -77,19 +80,113 @@ export const vi = {
     viewDetailsAria: 'Xem chi tiết {name}',
     addCartAria: 'Thêm {name} vào giỏ hàng',
     items: {
-      'royal-brown-sugar': { name: 'Trà sữa Đường nâu Hoàng gia' },
-      'jasmine-cloud': { name: 'Trà sữa Lài Mây' },
-      'tropical-hibiscus-menu': { name: 'Trà trái cây Hibiscus Nhiệt đới' },
-      'yuzu-peach-tea': { name: 'Trà xanh Yuzu Đào' },
-      'espresso-boba-latte': { name: 'Latte Espresso Trân châu' },
-      'matcha-vanilla-dream': { name: 'Vanilla Matcha Mơ màng' },
-      'strawberry-cloud': { name: 'Smoothie Dâu Mây' },
-      'mango-sago': { name: 'Smoothie Xoài Sago' },
-      'earl-grey-cheesecake': { name: 'Cheesecake Earl Grey' },
-      'honey-pearl-cup': { name: 'Ly trân châu mật ong' },
-      'tiramisu-cream-coffee': { name: 'Cà phê Kem Tiramisu' },
-      'lychee-rose-tea': { name: 'Trà Vải Hoa hồng' }
+      'midnight-milk-tea': {
+        name: 'Trà sữa Đêm Đen',
+        description: 'Trà đen mượt mà cùng trân châu đường nâu, kem foam và nốt caramel dịu nhẹ.'
+      },
+      'tropical-hibiscus': {
+        name: 'Hibiscus Nhiệt Đới',
+        description: 'Hibiscus rực rỡ với dứa, chanh dây và trân châu nổ vị lemonade.'
+      },
+      'vanilla-matcha-dream': {
+        name: 'Vanilla Matcha Mơ Màng',
+        description: 'Matcha mịn với vanilla nhà làm, sữa yến mạch và lớp ánh vàng tinh tế.'
+      },
+      'strawberry-cloud-smoothie': {
+        name: 'Smoothie Dâu Mây',
+        description: 'Dâu tươi xay cùng kem yogurt, trân châu thủy tinh và hậu vị vanilla mềm.'
+      },
+      'royal-brown-sugar': {
+        name: 'Trà sữa Đường nâu Hoàng gia',
+        description: 'Trà sữa đường nâu đậm vị với trân châu nấu chậm, sữa béo mịn và hậu vị caramel sâu.'
+      },
+      'jasmine-cloud': {
+        name: 'Trà sữa Lài Mây',
+        description: 'Trà lài thơm thanh quyện cùng sữa mịn, vị ngọt nhẹ và lớp kem mềm như mây.'
+      },
+      'tropical-hibiscus-menu': {
+        name: 'Trà trái cây Hibiscus Nhiệt đới',
+        description: 'Trà hibiscus tươi sáng với sắc trái cây nhiệt đới, vị chua mọng và trân châu giòn vui miệng.'
+      },
+      'yuzu-peach-tea': {
+        name: 'Trà xanh Yuzu Đào',
+        description: 'Trà xanh thanh mát kết hợp yuzu, đào và hương cam chanh sạch vị.'
+      },
+      'espresso-boba-latte': {
+        name: 'Latte Espresso Trân châu',
+        description: 'Espresso đậm, sữa mịn và trân châu dẻo tạo nên một ly cà phê trà cân bằng.'
+      },
+      'matcha-vanilla-dream': {
+        name: 'Vanilla Matcha Mơ màng',
+        description: 'Matcha cao cấp hòa cùng vanilla nhà làm, sữa và hậu vị ngọt dịu.'
+      },
+      'strawberry-cloud': {
+        name: 'Smoothie Dâu Mây',
+        description: 'Smoothie dâu tươi cùng kem yogurt, trân châu thủy tinh và hậu vị vanilla mềm.'
+      },
+      'mango-sago': {
+        name: 'Smoothie Xoài Sago',
+        description: 'Xoài chín vàng xay mịn cùng sago, mang lại kết cấu nhiệt đới béo nhẹ.'
+      },
+      'earl-grey-cheesecake': {
+        name: 'Cheesecake Earl Grey',
+        description: 'Cheesecake mềm thơm trà Earl Grey, lý tưởng để dùng kèm trà sữa.'
+      },
+      'honey-pearl-cup': {
+        name: 'Ly trân châu mật ong',
+        description: 'Ly topping trân châu mật ong dẻo thơm, thêm vị ngọt và độ nhai cho mọi món.'
+      },
+      'tiramisu-cream-coffee': {
+        name: 'Cà phê Kem Tiramisu',
+        description: 'Cà phê kem với hương tiramisu, cacao nhẹ và lớp foam mượt.'
+      },
+      'lychee-rose-tea': {
+        name: 'Trà Vải Hoa hồng',
+        description: 'Trà trái cây vải cùng hương hoa hồng, vị ngọt thanh và kết thúc tươi mát.'
+      }
     }
+  },
+  productDetail: {
+    galleryAria: 'Thư viện ảnh của {name}',
+    thumbnailsAria: 'Ảnh sản phẩm',
+    viewImageAria: 'Xem ảnh {index}',
+    optionAria: 'Chọn {option}',
+    origin: 'Nguồn gốc',
+    originValue: 'Cảm hứng trà Đài Loan, hoàn thiện tươi mới tại quầy trà',
+    chooseSize: 'Chọn kích cỡ',
+    chooseSugar: 'Chọn mức đường',
+    chooseIce: 'Chọn mức đá',
+    chooseToppings: 'Chọn topping',
+    quantityAria: 'Số lượng sản phẩm',
+    decreaseQuantity: 'Giảm số lượng',
+    increaseQuantity: 'Tăng số lượng',
+    notFoundTitle: 'Không tìm thấy sản phẩm',
+    notFoundCopy: 'Món bạn đang tìm hiện không còn trong thực đơn.',
+    backToMenu: 'Quay lại thực đơn',
+    continueShopping: 'Tiếp tục mua sắm',
+    outOfStock: 'Hết hàng',
+    addedToCart: 'Đã thêm vào giỏ',
+    relatedEyebrow: 'Có thể bạn cũng thích',
+    relatedTitle: 'Sản phẩm liên quan',
+    viewAllProducts: 'Xem tất cả sản phẩm',
+    defaults: {
+      ingredients: 'Trà pha tươi, sữa hoặc sữa yến mạch, syrup nhà làm, topping cao cấp và đá lọc. Thành phần có thể thay đổi theo tùy chọn.',
+      nutrition: 'Ước tính 180-420 calories tùy kích cỡ, mức đường, loại sữa và topping. Vui lòng hỏi nhân viên nếu bạn cần thông tin dị ứng.'
+    },
+    tabs: {
+      description: 'Mô tả',
+      reviews: 'Đánh giá',
+      ingredients: 'Thành phần',
+      nutrition: 'Dinh dưỡng'
+    },
+    toppings: {
+      'Brown sugar pearls': 'Trân châu đường nâu',
+      'Crystal boba': 'Trân châu thủy tinh',
+      'Cream foam': 'Kem foam',
+      'Aloe jelly': 'Thạch nha đam',
+      Pudding: 'Pudding'
+    },
+    reviewsCopy: 'Khách hàng đánh giá {rating}/5 nhờ vị ngọt cân bằng, kết cấu ngon và cách trình bày cao cấp.'
   },
   filters: {
     title: 'Bộ lọc',

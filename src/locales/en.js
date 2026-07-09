@@ -37,7 +37,10 @@ export const en = {
     view: 'View',
     add: 'Add',
     previous: 'Prev',
-    next: 'Next'
+    next: 'Next',
+    back: 'Back',
+    continueShopping: 'Continue Shopping',
+    share: 'Share'
   },
   common: {
     brand: 'MilkTea Premium',
@@ -77,19 +80,113 @@ export const en = {
     viewDetailsAria: 'View details for {name}',
     addCartAria: 'Add {name} to cart',
     items: {
-      'royal-brown-sugar': { name: 'Royal Brown Sugar Milk Tea' },
-      'jasmine-cloud': { name: 'Jasmine Cloud Milk Tea' },
-      'tropical-hibiscus-menu': { name: 'Tropical Hibiscus Fruit Tea' },
-      'yuzu-peach-tea': { name: 'Yuzu Peach Green Tea' },
-      'espresso-boba-latte': { name: 'Espresso Boba Latte' },
-      'matcha-vanilla-dream': { name: 'Vanilla Matcha Dream' },
-      'strawberry-cloud': { name: 'Strawberry Cloud Smoothie' },
-      'mango-sago': { name: 'Mango Sago Smoothie' },
-      'earl-grey-cheesecake': { name: 'Earl Grey Cheesecake' },
-      'honey-pearl-cup': { name: 'Honey Pearl Topping Cup' },
-      'tiramisu-cream-coffee': { name: 'Tiramisu Cream Coffee' },
-      'lychee-rose-tea': { name: 'Lychee Rose Fruit Tea' }
+      'midnight-milk-tea': {
+        name: 'Midnight Milk Tea',
+        description: 'Velvet black tea with brown sugar boba, cream foam, and a subtle caramel note.'
+      },
+      'tropical-hibiscus': {
+        name: 'Tropical Hibiscus',
+        description: 'Bright hibiscus with pineapple, passionfruit, and popping lemonade pearls.'
+      },
+      'vanilla-matcha-dream': {
+        name: 'Vanilla Matcha Dream',
+        description: 'Silky matcha with house vanilla, oat milk, and a gold dust finish.'
+      },
+      'strawberry-cloud-smoothie': {
+        name: 'Strawberry Cloud Smoothie',
+        description: 'Fresh strawberry blend with yogurt cream, crystal pearls, and a soft vanilla finish.'
+      },
+      'royal-brown-sugar': {
+        name: 'Royal Brown Sugar Milk Tea',
+        description: 'A rich brown sugar milk tea with slow-cooked pearls, creamy milk, and a deep caramel finish.'
+      },
+      'jasmine-cloud': {
+        name: 'Jasmine Cloud Milk Tea',
+        description: 'Fragrant jasmine tea layered with silky milk, light sweetness, and a soft cream finish.'
+      },
+      'tropical-hibiscus-menu': {
+        name: 'Tropical Hibiscus Fruit Tea',
+        description: 'A bright hibiscus fruit tea with tropical notes, juicy acidity, and refreshing pearls.'
+      },
+      'yuzu-peach-tea': {
+        name: 'Yuzu Peach Green Tea',
+        description: 'Crisp green tea blended with yuzu, peach, and a clean citrus aroma.'
+      },
+      'espresso-boba-latte': {
+        name: 'Espresso Boba Latte',
+        description: 'Bold espresso, creamy milk, and chewy boba balanced for a smooth coffee-tea treat.'
+      },
+      'matcha-vanilla-dream': {
+        name: 'Vanilla Matcha Dream',
+        description: 'Premium matcha with house vanilla, milk, and a softly sweet finish.'
+      },
+      'strawberry-cloud': {
+        name: 'Strawberry Cloud Smoothie',
+        description: 'Fresh strawberry smoothie with yogurt cream, crystal pearls, and a soft vanilla finish.'
+      },
+      'mango-sago': {
+        name: 'Mango Sago Smoothie',
+        description: 'Golden mango blended with sago pearls and a creamy tropical texture.'
+      },
+      'earl-grey-cheesecake': {
+        name: 'Earl Grey Cheesecake',
+        description: 'A soft cheesecake infused with Earl Grey tea, made to pair beautifully with milk tea.'
+      },
+      'honey-pearl-cup': {
+        name: 'Honey Pearl Topping Cup',
+        description: 'A topping cup of honeyed pearls for extra chew, sweetness, and texture.'
+      },
+      'tiramisu-cream-coffee': {
+        name: 'Tiramisu Cream Coffee',
+        description: 'Creamy coffee with tiramisu notes, cocoa aroma, and a velvety foam top.'
+      },
+      'lychee-rose-tea': {
+        name: 'Lychee Rose Fruit Tea',
+        description: 'Lychee fruit tea with rose aroma, floral sweetness, and a refreshing finish.'
+      }
     }
+  },
+  productDetail: {
+    galleryAria: '{name} image gallery',
+    thumbnailsAria: 'Product images',
+    viewImageAria: 'View image {index}',
+    optionAria: 'Choose {option}',
+    origin: 'Origin',
+    originValue: 'Taiwanese tea craft, finished fresh in our tea bar',
+    chooseSize: 'Choose size',
+    chooseSugar: 'Choose sugar level',
+    chooseIce: 'Choose ice level',
+    chooseToppings: 'Choose toppings',
+    quantityAria: 'Product quantity',
+    decreaseQuantity: 'Decrease quantity',
+    increaseQuantity: 'Increase quantity',
+    notFoundTitle: 'Product not found',
+    notFoundCopy: 'The item you are looking for is no longer on the menu.',
+    backToMenu: 'Back to Menu',
+    continueShopping: 'Continue shopping',
+    outOfStock: 'Out of Stock',
+    addedToCart: 'Added to cart',
+    relatedEyebrow: 'You may also like',
+    relatedTitle: 'Related products',
+    viewAllProducts: 'View all products',
+    defaults: {
+      ingredients: 'Fresh brewed tea, milk or oat milk, house syrup, premium toppings, and filtered ice. Ingredients may vary by selected options.',
+      nutrition: 'Estimated 180-420 calories depending on size, sugar level, milk choice, and toppings. Ask our team for allergen guidance.'
+    },
+    tabs: {
+      description: 'Description',
+      reviews: 'Reviews',
+      ingredients: 'Ingredients',
+      nutrition: 'Nutrition'
+    },
+    toppings: {
+      'Brown sugar pearls': 'Brown sugar pearls',
+      'Crystal boba': 'Crystal boba',
+      'Cream foam': 'Cream foam',
+      'Aloe jelly': 'Aloe jelly',
+      Pudding: 'Pudding'
+    },
+    reviewsCopy: 'Customers rate this {rating}/5 for balanced sweetness, texture, and premium presentation.'
   },
   filters: {
     title: 'Filters',
