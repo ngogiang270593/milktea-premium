@@ -5,6 +5,7 @@ history.scrollRestoration = 'manual';
 import { renderApp } from './App.js';
 import { applyLanguage } from './store/languageStore.js';
 import { initAppInteractions } from './utils/animations.js';
+import { registerServiceWorker, updateDocumentMeta } from './utils/seo.js';
 
 const appRoutes = new Set(['/', '/cart', '/menu', '/product', '/wishlist']);
 
@@ -30,6 +31,7 @@ function scrollToHashAfterRender() {
 async function renderCurrentRoute() {
   applyLanguage();
   await renderApp();
+  updateDocumentMeta();
   initAppInteractions();
   scrollToHashAfterRender();
 }
@@ -84,4 +86,5 @@ document.addEventListener('click', (event) => {
 
 window.addEventListener('popstate', renderCurrentRoute);
 
+registerServiceWorker();
 renderCurrentRoute();

@@ -42,6 +42,7 @@ import { formatCurrency } from './format.js';
 import { escapeAttribute, escapeHtml } from './html.js';
 import { imageAttributes } from './images.js';
 import { applyProductFilters } from './productFilter.js';
+import { updateDocumentMeta } from './seo.js';
 
 let motionModulePromise;
 
@@ -148,6 +149,7 @@ export function initLanguageControls() {
       setLanguage(button.dataset.languageNext);
       updateNavbarTranslations();
       updateLanguageSwitchers();
+      updateDocumentMeta();
     });
   });
 }
