@@ -1,5 +1,4 @@
 import { Chip } from './ui/index.js';
-import { POPULAR_SEARCHES } from '../store/searchStore.js';
 import { t } from '../utils/i18n.js';
 
 function searchChip(term, type) {
@@ -20,7 +19,10 @@ export function SearchOverlay() {
     recentSearches: t('search.recentSearches'),
     clear: t('search.clear'),
     noResults: t('search.noResults'),
-    emptyCopy: t('search.emptyCopy')
+    emptyCopy: t('search.emptyCopy'),
+    title: t('search.title'),
+    inputLabel: t('search.inputLabel'),
+    popularTerms: t('search.popularTerms')
   };
 
   return `
@@ -30,7 +32,7 @@ export function SearchOverlay() {
         <div class="flex items-center justify-between gap-4">
           <div>
             <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('buttons.search')}</p>
-            <h2 id="search-title">Find your next drink.</h2>
+            <h2 id="search-title">${search.title}</h2>
           </div>
           <button type="button" class="nav-icon-button ripple-button" data-search-close aria-label="${t('buttons.close')}">
             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
@@ -38,7 +40,7 @@ export function SearchOverlay() {
         </div>
 
         <div class="search-input-wrap">
-          <label for="global-search" class="sr-only">Search products by name, category, or tags</label>
+          <label for="global-search" class="sr-only">${search.inputLabel}</label>
           <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="m21 21-4.35-4.35"></path>
             <circle cx="11" cy="11" r="7"></circle>
@@ -50,7 +52,7 @@ export function SearchOverlay() {
           <section aria-labelledby="popular-searches-title">
             <h3 id="popular-searches-title">${search.popularSearches}</h3>
             <div class="search-chip-row">
-              ${POPULAR_SEARCHES.map((term) => searchChip(term, 'popular')).join('')}
+              ${search.popularTerms.map((term) => searchChip(term, 'popular')).join('')}
             </div>
           </section>
           <section aria-labelledby="recent-searches-title">

@@ -1,12 +1,9 @@
 import { getSiteContent } from '../config/siteConfig.js';
 import { FEATURED_PRODUCTS } from '../repositories/ProductRepository.js';
+import { formatCurrency } from '../utils/currency.js';
 import { getLanguage } from '../store/languageStore.js';
 import { imageAttributes } from '../utils/image.js';
 import { t } from '../utils/i18n.js';
-
-function formatPrice(price) {
-  return `$${price.toFixed(2)}`;
-}
 
 function featuredCard(product, featuredContent) {
   const productContent = featuredContent.items[product.id];
@@ -54,8 +51,8 @@ function featuredCard(product, featuredContent) {
 
         <div class="mt-auto flex items-end justify-between gap-4 pt-5">
           <div>
-            <div class="text-2xl font-extrabold leading-none text-brand-green">${formatPrice(product.price)}</div>
-            <div class="mt-1 text-sm font-medium text-[#8f7d6c] line-through">${formatPrice(product.oldPrice)}</div>
+            <div class="text-2xl font-extrabold leading-none text-brand-green">${formatCurrency(product.price)}</div>
+            <div class="mt-1 text-sm font-medium text-[#8f7d6c] line-through">${formatCurrency(product.oldPrice)}</div>
           </div>
           <button type="button" class="add-cart-button ripple-button" aria-label="${t('home.featured.addToCartAria', { title })}" data-add-to-cart="${product.id}">
             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">

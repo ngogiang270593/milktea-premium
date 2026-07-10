@@ -8,7 +8,7 @@ function categoryCard(category, index) {
   const productCount = t('home.categories.productCount', { count: category.count });
 
   return `
-    <button type="button" data-category="${category.value}" class="category-card ripple-button${activeClass}" aria-pressed="${index === 0}" aria-label="${t('home.categories.cardAria', { name: category.title, count: category.count })}">
+    <a href="/menu?category=${category.value}" data-category="${category.value}" class="category-card ripple-button${activeClass}" aria-current="${index === 0 ? 'true' : 'false'}" aria-label="${t('home.categories.cardAria', { name: category.title, count: category.count })}">
       <span class="category-card-glow bg-gradient-to-br ${category.toneClass}" aria-hidden="true"></span>
       <span class="category-icon-wrap bg-gradient-to-br ${category.toneClass}" aria-hidden="true">
         ${CATEGORY_ICONS[category.icon]}
@@ -24,7 +24,7 @@ function categoryCard(category, index) {
         <span aria-hidden="true">${productCount}</span>
         <span class="category-arrow" aria-hidden="true">-&gt;</span>
       </span>
-    </button>
+    </a>
   `;
 }
 

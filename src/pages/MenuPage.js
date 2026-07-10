@@ -2,26 +2,41 @@ import { MenuFilterPanel } from '../components/menu/MenuFilterPanel.js';
 import { MenuPagination } from '../components/menu/MenuPagination.js';
 import { MenuProductCard } from '../components/menu/MenuProductCard.js';
 import { MenuToolbar } from '../components/menu/MenuToolbar.js';
+import { MENU_CATEGORIES } from '../repositories/CategoryRepository.js';
 import { MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { t } from '../utils/i18n.js';
 
+function getSelectedCategory() {
+  const category = new URLSearchParams(window.location.search).get('category');
+
+  return MENU_CATEGORIES.find((item) => item.value === category);
+}
+
 export function MenuPage() {
+  const selectedCategory = getSelectedCategory();
+  const selectedCategoryTitle = selectedCategory ? t(`filters.categoryOptions.${selectedCategory.value}`) : '';
+  const visibleProducts = selectedCategory
+    ? MENU_PRODUCTS.filter((product) => product.category === selectedCategory.value)
+    : MENU_PRODUCTS;
+  const title = selectedCategoryTitle || t('menu.title');
+
   return `
     <section class="menu-page" aria-labelledby="menu-title">
       <div class="menu-container">
         <nav class="menu-breadcrumb" aria-label="${t('menu.breadcrumbAria')}">
-          <ol>
+          <ol data-menu-breadcrumb>
             <li><a href="/">${t('navbar.home')}</a></li>
-            <li aria-current="page">${t('navbar.menu')}</li>
+            ${selectedCategory ? `<li><a href="/menu">${t('navbar.menu')}</a></li>` : `<li aria-current="page">${t('navbar.menu')}</li>`}
+            ${selectedCategory ? `<li aria-current="page">${selectedCategoryTitle}</li>` : ''}
           </ol>
         </nav>
 
         <div class="menu-heading" data-reveal>
           <div>
             <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('menu.eyebrow')}</p>
-            <h1 id="menu-title">${t('menu.title')}</h1>
+            <h1 id="menu-title" data-menu-title>${title}</h1>
           </div>
-          <p>${t('menu.productCountPrefix')} <span data-product-count>${MENU_PRODUCTS.length}</span> ${t('menu.productCountSuffix')}</p>
+          <p>${t('menu.productCountPrefix')} <span data-product-count>${visibleProducts.length}</span> ${t('menu.productCountSuffix')}</p>
         </div>
 
         ${MenuToolbar()}

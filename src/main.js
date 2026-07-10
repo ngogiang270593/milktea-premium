@@ -4,7 +4,7 @@ import './assets/css/utilities.css';
 history.scrollRestoration = 'manual';
 import { APP_ROUTES } from './constants/routes.js';
 import { preloadRoute, renderApp } from './App.js';
-import { applyLanguage } from './store/languageStore.js';
+import { applyLanguage, subscribe as subscribeToLanguage } from './store/languageStore.js';
 import { initAppInteractions } from './utils/animations.js';
 import { prefetchRoute, prefetchRoutes } from './utils/prefetch.js';
 import { isPlainLeftClick, routeToString, shouldHandleLink } from './utils/router.js';
@@ -13,12 +13,23 @@ import { registerServiceWorker, updateDocumentMeta } from './utils/seo.js';
 
 const appRoutes = new Set(APP_ROUTES);
 
-async function renderCurrentRoute() {
+let isRenderingLanguageChange = false;
+
+async function renderCurrentRoute({ preserveScroll = false } = {}) {
+  const scrollPosition = preserveScroll
+    ? { x: window.scrollX, y: window.scrollY }
+    : null;
+
   applyLanguage();
   await renderApp();
   updateDocumentMeta();
   initAppInteractions();
-  scrollToHashAfterRender();
+
+  if (scrollPosition) {
+    window.scrollTo(scrollPosition.x, scrollPosition.y);
+  } else {
+    scrollToHashAfterRender();
+  }
 }
 
 document.addEventListener('click', (event) => {
@@ -58,6 +69,19 @@ document.addEventListener('click', (event) => {
 
 window.addEventListener('popstate', renderCurrentRoute);
 window.addEventListener('site-config:updated', renderCurrentRoute);
+subscribeToLanguage(async () => {
+  if (isRenderingLanguageChange) {
+    return;
+  }
+
+  isRenderingLanguageChange = true;
+
+  try {
+    await renderCurrentRoute({ preserveScroll: true });
+  } finally {
+    isRenderingLanguageChange = false;
+  }
+});
 
 registerServiceWorker();
 renderCurrentRoute();

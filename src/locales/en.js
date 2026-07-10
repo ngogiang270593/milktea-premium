@@ -40,12 +40,21 @@ export const en = {
     next: 'Next',
     back: 'Back',
     continueShopping: 'Continue Shopping',
-    share: 'Share'
+    share: 'Share',
+    learnMore: 'Learn More',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    apply: 'Apply',
+    clear: 'Clear',
+    save: 'Save',
+    edit: 'Edit',
+    delete: 'Delete'
   },
   common: {
     brand: 'MilkTea Premium',
     loading: 'Loading...',
     noData: 'No data',
+    item: 'Item',
     language: 'Language',
     english: 'English',
     vietnamese: 'Vietnamese'
@@ -431,12 +440,16 @@ export const en = {
     }
   },
   search: {
+    title: 'Find your next drink.',
+    inputLabel: 'Search products by name, category, or tags',
     placeholder: 'Search milk tea, matcha, coffee...',
     popularSearches: 'Popular searches',
     recentSearches: 'Recent searches',
     clear: 'Clear',
     noResults: 'No results found',
-    emptyCopy: 'Try searching for milk tea, matcha, fruit tea, coffee, or toppings.'
+    emptyCopy: 'Try searching for milk tea, matcha, fruit tea, coffee, or toppings.',
+    noRecent: 'No recent searches yet.',
+    popularTerms: ['brown sugar', 'matcha', 'fruit tea', 'coffee', 'smoothie', 'topping']
   },
   cart: {
     breadcrumb: 'Cart',
@@ -460,6 +473,8 @@ export const en = {
     couponLabel: 'Coupon code',
     couponPlaceholder: 'MILKTEA10',
     applyCoupon: 'Apply',
+    couponApplied: 'Coupon applied: 10% off your order.',
+    couponHint: 'Try MILKTEA10 for 10% off.',
     shippingEstimateTitle: 'Shipping estimate',
     shippingEstimateCopy: 'Free delivery for orders over $35. Estimated arrival is 25-40 minutes.',
     subtotal: 'Subtotal',
@@ -566,5 +581,95 @@ export const en = {
   },
   language: {
     current: 'Current language: {label}. Change language'
+  },
+  theme: {
+    label: 'Theme',
+    currentAria: 'Current theme: {label}. Change theme',
+    system: 'System ({theme})',
+    names: {
+      'green-tea': 'Green Tea',
+      coffee: 'Coffee',
+      'luxury-gold': 'Luxury Gold',
+      ocean: 'Ocean',
+      sakura: 'Sakura',
+      dark: 'Dark',
+      system: 'System'
+    }
+  },
+  toast: {
+    addedToCart: '{name} added to cart',
+    removedFromCart: 'Item removed from cart',
+    cartCleared: 'Cart cleared',
+    quantityUpdated: 'Quantity updated',
+    wishlistSaved: '{name} saved to wishlist',
+    wishlistRemoved: '{name} removed from wishlist',
+    wishlistUpdated: 'Wishlist updated',
+    movedToCart: '{name} moved to cart',
+    languageChanged: 'Language changed to {language}',
+    themeChanged: 'Theme set to {theme}',
+    searchCleared: 'Search history cleared',
+    noResults: 'No results found',
+    couponApplied: 'Coupon applied',
+    configurationSaved: 'Configuration saved'
+  },
+  validation: {
+    required: 'Required',
+    invalidEmail: 'Invalid email',
+    requiredField: 'Required field',
+    quantityGreaterThanZero: 'Quantity must be greater than zero'
+  },
+  admin: {
+    breadcrumb: 'Admin',
+    eyebrow: 'Configuration',
+    title: 'Admin Panel',
+    localPreview: 'Local preview',
+    sections: {
+      brand: {
+        title: 'Brand',
+        description: 'Editable brand identity used across the storefront.'
+      },
+      hero: {
+        title: 'Homepage Hero',
+        description: 'Content for the currently active language: {language}.'
+      },
+      banner: {
+        title: 'Homepage Banner',
+        description: 'Promotion banner copy shown on the homepage.'
+      },
+      contact: {
+        title: 'Contact Information',
+        description: 'Customer-facing store contact details.'
+      },
+      social: {
+        title: 'Social Links',
+        description: 'External links used by the footer and social sections.'
+      },
+      preferences: {
+        title: 'Preferences',
+        description: 'Preview storefront theme and language without a page reload.'
+      }
+    },
+    fields: {
+      brandName: 'Brand Name',
+      logoText: 'Logo Text',
+      heroTitle: 'Hero Title',
+      heroSubtitle: 'Hero Subtitle',
+      bannerLabel: 'Banner Label',
+      bannerTitle: 'Banner Title',
+      bannerDescription: 'Banner Description',
+      bannerCta: 'Banner CTA',
+      email: 'Email',
+      phone: 'Phone',
+      address: 'Address',
+      openingHours: 'Opening Hours',
+      theme: 'Theme'
+    },
+    status: {
+      idle: 'Changes are saved to this browser and can later be replaced by an API response.',
+      saved: 'Configuration saved locally. The storefront preview has been updated.'
+    },
+    actions: {
+      saveConfiguration: 'Save Configuration'
+    }
   }
 };

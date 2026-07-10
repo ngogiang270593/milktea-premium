@@ -1,5 +1,6 @@
 import { MENU_CATEGORIES, MENU_FILTERS } from '../../repositories/CategoryRepository.js';
 import { Checkbox } from '../ui/index.js';
+import { formatCurrency } from '../../utils/currency.js';
 import { t } from '../../utils/i18n.js';
 
 function checkbox(name, value, label, count = null) {
@@ -40,8 +41,8 @@ export function MenuFilterPanel({ mobile = false } = {}) {
         <label class="mt-4 block text-sm text-[#6f5f51]" for="${mobile ? 'mobile-' : ''}menu-price">${t('filters.maximumPrice')}</label>
         <input id="${mobile ? 'mobile-' : ''}menu-price" type="range" min="2" max="12" value="12" step="0.5" class="menu-range" data-price-range />
         <div class="mt-2 flex items-center justify-between text-xs font-semibold text-[#7b6a5a]">
-          <span>$2</span>
-          <span data-price-value>$12</span>
+          <span>${formatCurrency(2)}</span>
+          <span data-price-value>${formatCurrency(12)}</span>
         </div>
       </fieldset>
 

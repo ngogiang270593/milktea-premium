@@ -40,12 +40,21 @@ export const vi = {
     next: 'Sau',
     back: 'Quay lại',
     continueShopping: 'Tiếp tục mua sắm',
-    share: 'Chia sẻ'
+    share: 'Chia sẻ',
+    learnMore: 'Tìm hiểu thêm',
+    cancel: 'Hủy',
+    confirm: 'Xác nhận',
+    apply: 'Áp dụng',
+    clear: 'Xóa',
+    save: 'Lưu',
+    edit: 'Sửa',
+    delete: 'Xóa'
   },
   common: {
     brand: 'MilkTea Premium',
     loading: 'Đang tải...',
     noData: 'Không có dữ liệu',
+    item: 'Sản phẩm',
     language: 'Ngôn ngữ',
     english: 'Tiếng Anh',
     vietnamese: 'Tiếng Việt'
@@ -439,12 +448,16 @@ export const vi = {
     }
   },
   search: {
+    title: 'Tìm thức uống tiếp theo của bạn.',
+    inputLabel: 'Tìm sản phẩm theo tên, danh mục hoặc thẻ',
     placeholder: 'Tìm trà sữa, matcha, cà phê...',
     popularSearches: 'Tìm kiếm phổ biến',
     recentSearches: 'Tìm kiếm gần đây',
     clear: 'Xóa',
     noResults: 'Không tìm thấy kết quả',
-    emptyCopy: 'Hãy thử tìm trà sữa, matcha, trà trái cây, cà phê hoặc topping.'
+    emptyCopy: 'Hãy thử tìm trà sữa, matcha, trà trái cây, cà phê hoặc topping.',
+    noRecent: 'Chưa có tìm kiếm gần đây.',
+    popularTerms: ['đường nâu', 'matcha', 'trà trái cây', 'cà phê', 'smoothie', 'topping']
   },
   cart: {
     breadcrumb: 'Giỏ hàng',
@@ -468,6 +481,8 @@ export const vi = {
     couponLabel: 'Mã ưu đãi',
     couponPlaceholder: 'MILKTEA10',
     applyCoupon: 'Áp dụng',
+    couponApplied: 'Đã áp dụng mã: giảm 10% cho đơn hàng.',
+    couponHint: 'Thử mã MILKTEA10 để được giảm 10%.',
     shippingEstimateTitle: 'Ước tính giao hàng',
     shippingEstimateCopy: 'Miễn phí giao hàng cho đơn từ 35 USD. Thời gian dự kiến 25-40 phút.',
     subtotal: 'Tạm tính',
@@ -574,5 +589,95 @@ export const vi = {
   },
   language: {
     current: 'Ngôn ngữ hiện tại: {label}. Đổi ngôn ngữ'
+  },
+  theme: {
+    label: 'Giao diện',
+    currentAria: 'Giao diện hiện tại: {label}. Đổi giao diện',
+    system: 'Hệ thống ({theme})',
+    names: {
+      'green-tea': 'Trà xanh',
+      coffee: 'Cà phê',
+      'luxury-gold': 'Vàng sang trọng',
+      ocean: 'Đại dương',
+      sakura: 'Sakura',
+      dark: 'Tối',
+      system: 'Hệ thống'
+    }
+  },
+  toast: {
+    addedToCart: 'Đã thêm {name} vào giỏ hàng',
+    removedFromCart: 'Đã xóa sản phẩm khỏi giỏ hàng',
+    cartCleared: 'Đã xóa giỏ hàng',
+    quantityUpdated: 'Đã cập nhật số lượng',
+    wishlistSaved: 'Đã lưu {name} vào yêu thích',
+    wishlistRemoved: 'Đã xóa {name} khỏi yêu thích',
+    wishlistUpdated: 'Đã cập nhật danh sách yêu thích',
+    movedToCart: 'Đã chuyển {name} vào giỏ hàng',
+    languageChanged: 'Đã đổi ngôn ngữ sang {language}',
+    themeChanged: 'Đã đổi giao diện sang {theme}',
+    searchCleared: 'Đã xóa lịch sử tìm kiếm',
+    noResults: 'Không tìm thấy kết quả',
+    couponApplied: 'Đã áp dụng mã ưu đãi',
+    configurationSaved: 'Đã lưu cấu hình'
+  },
+  validation: {
+    required: 'Bắt buộc',
+    invalidEmail: 'Email không hợp lệ',
+    requiredField: 'Trường bắt buộc',
+    quantityGreaterThanZero: 'Số lượng phải lớn hơn 0'
+  },
+  admin: {
+    breadcrumb: 'Quản trị',
+    eyebrow: 'Cấu hình',
+    title: 'Bảng quản trị',
+    localPreview: 'Xem trước cục bộ',
+    sections: {
+      brand: {
+        title: 'Thương hiệu',
+        description: 'Thông tin nhận diện thương hiệu dùng trên toàn bộ cửa hàng.'
+      },
+      hero: {
+        title: 'Hero trang chủ',
+        description: 'Nội dung cho ngôn ngữ đang hoạt động: {language}.'
+      },
+      banner: {
+        title: 'Banner trang chủ',
+        description: 'Nội dung ưu đãi hiển thị trên trang chủ.'
+      },
+      contact: {
+        title: 'Thông tin liên hệ',
+        description: 'Thông tin liên hệ cửa hàng hiển thị cho khách hàng.'
+      },
+      social: {
+        title: 'Liên kết mạng xã hội',
+        description: 'Liên kết bên ngoài dùng ở chân trang và khu vực hình ảnh.'
+      },
+      preferences: {
+        title: 'Tùy chọn',
+        description: 'Xem trước giao diện và ngôn ngữ mà không cần tải lại trang.'
+      }
+    },
+    fields: {
+      brandName: 'Tên thương hiệu',
+      logoText: 'Chữ logo',
+      heroTitle: 'Tiêu đề hero',
+      heroSubtitle: 'Mô tả hero',
+      bannerLabel: 'Nhãn banner',
+      bannerTitle: 'Tiêu đề banner',
+      bannerDescription: 'Mô tả banner',
+      bannerCta: 'CTA banner',
+      email: 'Email',
+      phone: 'Số điện thoại',
+      address: 'Địa chỉ',
+      openingHours: 'Giờ mở cửa',
+      theme: 'Giao diện'
+    },
+    status: {
+      idle: 'Thay đổi được lưu trong trình duyệt này và có thể thay bằng dữ liệu API sau này.',
+      saved: 'Đã lưu cấu hình cục bộ. Bản xem trước cửa hàng đã được cập nhật.'
+    },
+    actions: {
+      saveConfiguration: 'Lưu cấu hình'
+    }
   }
 };

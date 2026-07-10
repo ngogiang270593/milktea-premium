@@ -49,6 +49,7 @@ import { setAttributeIfChanged, setTextIfChanged } from './dom.js';
 import { formatCurrency } from './format.js';
 import { escapeAttribute, escapeHtml } from './html.js';
 import { imageAttributes } from './image.js';
+import { t } from './i18n.js';
 import { applyProductFilters } from './productFilter.js';
 import { getScrollBehavior } from './scroll.js';
 import { updateDocumentMeta } from './seo.js';
@@ -91,20 +92,28 @@ function animateCards(cards, options) {
 function updateThemeControls() {
   const preference = getThemePreference();
   const resolvedTheme = getResolvedTheme(preference);
-  const label = getThemeLabel(preference);
+  const label = translatedThemeLabel(preference);
 
   document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
     button.dataset.themePreference = preference;
     button.dataset.themeResolved = resolvedTheme;
-    button.setAttribute('aria-label', `Current theme: ${label}. Change theme`);
+    button.setAttribute('aria-label', t('theme.currentAria', { label }));
     button.setAttribute('aria-pressed', String(preference !== THEMES.SYSTEM));
   });
 
   document.querySelectorAll('[data-theme-label]').forEach((element) => {
-    element.textContent = label;
+    element.textContent = translatedThemeLabel(preference);
   });
 
   updateThemeSwitchers();
+}
+
+function translatedThemeLabel(preference) {
+  const resolvedTheme = getResolvedTheme(preference);
+  const key = `theme.names.${resolvedTheme}`;
+  const label = t(key);
+
+  return label === key ? getThemeLabel(preference) : label;
 }
 
 export function initThemeSystem() {
@@ -125,7 +134,7 @@ export function initThemeSystem() {
     button.dataset.themeReady = 'true';
     button.addEventListener('click', () => {
       const { preference } = cycleThemePreference();
-      showToast(`Theme set to ${getThemeLabel(preference)}`);
+      showToast(t('toast.themeChanged', { theme: translatedThemeLabel(preference) }));
     });
   });
 
@@ -138,7 +147,7 @@ export function initThemeSystem() {
     select.addEventListener('change', () => {
       const { preference } = setThemePreference(select.value);
       updateThemeControls();
-      showToast(`Theme set to ${getThemeLabel(preference)}`);
+      showToast(t('toast.themeChanged', { theme: translatedThemeLabel(preference) }));
     });
   });
 }
@@ -151,10 +160,11 @@ export function initLanguageControls() {
 
     button.dataset.languageReady = 'true';
     button.addEventListener('click', () => {
-      setLanguage(button.dataset.languageNext);
+      const nextLanguage = setLanguage(button.dataset.languageNext);
       updateNavbarTranslations();
       updateLanguageSwitchers();
       updateDocumentMeta();
+      showToast(t('toast.languageChanged', { language: t(nextLanguage === 'vi' ? 'common.vietnamese' : 'common.english') }));
     });
   });
 }
@@ -327,7 +337,7 @@ function updateCartBadges() {
 
   document.querySelectorAll('[data-cart-count]').forEach((badge) => {
     setTextIfChanged(badge, String(quantity));
-    setAttributeIfChanged(badge, 'aria-label', `${quantity} items in cart`);
+    setAttributeIfChanged(badge, 'aria-label', t('navbar.cartCount', { count: quantity }));
   });
 
   document.querySelectorAll('[data-cart-page-count]').forEach((count) => {
@@ -340,7 +350,7 @@ function updateWishlistBadges() {
 
   document.querySelectorAll('[data-wishlist-count]').forEach((badge) => {
     setTextIfChanged(badge, String(quantity));
-    setAttributeIfChanged(badge, 'aria-label', `${quantity} saved wishlist items`);
+    setAttributeIfChanged(badge, 'aria-label', t('navbar.wishlistCount', { count: quantity }));
   });
 
   document.querySelectorAll('[data-wishlist-page-count]').forEach((count) => {
@@ -429,10 +439,10 @@ export function initAdminPanel() {
     updateDocumentMeta();
 
     if (status) {
-      status.textContent = 'Configuration saved locally. The storefront preview has been updated.';
+      status.textContent = t('admin.status.saved');
     }
 
-    showToast('Configuration saved');
+    showToast(t('toast.configurationSaved'));
   });
 }
 
@@ -446,7 +456,11 @@ export function initCategoryFilters() {
         const isActive = btn === button;
 
         btn.classList.toggle('is-active', isActive);
-        btn.setAttribute('aria-pressed', String(isActive));
+        if (btn.tagName === 'BUTTON') {
+          btn.setAttribute('aria-pressed', String(isActive));
+        } else {
+          btn.setAttribute('aria-current', isActive ? 'true' : 'false');
+        }
         categoryDots[btnIndex]?.classList.toggle('is-active', isActive);
       });
 
@@ -526,7 +540,7 @@ export function initProductCards() {
       button.setAttribute('aria-pressed', String(active));
       button.setAttribute('aria-label', `${active ? 'Remove' : 'Add'} ${currentProduct.name} ${active ? 'from' : 'to'} wishlist`);
       updateWishlistBadges();
-      showToast(active ? `${currentProduct.name} saved to wishlist` : `${currentProduct.name} removed from wishlist`);
+      showToast(t(active ? 'toast.wishlistSaved' : 'toast.wishlistRemoved', { name: currentProduct.name }));
       button.addEventListener('animationend', () => button.classList.remove('heart-pop'), { once: true });
     });
   });
@@ -546,7 +560,7 @@ export function initProductCards() {
 
       addItem(product);
       updateCartBadges();
-      showToast(`${product.name} added to cart`);
+      showToast(t('toast.addedToCart', { name: product.name }));
     });
   });
 }
@@ -583,7 +597,7 @@ function bindWishlistControls() {
       if (product) {
         addItem(product);
         removeWishlistItem(product.id);
-        showToast(`${product.name} moved to cart`);
+        showToast(t('toast.movedToCart', { name: product.name }));
       }
 
       content.dataset.wishlistReady = 'false';
@@ -593,7 +607,7 @@ function bindWishlistControls() {
       const product = getProductById(remove.dataset.wishlistRemove);
 
       removeWishlistItem(remove.dataset.wishlistRemove);
-      showToast(`${product?.name || 'Item'} removed from wishlist`);
+      showToast(t('toast.wishlistRemoved', { name: product?.name || t('common.item') }));
       content.dataset.wishlistReady = 'false';
       renderWishlistContent();
     }
@@ -645,7 +659,7 @@ export function initSearchOverlay() {
     const recentSearches = getRecentSearches();
     recentList.innerHTML = recentSearches.length
       ? recentSearches.map((term) => `<button type="button" class="search-chip" data-search-term="${escapeAttribute(term)}" data-search-recent>${escapeHtml(term)}</button>`).join('')
-      : '<p class="text-sm text-[#7b6a5a]">No recent searches yet.</p>';
+      : `<p class="text-sm text-[#7b6a5a]">${t('search.noRecent')}</p>`;
   };
 
   const renderResults = (term) => {
@@ -767,22 +781,22 @@ function bindCartControls() {
 
     if (increase) {
       increaseQuantity(increase.dataset.cartIncrease);
-      showToast('Quantity updated');
+      showToast(t('toast.quantityUpdated'));
       content.dataset.cartReady = 'false';
       renderCartContent();
     } else if (decrease) {
       decreaseQuantity(decrease.dataset.cartDecrease);
-      showToast('Quantity updated');
+      showToast(t('toast.quantityUpdated'));
       content.dataset.cartReady = 'false';
       renderCartContent();
     } else if (remove) {
       removeItem(remove.dataset.cartRemove);
-      showToast('Item removed');
+      showToast(t('toast.removedFromCart'));
       content.dataset.cartReady = 'false';
       renderCartContent();
     } else if (clear) {
       clearCart();
-      showToast('Cart cleared');
+      showToast(t('toast.cartCleared'));
       content.dataset.cartReady = 'false';
       renderCartContent();
     }
@@ -804,10 +818,10 @@ function bindCartControls() {
     if (code === 'MILKTEA10') {
       const discountedTotal = Math.max(0, getTotal() - getTotal() * 0.1);
       total.textContent = formatCurrency(discountedTotal);
-      message.textContent = 'Coupon applied: 10% off your order.';
-      showToast('Coupon applied');
+      message.textContent = t('cart.couponApplied');
+      showToast(t('toast.couponApplied'));
     } else {
-      message.textContent = 'Try MILKTEA10 for 10% off.';
+      message.textContent = t('cart.couponHint');
     }
   });
 }
@@ -936,7 +950,7 @@ export function initProductDetail() {
 
       addItem(product);
       updateCartBadges();
-      showToast(`${product.name} added to cart`);
+      showToast(t('toast.addedToCart', { name: product.name }));
       button.classList.remove('cart-pop');
       window.requestAnimationFrame(() => button.classList.add('cart-pop'));
       button.addEventListener('animationend', () => button.classList.remove('cart-pop'), { once: true });
@@ -962,6 +976,8 @@ export function initMenuPage() {
   const priceValues = document.querySelectorAll('[data-price-value]');
   const count = document.querySelector('[data-product-count]');
   const empty = document.querySelector('[data-menu-empty]');
+  const menuTitle = document.querySelector('[data-menu-title]');
+  const menuBreadcrumb = document.querySelector('[data-menu-breadcrumb]');
   const pagination = document.querySelector('[data-menu-pagination]');
   const filterOpen = document.querySelector('[data-filter-open]');
   const filterClose = document.querySelector('[data-filter-close]');
@@ -971,12 +987,18 @@ export function initMenuPage() {
   const products = [...grid.querySelectorAll('[data-menu-product]')];
   const productElementsById = new Map(products.map((product) => [product.dataset.productId, product]));
   const pageSize = 8;
+  const initialParams = new URLSearchParams(window.location.search);
+  const initialCategory = initialParams.get('category') || '';
+  const initialCategories = initialCategory ? [initialCategory] : [];
+  const initialSearch = initialParams.get('q') || '';
   let currentPage = 1;
   let filteredProducts = [...MENU_PRODUCTS];
 
-  const selectedValues = (name) => [...filters]
-    .filter((input) => input.name === name && input.checked)
-    .map((input) => input.value);
+  const selectedValues = (name) => [...new Set(
+    [...filters]
+      .filter((input) => input.name === name && input.checked)
+      .map((input) => input.value)
+  )];
 
   const getFilterState = () => ({
     search: search?.value || '',
@@ -989,6 +1011,70 @@ export function initMenuPage() {
     minRating: Math.max(0, ...selectedValues('rating').map(Number)),
     sort: sort?.value || 'featured'
   });
+
+  const syncInitialFiltersFromUrl = () => {
+    if (search && initialSearch) {
+      search.value = initialSearch;
+    }
+
+    if (!initialCategories.length) {
+      return;
+    }
+
+    filters.forEach((input) => {
+      if (input.name === 'category') {
+        input.checked = initialCategories.includes(input.value);
+      }
+    });
+  };
+
+  const updateMenuUrl = ({ replace = false } = {}) => {
+    const state = getFilterState();
+    const params = new URLSearchParams(window.location.search);
+
+    params.delete('category');
+    if (state.categories[0]) {
+      params.set('category', state.categories[0]);
+    }
+
+    if (state.search.trim()) {
+      params.set('q', state.search.trim());
+    } else {
+      params.delete('q');
+    }
+
+    const query = params.toString();
+    const nextUrl = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
+    const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
+    if (nextUrl !== currentUrl) {
+      window.history[replace ? 'replaceState' : 'pushState'](null, '', nextUrl);
+    }
+  };
+
+  const categoryLabel = (category) => {
+    const key = `filters.categoryOptions.${category}`;
+    const label = t(key);
+
+    return label === key ? category : label;
+  };
+
+  const updateCategoryHeader = () => {
+    const categories = getFilterState().categories;
+    const singleCategory = categories.length === 1 ? categories[0] : '';
+    const title = singleCategory ? categoryLabel(singleCategory) : t('menu.title');
+
+    if (menuTitle) {
+      setTextIfChanged(menuTitle, title);
+    }
+
+    if (menuBreadcrumb) {
+      menuBreadcrumb.innerHTML = `
+        <li><a href="/">${t('navbar.home')}</a></li>
+        ${singleCategory ? `<li><a href="/menu">${t('navbar.menu')}</a></li><li aria-current="page">${title}</li>` : `<li aria-current="page">${t('navbar.menu')}</li>`}
+      `;
+    }
+  };
 
   const updatePagination = () => {
     const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
@@ -1033,6 +1119,7 @@ export function initMenuPage() {
       empty.hidden = filteredProducts.length > 0;
     }
 
+    updateCategoryHeader();
     updatePagination();
 
     if (grid.dataset.initialMenuMotion === 'true') {
@@ -1087,14 +1174,30 @@ export function initMenuPage() {
     }, 260);
   };
 
-  search?.addEventListener('input', resetAndRender);
+  syncInitialFiltersFromUrl();
+
+  search?.addEventListener('input', () => {
+    updateMenuUrl({ replace: true });
+    resetAndRender();
+  });
   sort?.addEventListener('change', resetAndRender);
   filters.forEach((input) => input.addEventListener('change', () => {
+    if (input.name === 'category' && input.checked) {
+      filters.forEach((matchingInput) => {
+        if (matchingInput.name === 'category' && matchingInput.value !== input.value) {
+          matchingInput.checked = false;
+        }
+      });
+    }
+
     filters.forEach((matchingInput) => {
       if (matchingInput !== input && matchingInput.name === input.name && matchingInput.value === input.value) {
         matchingInput.checked = input.checked;
       }
     });
+    if (input.name === 'category') {
+      updateMenuUrl();
+    }
     resetAndRender();
   }));
   priceRanges.forEach((range) => {
@@ -1103,7 +1206,7 @@ export function initMenuPage() {
         input.value = range.value;
       });
       priceValues.forEach((value) => {
-        value.textContent = `$${range.value}`;
+        value.textContent = formatCurrency(Number(range.value));
       });
       resetAndRender();
     });

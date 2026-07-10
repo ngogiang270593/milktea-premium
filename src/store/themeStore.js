@@ -6,6 +6,7 @@ import {
 } from '../constants/theme.js';
 import { getStoredTheme, setStoredTheme } from '../services/ThemeService.js';
 import { canUseDOM } from '../utils/dom.js';
+import { t } from '../utils/i18n.js';
 
 export {
   THEME_DEFINITIONS,
@@ -92,10 +93,13 @@ export function getResolvedTheme(preference = getThemePreference()) {
  */
 export function getThemeLabel(preference = getThemePreference()) {
   if (preference === THEMES.SYSTEM) {
-    return `System (${getThemeLabel(getResolvedTheme(preference))})`;
+    return t('theme.system', { theme: getThemeLabel(getResolvedTheme(preference)) });
   }
 
-  return THEME_DEFINITIONS[preference]?.label || THEME_DEFINITIONS[THEMES.GREEN_TEA].label;
+  const key = `theme.names.${preference}`;
+  const label = t(key);
+
+  return label === key ? THEME_DEFINITIONS[preference]?.label || THEME_DEFINITIONS[THEMES.GREEN_TEA].label : label;
 }
 
 function applyThemeVariables(root, theme) {
