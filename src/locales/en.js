@@ -282,10 +282,19 @@ export const en = {
       eyebrow: 'Premium Bubble Tea',
       title: 'Enjoy Every Sip.',
       subtitle: 'Handcrafted milk tea, slow-brewed leaves, silky cream, and jewel-like pearls made for a calmer, richer daily ritual.',
-      primaryCta: 'Explore Menu',
-      secondaryCta: 'Order Signature',
+      premiumBadge: 'Premium daily brew',
+      trustMessage: 'Freshly brewed in small batches',
+      deliveryInfo: 'Fast delivery in 25-40 minutes',
+      primaryCta: 'Order Now',
+      secondaryCta: 'Explore Menu',
       statsAria: 'Store highlights',
       stats: {
+        items: [
+          { value: '120+', label: 'Drinks' },
+          { value: '15k+', label: 'Happy Customers' },
+          { value: '4.9★', label: 'Rating' },
+          { value: '8', label: 'Years Experience' }
+        ],
         cupsValue: '42k+',
         cups: 'Cups served',
         blendsValue: '18',
@@ -309,6 +318,17 @@ export const en = {
       },
       freshBatch: 'Fresh batch',
       freshBatchTime: '11:30 AM'
+    },
+    trust: {
+      eyebrow: 'Why Choose Us',
+      title: 'Premium details in every order.',
+      copy: 'From tea sourcing to delivery handoff, each step is designed for a polished commerce experience and a better cup.',
+      items: [
+        { icon: 'fresh', title: 'Fresh Ingredients', copy: 'Fruit, milk, pearls, and toppings prepared daily for clean flavor.' },
+        { icon: 'tea', title: 'Premium Tea Leaves', copy: 'Selected tea bases brewed slowly for aroma, depth, and balance.' },
+        { icon: 'delivery', title: 'Fast Delivery', copy: 'Optimized pickup and delivery flow keeps drinks fresh on arrival.' },
+        { icon: 'craft', title: 'Handcrafted Drinks', copy: 'Each order is finished by trained tea bar staff with precise options.' }
+      ]
     },
     categories: {
       eyebrow: 'Shop by category',
@@ -380,6 +400,8 @@ export const en = {
       quickViewAria: 'Open product detail for {title}',
       ratingAria: '{rating} out of 5 stars',
       addToCartAria: 'Add {title} to cart',
+      fastPickup: 'Pickup ready',
+      viewMenu: 'View full menu',
       labels: {
         classic: 'classic',
         fruit: 'fruit',
@@ -413,12 +435,16 @@ export const en = {
       eyebrow: 'Limited Time',
       title: 'Summer Sip Pass: 2 for 1 on select drinks.',
       copy: 'Refresh your routine with two premium teas for the price of one. Available in-store and pickup for a limited season.',
+      note: 'This week only · selected signatures',
       cta: 'Claim your pass'
     },
     testimonials: {
       eyebrow: 'Testimonials',
       title: 'Loved by bubble tea fans everywhere.',
       ratingAria: 'Rating {rating} out of 5',
+      verified: 'Verified Customer',
+      customer: 'Premium member',
+      sliderAria: 'Customer testimonials slider',
       items: [
         {
           name: 'Sophie H.',
@@ -442,6 +468,7 @@ export const en = {
       title: 'Aesthetic moments from our tea bar.',
       follow: 'Follow @milkteapremium',
       followAria: 'Follow MilkTea Premium on Instagram',
+      openImage: 'Open image: {label}',
       items: [
         { label: 'Tokyo-inspired bubble tea' },
         { label: 'Refreshing summer flavor' },
@@ -456,7 +483,11 @@ export const en = {
       formAria: 'Newsletter subscription',
       emailLabel: 'Email address',
       placeholder: 'you@example.com',
-      submit: 'Subscribe'
+      benefitsAria: 'Newsletter benefits',
+      benefits: ['Seasonal menu drops', 'Member-only tasting events', 'Exclusive promo codes'],
+      submit: 'Subscribe',
+      success: 'Welcome in. Your premium tea updates are on the way.',
+      subscribed: 'Subscribed'
     }
   },
   search: {

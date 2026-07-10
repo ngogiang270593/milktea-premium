@@ -14,12 +14,16 @@ export function Newsletter() {
             <p class="text-sm font-bold uppercase tracking-[0.3em] text-brand-green">${newsletter.eyebrow}</p>
             <h2 id="newsletter-title" class="section-heading mt-4">${newsletter.title}</h2>
             <p class="section-copy mt-4 leading-7 text-gray-600">${newsletter.copy}</p>
+            <ul class="newsletter-benefits" aria-label="${t('home.newsletter.benefitsAria')}">
+              ${newsletter.benefits.map((benefit) => `<li>${benefit}</li>`).join('')}
+            </ul>
           </div>
           ${Card({
             as: 'form',
             className: 'space-y-5 rounded-3xl border-0 bg-white p-6 shadow-[0_18px_44px_rgba(48,35,24,0.08)]',
             attributes: {
-              'aria-label': t('home.newsletter.formAria')
+              'aria-label': t('home.newsletter.formAria'),
+              'data-newsletter-form': ''
             },
             children: `
               <label for="newsletter-email" class="block text-sm font-semibold text-gray-700">${t('home.newsletter.emailLabel')}</label>
@@ -29,8 +33,13 @@ export function Newsletter() {
                 type: 'email',
                 autocomplete: 'email',
                 placeholder: newsletter.placeholder,
-                required: true
+                required: true,
+                attributes: {
+                  'data-newsletter-email': '',
+                  'aria-describedby': 'newsletter-message'
+                }
               })}
+              <p id="newsletter-message" class="newsletter-message" data-newsletter-message aria-live="polite"></p>
               ${Button({
                 type: 'submit',
                 className: 'min-h-12 w-full shadow-[0_16px_36px_rgba(13,59,46,0.2)] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2',

@@ -13,6 +13,7 @@ function loadHomeComponents() {
   return Promise.all([
     import('./components/Hero.js'),
     import('./components/Categories.js'),
+    import('./components/TrustSection.js'),
     import('./components/FeaturedProducts.js'),
     import('./components/Promotion.js'),
     import('./components/Testimonials.js'),
@@ -24,6 +25,7 @@ async function renderHomePage() {
   const [
     { Hero },
     { Categories },
+    { TrustSection },
     { FeaturedProducts },
     { Promotion },
     { Testimonials },
@@ -33,6 +35,7 @@ async function renderHomePage() {
   return `
     ${Hero()}
     ${Categories()}
+    ${TrustSection()}
     ${FeaturedProducts()}
     ${Promotion()}
     ${Testimonials()}

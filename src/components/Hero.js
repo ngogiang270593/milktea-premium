@@ -13,9 +13,12 @@ export function Hero() {
 
       <div class="relative mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-16 px-6 pb-20 pt-24 sm:pt-28 lg:grid-cols-[1.02fr_0.98fr] lg:gap-20 lg:px-8 lg:pb-24 lg:pt-24">
         <div class="hero-copy max-w-2xl">
-          <p class="fade-up inline-flex items-center rounded-full border border-white/75 bg-white/60 px-4 py-2 text-sm font-bold text-brand-green shadow-[0_16px_38px_rgba(48,35,24,0.08)] backdrop-blur-xl">
-            ${hero.eyebrow}
-          </p>
+          <div class="fade-up flex flex-wrap items-center gap-3">
+            <p class="inline-flex items-center rounded-full border border-white/75 bg-white/60 px-4 py-2 text-sm font-bold text-brand-green shadow-[0_16px_38px_rgba(48,35,24,0.08)] backdrop-blur-xl">
+              ${hero.eyebrow}
+            </p>
+            <span class="hero-premium-badge">${hero.premiumBadge}</span>
+          </div>
 
           <h1 id="hero-title" class="fade-up mt-8 max-w-3xl text-5xl font-extrabold leading-[0.92] tracking-tight text-[#1f1710] sm:text-6xl lg:text-7xl">
             ${hero.title}
@@ -25,24 +28,23 @@ export function Hero() {
             ${hero.subtitle}
           </p>
 
-          <div class="fade-up mt-9 flex flex-col gap-4 sm:flex-row">
-            <a href="#featured" class="ripple-button btn-primary min-h-12 px-8 shadow-[0_18px_44px_rgba(13,59,46,0.28)] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">${hero.primaryCta}</a>
-            <a href="#order" class="ripple-button btn-secondary min-h-12 bg-white/55 px-8 backdrop-blur-xl focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">${hero.secondaryCta}</a>
+          <div class="fade-up mt-5 grid gap-3 text-sm font-semibold text-[#4d4035] sm:grid-cols-2">
+            <span class="hero-trust-line">${hero.trustMessage}</span>
+            <span class="hero-trust-line">${hero.deliveryInfo}</span>
           </div>
 
-          <div class="fade-up mt-12 grid gap-4 sm:grid-cols-3" aria-label="${t('home.hero.statsAria')}">
-            <article class="hero-stat-card h-full">
-              <strong>${hero.stats.cupsValue}</strong>
-              <span>${hero.stats.cups}</span>
-            </article>
-            <article class="hero-stat-card h-full">
-              <strong>${hero.stats.blendsValue}</strong>
-              <span>${hero.stats.blends}</span>
-            </article>
-            <article class="hero-stat-card h-full">
-              <strong>${hero.stats.brewValue}</strong>
-              <span>${hero.stats.brew}</span>
-            </article>
+          <div class="fade-up mt-9 flex flex-col gap-4 sm:flex-row">
+            <a href="#order" class="ripple-button btn-primary min-h-12 px-8 shadow-[0_18px_44px_rgba(13,59,46,0.28)] focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">${hero.primaryCta}</a>
+            <a href="/menu" class="ripple-button btn-secondary min-h-12 bg-white/55 px-8 backdrop-blur-xl focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">${hero.secondaryCta}</a>
+          </div>
+
+          <div class="fade-up mt-12 grid gap-4 sm:grid-cols-4" aria-label="${t('home.hero.statsAria')}">
+            ${hero.stats.items.map((stat) => `
+              <article class="hero-stat-card h-full">
+                <strong>${stat.value}</strong>
+                <span>${stat.label}</span>
+              </article>
+            `).join('')}
           </div>
 
           <div class="fade-up mt-6 flex flex-wrap items-center gap-4 rounded-[2rem] border border-white/75 bg-white/60 px-4 py-3 shadow-[0_18px_42px_rgba(48,35,24,0.08)] backdrop-blur-xl sm:inline-flex sm:rounded-full" aria-label="${t('home.hero.ratingAria')}">

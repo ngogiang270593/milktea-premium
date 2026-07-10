@@ -282,10 +282,19 @@ export const vi = {
       eyebrow: 'Trà sữa cao cấp',
       title: 'Tận hưởng từng ngụm.',
       subtitle: 'Trà sữa thủ công từ lá trà ủ chậm, kem sữa mịn và trân châu dẻo thơm, tạo nên một khoảnh khắc thưởng thức tinh tế mỗi ngày.',
-      primaryCta: 'Khám phá thực đơn',
-      secondaryCta: 'Đặt món đặc trưng',
+      premiumBadge: 'Mẻ trà cao cấp mỗi ngày',
+      trustMessage: 'Ủ tươi theo từng mẻ nhỏ',
+      deliveryInfo: 'Giao nhanh trong 25-40 phút',
+      primaryCta: 'Đặt ngay',
+      secondaryCta: 'Khám phá thực đơn',
       statsAria: 'Điểm nổi bật của cửa hàng',
       stats: {
+        items: [
+          { value: '120+', label: 'Món uống' },
+          { value: '15k+', label: 'Khách hài lòng' },
+          { value: '4.9★', label: 'Đánh giá' },
+          { value: '8', label: 'Năm kinh nghiệm' }
+        ],
         cupsValue: '42k+',
         cups: 'Ly đã phục vụ',
         blendsValue: '18',
@@ -309,6 +318,17 @@ export const vi = {
       },
       freshBatch: 'Mẻ mới',
       freshBatchTime: '11:30'
+    },
+    trust: {
+      eyebrow: 'Vì sao chọn chúng tôi',
+      title: 'Từng chi tiết đều hướng đến trải nghiệm cao cấp.',
+      copy: 'Từ nguồn trà, topping đến khâu giao nhận, mọi bước đều được tối ưu để ly trà đến tay bạn thật chỉn chu.',
+      items: [
+        { icon: 'fresh', title: 'Nguyên liệu tươi', copy: 'Trái cây, sữa, trân châu và topping được chuẩn bị mỗi ngày.' },
+        { icon: 'tea', title: 'Lá trà tuyển chọn', copy: 'Nền trà được ủ chậm để giữ hương thơm, chiều sâu và độ cân bằng.' },
+        { icon: 'delivery', title: 'Giao hàng nhanh', copy: 'Quy trình nhận và giao đơn giúp đồ uống luôn tươi khi đến nơi.' },
+        { icon: 'craft', title: 'Pha chế thủ công', copy: 'Mỗi đơn được hoàn thiện bởi nhân viên tea bar theo đúng tùy chọn.' }
+      ]
     },
     categories: {
       eyebrow: 'Mua theo danh mục',
@@ -380,6 +400,8 @@ export const vi = {
       quickViewAria: 'Mở chi tiết sản phẩm {title}',
       ratingAria: '{rating} trên 5 sao',
       addToCartAria: 'Thêm {title} vào giỏ hàng',
+      fastPickup: 'Sẵn sàng nhận nhanh',
+      viewMenu: 'Xem toàn bộ thực đơn',
       labels: {
         classic: 'truyền thống',
         fruit: 'trái cây',
@@ -413,12 +435,16 @@ export const vi = {
       eyebrow: 'Ưu đãi giới hạn',
       title: 'Summer Sip Pass: mua 1 tặng 1 cho đồ uống chọn lọc.',
       copy: 'Làm mới thói quen thưởng thức với hai ly trà cao cấp chỉ với giá một ly. Áp dụng tại cửa hàng và đơn nhận mang đi trong mùa này.',
+      note: 'Chỉ trong tuần này · món đặc trưng chọn lọc',
       cta: 'Nhận ưu đãi'
     },
     testimonials: {
       eyebrow: 'Đánh giá',
       title: 'Được yêu thích bởi những người mê trà sữa.',
       ratingAria: 'Đánh giá {rating} trên 5',
+      verified: 'Khách đã xác thực',
+      customer: 'Thành viên premium',
+      sliderAria: 'Thanh trượt đánh giá khách hàng',
       items: [
         {
           name: 'Sophie H.',
@@ -442,6 +468,7 @@ export const vi = {
       title: 'Những khoảnh khắc đẹp từ quầy trà.',
       followAria: 'Theo dõi MilkTea Premium trên Instagram',
       follow: 'Theo dõi @milkteapremium',
+      openImage: 'Mở hình ảnh: {label}',
       items: [
         {
           label: 'Trà sữa lấy cảm hứng từ Tokyo'
@@ -464,7 +491,11 @@ export const vi = {
       formAria: 'Đăng ký nhận bản tin',
       emailLabel: 'Địa chỉ email',
       placeholder: 'ban@example.com',
-      submit: 'Đăng ký'
+      benefitsAria: 'Lợi ích khi đăng ký nhận tin',
+      benefits: ['Cập nhật món theo mùa', 'Sự kiện thử vị dành riêng cho thành viên', 'Mã ưu đãi độc quyền'],
+      submit: 'Đăng ký',
+      success: 'Chào mừng bạn. Tin trà cao cấp sẽ sớm đến hộp thư.',
+      subscribed: 'Đã đăng ký'
     }
   },
   search: {

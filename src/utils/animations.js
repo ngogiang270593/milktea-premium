@@ -1306,6 +1306,56 @@ export function initQuickView() {
   });
 }
 
+export function initNewsletterForms() {
+  document.querySelectorAll('[data-newsletter-form]').forEach((form) => {
+    if (form.dataset.newsletterReady === 'true') {
+      return;
+    }
+
+    form.dataset.newsletterReady = 'true';
+    const input = form.querySelector('[data-newsletter-email]');
+    const message = form.querySelector('[data-newsletter-message]');
+    const button = form.querySelector('button[type="submit"]');
+
+    const validate = () => {
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+
+      input.classList.toggle('is-invalid', input.value.trim() && !valid);
+      input.setAttribute('aria-invalid', String(input.value.trim() && !valid));
+
+      return valid;
+    };
+
+    input?.addEventListener('input', () => {
+      validate();
+      message.textContent = '';
+      message.className = 'newsletter-message';
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (!validate()) {
+        message.textContent = t('validation.invalidEmail');
+        message.className = 'newsletter-message is-error';
+        input.focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      button.textContent = t('common.loading');
+
+      window.setTimeout(() => {
+        message.textContent = t('home.newsletter.success');
+        message.className = 'newsletter-message is-success';
+        button.textContent = t('home.newsletter.subscribed');
+        button.classList.add('cart-pop');
+      }, 450);
+    });
+  });
+}
+
 function buildDetailProduct(id) {
   const product = getProductById(id);
   const quantity = getDetailQuantity();
@@ -1795,6 +1845,7 @@ export function initAppInteractions() {
   initHeroParallax();
   initProductCards();
   initQuickView();
+  initNewsletterForms();
   initSearchOverlay();
   initMenuPage();
   initCartPage();

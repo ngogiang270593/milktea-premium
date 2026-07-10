@@ -13,7 +13,7 @@ function featuredCard(product, featuredContent) {
   const label = featuredContent.labels[product.label];
 
   return `
-    <article class="product-card group flex h-full flex-col" data-product-card>
+    <article class="product-card featured-premium-card group flex h-full flex-col" data-product-card>
       <div class="product-image-wrap">
         <img ${imageAttributes(product.image, {
           alt: title,
@@ -48,6 +48,10 @@ function featuredCard(product, featuredContent) {
 
         <h3 class="mt-4 text-xl font-bold tracking-tight text-[#1f1710]"><a href="/product?id=${product.id}" class="outline-none transition hover:text-brand-green focus-visible:text-brand-green">${title}</a></h3>
         <p class="mt-2 min-h-[4.5rem] text-sm leading-6 text-[#6f5f51]">${description}</p>
+        <div class="mt-4 flex items-center justify-between gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[#7b6a5a]">
+          <span>${t('home.featured.fastPickup')}</span>
+          <span>${t('products.soldCount', { count: (product.reviews * 8).toLocaleString() })}</span>
+        </div>
 
         <div class="mt-auto flex items-end justify-between gap-4 pt-5">
           <div>
@@ -81,7 +85,10 @@ export function FeaturedProducts() {
           <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${featured.eyebrow}</p>
           <h2 id="featured-title" class="section-heading mt-4">${featured.title}</h2>
         </div>
-        <p class="section-copy mt-6 max-w-xl text-gray-600 lg:mt-0">${featured.copy}</p>
+        <div class="mt-6 max-w-xl lg:mt-0">
+          <p class="section-copy text-gray-600">${featured.copy}</p>
+          <a href="/menu" class="mt-5 inline-flex text-sm font-extrabold text-brand-green outline-none transition hover:text-[#0b3427] focus-visible:ring-2 focus-visible:ring-brand-gold/70">${t('home.featured.viewMenu')}</a>
+        </div>
       </div>
 
       <div class="relative mx-auto mt-12 grid max-w-7xl gap-6 px-6 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
