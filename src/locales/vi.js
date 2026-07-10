@@ -1,7 +1,8 @@
-import { siteConfig } from '../config/siteConfig.js';
-
 export const vi = {
-  seo: siteConfig.seo.vi,
+  seo: {
+    title: 'MilkTea Premium - Trà sữa cao cấp',
+    description: 'MilkTea Premium - Trà sữa cao cấp, nguyên liệu tuyển chọn, giao hàng nhanh, trải nghiệm thưởng thức tuyệt hảo.'
+  },
   navbar: {
     home: 'Trang chủ',
     menu: 'Thực đơn',
@@ -42,7 +43,7 @@ export const vi = {
     share: 'Chia sẻ'
   },
   common: {
-    brand: siteConfig.brand.name,
+    brand: 'MilkTea Premium',
     loading: 'Đang tải...',
     noData: 'Không có dữ liệu',
     language: 'Ngôn ngữ',
@@ -256,8 +257,11 @@ export const vi = {
       secondaryCta: 'Đặt món đặc trưng',
       statsAria: 'Điểm nổi bật của cửa hàng',
       stats: {
+        cupsValue: '42k+',
         cups: 'Ly đã phục vụ',
+        blendsValue: '18',
         blends: 'Công thức trà',
+        brewValue: '12h',
         brew: 'Ủ lạnh'
       },
       ratingAria: 'Khách hàng đánh giá 4.9 trên 5 từ 2.400 lượt đánh giá',
@@ -274,7 +278,8 @@ export const vi = {
           description: 'Mềm mịn như nhung'
         }
       },
-      freshBatch: 'Mẻ mới'
+      freshBatch: 'Mẻ mới',
+      freshBatchTime: '11:30'
     },
     categories: {
       eyebrow: 'Mua theo danh mục',
@@ -284,32 +289,56 @@ export const vi = {
       groupAria: 'Danh mục sản phẩm',
       cardAria: '{name}, {count} sản phẩm',
       productCount: '{count} sản phẩm',
-      items: {
-        'milk-tea': {
+      items: [
+        {
+          value: 'milk-tea',
+          count: 24,
+          icon: 'MilkTea',
+          toneClass: 'from-[#0d3b2e] to-[#2f6b58]',
           title: 'Trà sữa',
           description: 'Những vị trà sữa béo mịn và đường nâu đặc trưng.'
         },
-        'fruit-tea': {
+        {
+          value: 'fruit-tea',
+          count: 18,
+          icon: 'FruitTea',
+          toneClass: 'from-[#f8c3b6] to-[#d86f5d]',
           title: 'Trà trái cây',
           description: 'Cam chanh, dâu, xoài tươi mát cùng trân châu nổ.'
         },
-        coffee: {
+        {
+          value: 'coffee',
+          count: 12,
+          icon: 'Coffee',
+          toneClass: 'from-[#6f4329] to-[#2f2419]',
           title: 'Cà phê',
           description: 'Cà phê pha kiểu tea bar với lớp kem béo mượt.'
         },
-        smoothie: {
+        {
+          value: 'smoothie',
+          count: 16,
+          icon: 'Smoothie',
+          toneClass: 'from-[#cdebf6] to-[#62a8b8]',
           title: 'Smoothie',
           description: 'Sinh tố trái cây lạnh, mịn và nhẹ nhàng cho buổi chiều.'
         },
-        cake: {
+        {
+          value: 'cake',
+          count: 10,
+          icon: 'Cake',
+          toneClass: 'from-[#d3a86a] to-[#b7793f]',
           title: 'Bánh ngọt',
           description: 'Bánh mềm tinh tế để dùng kèm mọi ly trà.'
         },
-        topping: {
+        {
+          value: 'topping',
+          count: 22,
+          icon: 'Topping',
+          toneClass: 'from-[#e7f8f6] to-[#1f7665]',
           title: 'Topping',
           description: 'Trân châu, thạch, kem cheese, pudding và hạt giòn.'
         }
-      }
+      ]
     },
     featured: {
       eyebrow: 'Sản phẩm nổi bật',
@@ -363,13 +392,19 @@ export const vi = {
       ratingAria: 'Đánh giá {rating} trên 5',
       items: [
         {
-          quote: 'Bộ sưu tập Premium vừa sang trọng vừa dễ chịu. Mỗi ly đều là một món quà nhỏ đầy tinh tế.'
+          name: 'Sophie H.',
+          quote: 'Bộ sưu tập Premium vừa sang trọng vừa dễ chịu. Mỗi ly đều là một món quà nhỏ đầy tinh tế.',
+          rating: '5.0'
         },
         {
-          quote: 'Sự kết hợp hoàn hảo giữa không gian hiện đại và đồ uống ngon. Matcha latte thật sự khó quên.'
+          name: 'Daniel P.',
+          quote: 'Sự kết hợp hoàn hảo giữa không gian hiện đại và đồ uống ngon. Matcha latte thật sự khó quên.',
+          rating: '5.0'
         },
         {
-          quote: 'Hương vị thanh lịch và phục vụ chu đáo. Đây đúng là một điểm đến trà sữa cao cấp.'
+          name: 'Ava W.',
+          quote: 'Hương vị thanh lịch và phục vụ chu đáo. Đây đúng là một điểm đến trà sữa cao cấp.',
+          rating: '5.0'
         }
       ]
     },
@@ -402,6 +437,14 @@ export const vi = {
       placeholder: 'ban@example.com',
       submit: 'Đăng ký'
     }
+  },
+  search: {
+    placeholder: 'Tìm trà sữa, matcha, cà phê...',
+    popularSearches: 'Tìm kiếm phổ biến',
+    recentSearches: 'Tìm kiếm gần đây',
+    clear: 'Xóa',
+    noResults: 'Không tìm thấy kết quả',
+    emptyCopy: 'Hãy thử tìm trà sữa, matcha, trà trái cây, cà phê hoặc topping.'
   },
   cart: {
     breadcrumb: 'Giỏ hàng',
@@ -517,9 +560,9 @@ export const vi = {
   },
   orderSuccess: {
     eyebrow: 'Đặt hàng thành công',
-    title: siteConfig.content.vi.orderSuccess.title,
-    orderNumber: siteConfig.content.vi.orderSuccess.orderNumber,
-    copy: siteConfig.content.vi.orderSuccess.copy,
+    title: 'Cảm ơn bạn đã chọn MilkTea Premium.',
+    orderNumber: 'Mã đơn hàng: MT-2026-001',
+    copy: 'Đơn hàng mẫu đã được ghi nhận trên giao diện. Khi tích hợp backend, trạng thái và mã đơn sẽ được cập nhật tự động.',
     continueShopping: 'Tiếp tục mua sắm',
     backToCart: 'Quay lại giỏ hàng'
   },

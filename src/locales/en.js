@@ -1,7 +1,8 @@
-import { siteConfig } from '../config/siteConfig.js';
-
 export const en = {
-  seo: siteConfig.seo.en,
+  seo: {
+    title: 'MilkTea Premium | Handcrafted Bubble Tea',
+    description: 'MilkTea Premium offers a modern bubble tea experience with handcrafted blends, premium ingredients, and elegant presentation.'
+  },
   navbar: {
     home: 'Home',
     menu: 'Menu',
@@ -42,7 +43,7 @@ export const en = {
     share: 'Share'
   },
   common: {
-    brand: siteConfig.brand.name,
+    brand: 'MilkTea Premium',
     loading: 'Loading...',
     noData: 'No data',
     language: 'Language',
@@ -249,38 +250,193 @@ export const en = {
   },
   home: {
     hero: {
-      ...siteConfig.content.en.home.hero,
+      eyebrow: 'Premium Bubble Tea',
+      title: 'Enjoy Every Sip.',
+      subtitle: 'Handcrafted milk tea, slow-brewed leaves, silky cream, and jewel-like pearls made for a calmer, richer daily ritual.',
+      primaryCta: 'Explore Menu',
+      secondaryCta: 'Order Signature',
       statsAria: 'Store highlights',
-      ratingAria: 'Customer rating 4.9 out of 5 from 2,400 reviews'
+      stats: {
+        cupsValue: '42k+',
+        cups: 'Cups served',
+        blendsValue: '18',
+        blends: 'Tea blends',
+        brewValue: '12h',
+        brew: 'Cold brew'
+      },
+      ratingAria: 'Customer rating 4.9 out of 5 from 2,400 reviews',
+      ratingTitle: '4.9/5 customer love',
+      ratingMeta: '2,400+ verified tea moments',
+      visualAria: 'Illustration of a premium bubble tea drink with brown sugar pearls and cream topping',
+      toppings: {
+        pearls: {
+          title: 'Brown Sugar Pearls',
+          description: 'Slow simmered daily'
+        },
+        cream: {
+          title: 'Cloud Cream',
+          description: 'Velvet finish'
+        }
+      },
+      freshBatch: 'Fresh batch',
+      freshBatchTime: '11:30 AM'
     },
     categories: {
-      ...siteConfig.content.en.home.categories,
+      eyebrow: 'Shop by category',
+      title: 'Choose your next premium treat.',
+      copy: 'Swipe, tap, or browse our signature families crafted for milk tea lovers, coffee guests, and dessert pairings.',
+      sideCopy: 'Interactive category cards highlight product depth and make mobile discovery feel as smooth as the first sip.',
       groupAria: 'Product categories',
       cardAria: '{name}, {count} products',
-      productCount: '{count} products'
+      productCount: '{count} products',
+      items: [
+        {
+          value: 'milk-tea',
+          count: 24,
+          icon: 'MilkTea',
+          toneClass: 'from-[#0d3b2e] to-[#2f6b58]',
+          title: 'Milk Tea',
+          description: 'Velvety classics and brown sugar signatures.'
+        },
+        {
+          value: 'fruit-tea',
+          count: 18,
+          icon: 'FruitTea',
+          toneClass: 'from-[#f8c3b6] to-[#d86f5d]',
+          title: 'Fruit Tea',
+          description: 'Bright citrus, berry, mango, and popping pearls.'
+        },
+        {
+          value: 'coffee',
+          count: 12,
+          icon: 'Coffee',
+          toneClass: 'from-[#6f4329] to-[#2f2419]',
+          title: 'Coffee',
+          description: 'Tea bar espresso blends with creamy foam.'
+        },
+        {
+          value: 'smoothie',
+          count: 16,
+          icon: 'Smoothie',
+          toneClass: 'from-[#cdebf6] to-[#62a8b8]',
+          title: 'Smoothie',
+          description: 'Cold, silky fruit blends for slower afternoons.'
+        },
+        {
+          value: 'cake',
+          count: 10,
+          icon: 'Cake',
+          toneClass: 'from-[#d3a86a] to-[#b7793f]',
+          title: 'Cake',
+          description: 'Soft patisserie pairings for every tea order.'
+        },
+        {
+          value: 'topping',
+          count: 22,
+          icon: 'Topping',
+          toneClass: 'from-[#e7f8f6] to-[#1f7665]',
+          title: 'Topping',
+          description: 'Pearls, jellies, foam, pudding, and crunch.'
+        }
+      ]
     },
     featured: {
-      ...siteConfig.content.en.home.featured,
+      eyebrow: 'Featured products',
+      title: 'Premium picks, ready for your cart.',
+      copy: 'Image-led product cards with instant favorite, quick view, discounts, ratings, and polished cart actions.',
       quickView: 'Quick view',
       add: 'Add',
       discountAria: '{discount} percent discount',
       favoriteAria: 'Add {title} to wishlist',
       quickViewAria: 'Open product detail for {title}',
       ratingAria: '{rating} out of 5 stars',
-      addToCartAria: 'Add {title} to cart'
+      addToCartAria: 'Add {title} to cart',
+      labels: {
+        classic: 'classic',
+        fruit: 'fruit',
+        matcha: 'matcha',
+        smoothie: 'smoothie'
+      },
+      items: {
+        'midnight-milk-tea': {
+          title: 'Midnight Milk Tea',
+          description: 'Velvet black tea with brown sugar boba, cream foam, and a subtle caramel note.',
+          badge: 'Best Seller'
+        },
+        'tropical-hibiscus': {
+          title: 'Tropical Hibiscus',
+          description: 'Bright hibiscus with pineapple, passionfruit, and popping lemonade pearls.',
+          badge: 'Seasonal'
+        },
+        'vanilla-matcha-dream': {
+          title: 'Vanilla Matcha Dream',
+          description: 'Silky matcha with house vanilla, oat milk, and a gold dust finish.',
+          badge: 'Premium'
+        },
+        'strawberry-cloud-smoothie': {
+          title: 'Strawberry Cloud Smoothie',
+          description: 'Fresh strawberry blend with yogurt cream, crystal pearls, and a soft vanilla finish.',
+          badge: 'New'
+        }
+      }
     },
-    promotion: siteConfig.content.en.home.promotion,
+    promotion: {
+      eyebrow: 'Limited Time',
+      title: 'Summer Sip Pass: 2 for 1 on select drinks.',
+      copy: 'Refresh your routine with two premium teas for the price of one. Available in-store and pickup for a limited season.',
+      cta: 'Claim your pass'
+    },
     testimonials: {
-      ...siteConfig.content.en.home.testimonials,
-      ratingAria: 'Rating {rating} out of 5'
+      eyebrow: 'Testimonials',
+      title: 'Loved by bubble tea fans everywhere.',
+      ratingAria: 'Rating {rating} out of 5',
+      items: [
+        {
+          name: 'Sophie H.',
+          quote: 'The Premium collection feels luxurious yet comforting. Every cup is a beautiful treat.',
+          rating: '5.0'
+        },
+        {
+          name: 'Daniel P.',
+          quote: 'The perfect blend of modern design and delicious drinks. The matcha latte is unforgettable.',
+          rating: '5.0'
+        },
+        {
+          name: 'Ava W.',
+          quote: 'Elegant flavors and attentive service. This feels like a true premium tea destination.',
+          rating: '5.0'
+        }
+      ]
     },
-    instagram: siteConfig.content.en.home.instagram,
+    instagram: {
+      eyebrow: 'Instagram',
+      title: 'Aesthetic moments from our tea bar.',
+      follow: 'Follow @milkteapremium',
+      followAria: 'Follow MilkTea Premium on Instagram',
+      items: [
+        { label: 'Tokyo-inspired bubble tea' },
+        { label: 'Refreshing summer flavor' },
+        { label: 'Minimal premium cafe' },
+        { label: 'Styled tea and pearls' }
+      ]
+    },
     newsletter: {
-      ...siteConfig.content.en.home.newsletter,
+      eyebrow: 'Newsletter',
+      title: 'Stay in the loop with premium tea updates.',
+      copy: 'Receive new menu drops, seasonal offers, and exclusive tasting events direct to your inbox.',
       formAria: 'Newsletter subscription',
       emailLabel: 'Email address',
+      placeholder: 'you@example.com',
       submit: 'Subscribe'
     }
+  },
+  search: {
+    placeholder: 'Search milk tea, matcha, coffee...',
+    popularSearches: 'Popular searches',
+    recentSearches: 'Recent searches',
+    clear: 'Clear',
+    noResults: 'No results found',
+    emptyCopy: 'Try searching for milk tea, matcha, fruit tea, coffee, or toppings.'
   },
   cart: {
     breadcrumb: 'Cart',
@@ -396,9 +552,9 @@ export const en = {
   },
   orderSuccess: {
     eyebrow: 'Order Success',
-    title: siteConfig.content.en.orderSuccess.title,
-    orderNumber: siteConfig.content.en.orderSuccess.orderNumber,
-    copy: siteConfig.content.en.orderSuccess.copy,
+    title: 'Thank you for choosing MilkTea Premium.',
+    orderNumber: 'Order number: MT-2026-001',
+    copy: 'This frontend order state is ready for backend integration. Live order numbers and status updates can be connected later.',
     continueShopping: 'Continue Shopping',
     backToCart: 'Back to Cart'
   },
