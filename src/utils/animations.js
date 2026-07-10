@@ -22,6 +22,8 @@ import {
   clearCart,
   decreaseQuantity,
   getCartQuantity,
+  getDiscount,
+  getSubtotal,
   getTotal,
   increaseQuantity,
   removeItem
@@ -751,6 +753,154 @@ export function initSearchOverlay() {
   renderRecentSearches();
 }
 
+function bindCheckoutControls() {
+  const form = document.querySelector('[data-checkout-form]');
+
+  if (!form || form.dataset.checkoutReady === 'true') {
+    return;
+  }
+
+  form.dataset.checkoutReady = 'true';
+  const fields = [...form.querySelectorAll('[data-checkout-field]')];
+  const submitButton = form.querySelector('[data-checkout-submit]');
+  const couponInput = form.querySelector('[data-checkout-coupon]');
+  const couponButton = form.querySelector('[data-checkout-apply-coupon]');
+  const couponMessage = form.querySelector('[data-checkout-coupon-message]');
+  const summary = form.querySelector('[data-checkout-summary]');
+  let couponApplied = false;
+  let submitting = false;
+
+  const validationMessage = (field) => {
+    const value = field.value.trim();
+
+    if (field.dataset.required === 'true' && !value) {
+      return t('validation.requiredField');
+    }
+
+    if (!value) {
+      return '';
+    }
+
+    if (field.dataset.checkoutField === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      return t('validation.invalidEmail');
+    }
+
+    if (field.dataset.checkoutField === 'phone' && !/^[+()\d\s.-]{8,18}$/.test(value)) {
+      return t('checkout.errors.invalidPhone');
+    }
+
+    return '';
+  };
+
+  const setFieldState = (field) => {
+    const error = validationMessage(field);
+    const wrapper = field.closest('.checkout-field');
+    const errorElement = wrapper?.querySelector('[data-field-error]');
+
+    field.classList.toggle('is-invalid', Boolean(error));
+    field.setAttribute('aria-invalid', String(Boolean(error)));
+    if (errorElement) {
+      errorElement.textContent = error;
+      errorElement.hidden = !error;
+    }
+
+    return !error;
+  };
+
+  const updateSubmitState = () => {
+    const isValid = fields.every((field) => validationMessage(field) === '');
+
+    if (submitButton) {
+      submitButton.disabled = !isValid || submitting;
+      submitButton.toggleAttribute('aria-disabled', !isValid || submitting);
+    }
+
+    return isValid;
+  };
+
+  const selectedShipping = () => Number(form.querySelector('[data-shipping-option]:checked')?.dataset.shippingCost || 0);
+
+  const updateOptionState = (name) => {
+    form.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
+      input.closest('.checkout-option')?.classList.toggle('is-active', input.checked);
+    });
+  };
+
+  const updateSummary = () => {
+    const subtotal = getSubtotal();
+    const itemDiscount = getDiscount();
+    const couponDiscount = couponApplied ? subtotal * Number(summary?.dataset.couponRate || 0) : 0;
+    const shipping = selectedShipping();
+    const tax = Math.max(0, subtotal - couponDiscount) * Number(summary?.dataset.taxRate || 0);
+    const total = Math.max(0, subtotal - couponDiscount + shipping + tax);
+
+    setTextIfChanged(summary?.querySelector('[data-checkout-subtotal]'), formatCurrency(subtotal));
+    setTextIfChanged(summary?.querySelector('[data-checkout-discount]'), `-${formatCurrency(itemDiscount)}`);
+    setTextIfChanged(summary?.querySelector('[data-checkout-coupon-discount]'), `-${formatCurrency(couponDiscount)}`);
+    setTextIfChanged(summary?.querySelector('[data-checkout-shipping]'), shipping === 0 ? t('cart.freeShipping') : formatCurrency(shipping));
+    setTextIfChanged(summary?.querySelector('[data-checkout-tax]'), formatCurrency(tax));
+    setTextIfChanged(summary?.querySelector('[data-checkout-total]'), formatCurrency(total));
+  };
+
+  fields.forEach((field) => {
+    field.addEventListener('input', () => {
+      setFieldState(field);
+      updateSubmitState();
+    });
+    field.addEventListener('blur', () => {
+      setFieldState(field);
+      updateSubmitState();
+    });
+  });
+
+  form.querySelectorAll('[data-shipping-option], [data-payment-option]').forEach((input) => {
+    input.addEventListener('change', () => {
+      updateOptionState(input.name);
+      updateSummary();
+    });
+  });
+
+  couponButton?.addEventListener('click', () => {
+    const code = couponInput?.value.trim().toUpperCase();
+
+    couponApplied = code === 'MILKTEA10';
+    couponMessage.textContent = couponApplied ? t('checkout.couponSuccess') : t('checkout.couponInvalid');
+    couponMessage.classList.toggle('is-success', couponApplied);
+    couponMessage.classList.toggle('is-error', !couponApplied);
+    updateSummary();
+    showToast(couponApplied ? t('toast.couponApplied') : t('checkout.couponInvalid'));
+  });
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const isValid = fields.every(setFieldState);
+    updateSubmitState();
+
+    if (!isValid || submitting) {
+      fields.find((field) => validationMessage(field))?.focus();
+      return;
+    }
+
+    submitting = true;
+    submitButton.disabled = true;
+    submitButton.setAttribute('aria-busy', 'true');
+    submitButton.textContent = t('common.loading');
+
+    window.setTimeout(() => {
+      submitButton.textContent = submitButton.dataset.actionSuccess || t('checkout.orderSuccess');
+      submitButton.classList.add('cart-pop');
+      document.querySelector('#order-success')?.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
+      window.history.replaceState(null, '', '#order-success');
+    }, 700);
+  });
+
+  updateOptionState('delivery-method');
+  updateOptionState('payment-method');
+  updateSummary();
+  updateSubmitState();
+}
+
 function renderCartContent() {
   const content = document.querySelector('[data-cart-content]');
 
@@ -762,6 +912,7 @@ function renderCartContent() {
   updateCartBadges();
   initRippleButtons();
   bindCartControls();
+  bindCheckoutControls();
   animateCards(content.querySelectorAll('.cart-item'));
 }
 
@@ -829,6 +980,7 @@ function bindCartControls() {
 export function initCartPage() {
   updateCartBadges();
   bindCartControls();
+  bindCheckoutControls();
 }
 
 function getSelectedProductOptions() {

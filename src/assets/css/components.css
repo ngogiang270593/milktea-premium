@@ -1810,7 +1810,7 @@
 
   .checkout-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 24rem;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 26rem);
     gap: 2rem;
     margin-top: 2rem;
     align-items: start;
@@ -1846,7 +1846,7 @@
   }
 
   .checkout-payment-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .checkout-field {
@@ -1871,6 +1871,10 @@
     transition: border-color 220ms ease, box-shadow 220ms ease;
   }
 
+  .checkout-form-grid-single {
+    grid-template-columns: 1fr;
+  }
+
   .checkout-panel textarea {
     min-height: 7rem;
     margin-top: 1rem;
@@ -1884,6 +1888,18 @@
   .checkout-option:focus-within {
     border-color: #d3a86a;
     box-shadow: 0 0 0 3px rgba(211, 168, 106, 0.28);
+  }
+
+  .checkout-field input.is-invalid {
+    border-color: #b25449;
+    box-shadow: 0 0 0 3px rgba(178, 84, 73, 0.18);
+  }
+
+  .checkout-error {
+    min-height: 1.2rem;
+    color: #b25449;
+    font-size: 0.75rem;
+    font-weight: 750;
   }
 
   .checkout-option {
@@ -1900,10 +1916,15 @@
   }
 
   .checkout-option:hover,
-  .checkout-option:focus-within {
+  .checkout-option:focus-within,
+  .checkout-option.is-active {
     background: rgba(255, 255, 255, 0.86);
     border-color: rgba(211, 168, 106, 0.72);
     transform: translateY(-0.125rem);
+  }
+
+  .checkout-option.is-active {
+    box-shadow: 0 16px 38px rgba(48, 35, 24, 0.1);
   }
 
   .checkout-option input {
@@ -1928,6 +1949,15 @@
     line-height: 1.5;
   }
 
+  .checkout-option em {
+    margin-left: auto;
+    color: #0d3b2e;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 850;
+    white-space: nowrap;
+  }
+
   .checkout-coupon-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -1943,6 +1973,22 @@
     font-weight: 800;
     background: #0d3b2e;
     border-radius: 9999px;
+  }
+
+  .checkout-coupon-message {
+    min-height: 1.35rem;
+    margin-top: 0.75rem;
+    color: #7b6a5a;
+    font-size: 0.82rem;
+    font-weight: 750;
+  }
+
+  .checkout-coupon-message.is-success {
+    color: #0d3b2e;
+  }
+
+  .checkout-coupon-message.is-error {
+    color: #b25449;
   }
 
   .checkout-summary-panel {
@@ -1967,6 +2013,18 @@
   .checkout-summary-list dd {
     color: #1f1710;
     font-weight: 750;
+  }
+
+  .checkout-grand-total {
+    color: #0d3b2e;
+    font-size: 1.35rem;
+    font-weight: 900;
+  }
+
+  .checkout-place-order:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+    transform: none;
   }
 
   .checkout-summary-panel p {

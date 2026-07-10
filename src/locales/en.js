@@ -537,9 +537,19 @@ export const en = {
     ward: 'Ward',
     couponPlaceholder: 'Enter coupon code',
     applyCoupon: 'Apply',
+    couponSuccess: 'Coupon applied successfully.',
+    couponInvalid: 'Invalid coupon code. Try MILKTEA10.',
+    couponDiscount: 'Coupon Discount',
+    shippingFee: 'Shipping Fee',
+    tax: 'Tax',
+    grandTotal: 'Grand Total',
     notesPlaceholder: 'Add sweetness notes, pickup timing, or delivery instructions...',
     placeOrder: 'Place order',
+    orderSuccess: 'Order placed',
     securePayment: 'Payment details are prepared safely for gateway integration.',
+    errors: {
+      invalidPhone: 'Enter a valid phone number'
+    },
     delivery: {
       standard: {
         title: 'Standard Delivery',
@@ -563,21 +573,13 @@ export const en = {
         title: 'Bank Transfer',
         description: 'Ready for bank payment integration.'
       },
-      momo: {
-        title: 'Momo',
-        description: 'Prepared for Momo wallet integration.'
+      creditCard: {
+        title: 'Credit Card',
+        description: 'Prepared for secure card gateway integration.'
       },
-      vnpay: {
-        title: 'VNPay',
-        description: 'Prepared for VNPay gateway integration.'
-      },
-      stripe: {
-        title: 'Stripe',
-        description: 'Ready for international card payments.'
-      },
-      paypal: {
-        title: 'Paypal',
-        description: 'Ready for Paypal checkout.'
+      digitalWallet: {
+        title: 'Digital Wallet',
+        description: 'Prepared for Momo, VNPay, Apple Pay, or wallet integrations.'
       }
     }
   },

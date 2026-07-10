@@ -545,9 +545,19 @@ export const vi = {
     ward: 'Phường / Xã',
     couponPlaceholder: 'Nhập mã ưu đãi',
     applyCoupon: 'Áp dụng',
+    couponSuccess: 'Đã áp dụng mã ưu đãi.',
+    couponInvalid: 'Mã ưu đãi không hợp lệ. Hãy thử MILKTEA10.',
+    couponDiscount: 'Giảm giá mã ưu đãi',
+    shippingFee: 'Phí giao hàng',
+    tax: 'Thuế',
+    grandTotal: 'Tổng thanh toán',
     notesPlaceholder: 'Ghi chú về mức ngọt, thời gian nhận hàng hoặc hướng dẫn giao hàng...',
     placeOrder: 'Đặt hàng',
+    orderSuccess: 'Đã đặt hàng',
     securePayment: 'Thông tin thanh toán được chuẩn bị an toàn cho bước tích hợp cổng thanh toán.',
+    errors: {
+      invalidPhone: 'Vui lòng nhập số điện thoại hợp lệ'
+    },
     delivery: {
       standard: {
         title: 'Giao tiêu chuẩn',
@@ -571,21 +581,13 @@ export const vi = {
         title: 'Chuyển khoản',
         description: 'Chuẩn bị cho thanh toán qua ngân hàng.'
       },
-      momo: {
-        title: 'Momo',
-        description: 'Sẵn sàng tích hợp ví Momo.'
+      creditCard: {
+        title: 'Thẻ tín dụng',
+        description: 'Chuẩn bị cho tích hợp cổng thanh toán thẻ an toàn.'
       },
-      vnpay: {
-        title: 'VNPay',
-        description: 'Sẵn sàng tích hợp cổng VNPay.'
-      },
-      stripe: {
-        title: 'Stripe',
-        description: 'Sẵn sàng cho thẻ quốc tế.'
-      },
-      paypal: {
-        title: 'Paypal',
-        description: 'Sẵn sàng cho thanh toán Paypal.'
+      digitalWallet: {
+        title: 'Ví điện tử',
+        description: 'Chuẩn bị cho Momo, VNPay, Apple Pay hoặc ví điện tử.'
       }
     }
   },
