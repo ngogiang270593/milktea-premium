@@ -1,7 +1,9 @@
 import { MenuProductCard } from '../components/menu/MenuProductCard.js';
-import { Accordion, Rating } from '../components/ui/index.js';
+import { Accordion, Badge, Rating, Tag } from '../components/ui/index.js';
+import { getSiteConfig } from '../config/siteConfig.js';
 import { getProductById, MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { formatCurrency } from '../utils/format.js';
+import { escapeAttribute, escapeHtml } from '../utils/html.js';
 import { escapeImageAttribute, imageAttributes, imageSourceSet, resizeImageUrl } from '../utils/image.js';
 import { t } from '../utils/i18n.js';
 
@@ -99,6 +101,71 @@ function availabilityText(product) {
   return value === path ? product.availability : value;
 }
 
+function productSku(product) {
+  return `MT-${product.id.replaceAll('-', '').slice(0, 10).toUpperCase()}`;
+}
+
+function tagLabel(tag, product) {
+  const categoryPath = `filters.categoryOptions.${tag}`;
+  const category = t(categoryPath);
+
+  if (category !== categoryPath) {
+    return category;
+  }
+
+  if (tag === product.availability) {
+    return availabilityText(product);
+  }
+
+  if (SIZES.includes(tag)) {
+    return t(`filters.sizeOptions.${tag}`);
+  }
+
+  if (ICE_LEVELS.includes(tag)) {
+    return t(`filters.iceOptions.${tag}`);
+  }
+
+  if (String(tag).includes('%')) {
+    return t('filters.sugarValue', { value: tag });
+  }
+
+  return tag;
+}
+
+function productTags(product) {
+  const tags = [
+    product.category,
+    product.size,
+    product.sugar,
+    product.ice,
+    product.availability,
+    ...(product.tags || [])
+  ];
+
+  return [...new Set(tags.filter(Boolean))]
+    .map((tag) => tagLabel(tag, product))
+    .slice(0, 6);
+}
+
+function metaItem(label, value) {
+  return `
+    <div>
+      <dt>${label}</dt>
+      <dd>${value}</dd>
+    </div>
+  `;
+}
+
+function shareUrl(platform, productId) {
+  const path = `/product?id=${encodeURIComponent(productId)}`;
+
+  if (platform === 'facebook') {
+    return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(path)}`;
+  }
+
+  return `https://twitter.com/intent/tweet?url=${encodeURIComponent(path)}`;
+}
+
 function notFound() {
   return `
     <section class="product-page" aria-labelledby="product-title">
@@ -129,6 +196,9 @@ export function ProductPage() {
   const categoryTitle = productCategory(product);
   const availabilityLabel = availabilityText(product);
   const ratingLabel = t('products.ratingAria', { rating: product.rating, reviews: product.reviews });
+  const sku = productSku(product);
+  const brandName = getSiteConfig().brand.name;
+  const tags = productTags(product);
 
   return `
     <section class="product-page" aria-labelledby="product-title" data-product-detail="${product.id}">
@@ -176,8 +246,11 @@ export function ProductPage() {
             </div>
           </section>
 
-          <aside class="product-info" data-reveal>
-            <p class="menu-product-category">${categoryTitle}</p>
+          <aside class="product-info product-purchase-panel" data-reveal>
+            <div class="product-info-topline">
+              ${Badge({ children: escapeHtml(categoryTitle), tone: 'brand', className: 'menu-product-category' })}
+              <span class="product-sku">${t('productDetail.meta.sku')}: ${sku}</span>
+            </div>
             <div class="mt-4 flex items-start justify-between gap-4">
               <h1 id="product-title">${title}</h1>
               <button type="button" class="favorite-button ripple-button static shrink-0" aria-label="${t('products.addWishlistAria', { name: title })}" aria-pressed="false" data-favorite-button="${product.id}">
@@ -193,13 +266,24 @@ export function ProductPage() {
             </div>
 
             <div class="mt-6 flex items-end gap-3">
-              <strong class="product-detail-price">${formatCurrency(product.price)}</strong>
               <span class="product-detail-old-price">${formatCurrency(product.oldPrice)}</span>
+              <strong class="product-detail-price">${formatCurrency(product.price)}</strong>
               <span class="product-detail-discount">-${product.discount}%</span>
             </div>
 
             <p class="mt-6 text-base leading-8 text-[#6f5f51]">${description}</p>
             <p class="mt-4 text-sm font-semibold uppercase tracking-[0.16em] text-brand-green">${t('productDetail.origin')}: ${t('productDetail.originValue')}</p>
+
+            <dl class="product-meta-list" aria-label="${t('productDetail.meta.title')}">
+              ${metaItem(t('productDetail.meta.category'), `<a href="${categoryUrl(product)}">${escapeHtml(categoryTitle)}</a>`)}
+              ${metaItem(t('productDetail.meta.brand'), escapeHtml(brandName))}
+              ${metaItem(t('productDetail.meta.availability'), escapeHtml(availabilityLabel))}
+              ${metaItem(t('productDetail.meta.sku'), sku)}
+            </dl>
+
+            <div class="product-tag-list" aria-label="${t('productDetail.tagsAria')}">
+              ${tags.map((tag) => Tag({ children: escapeHtml(tag) })).join('')}
+            </div>
 
             <div class="product-choice-group" data-option-group="size">
               <h2>${t('productDetail.chooseSize')}</h2>
@@ -236,8 +320,15 @@ export function ProductPage() {
                 />
                 <button type="button" data-detail-quantity="increase" aria-label="${t('productDetail.increaseQuantity')}">+</button>
               </div>
-              <button type="button" class="btn-primary ripple-button flex-1 product-cart-action" data-detail-add="${product.id}">${t('buttons.addToCart')}</button>
-              <button type="button" class="btn-secondary ripple-button flex-1 bg-white/60 product-buy-action" data-detail-buy="${product.id}">${t('buttons.buyNow')}</button>
+              <button type="button" class="btn-primary ripple-button flex-1 product-cart-action" data-detail-add="${product.id}" data-action-label="${escapeAttribute(t('buttons.addToCart'))}" data-action-success="${escapeAttribute(t('productDetail.addedToCart'))}">${t('buttons.addToCart')}</button>
+              <button type="button" class="btn-secondary ripple-button flex-1 bg-white/60 product-buy-action" data-detail-buy="${product.id}" data-action-label="${escapeAttribute(t('buttons.buyNow'))}" data-action-success="${escapeAttribute(t('productDetail.addedToCart'))}">${t('buttons.buyNow')}</button>
+            </div>
+
+            <div class="product-share" aria-label="${t('productDetail.shareAria')}">
+              <span>${t('buttons.share')}</span>
+              <a href="${shareUrl('facebook', product.id)}" target="_blank" rel="noopener noreferrer" aria-label="${t('productDetail.shareFacebook')}">Facebook</a>
+              <a href="${shareUrl('twitter', product.id)}" target="_blank" rel="noopener noreferrer" aria-label="${t('productDetail.shareTwitter')}">X</a>
+              <button type="button" class="ripple-button" data-product-share="copy" aria-label="${t('productDetail.copyLink')}">${t('productDetail.copyLinkShort')}</button>
             </div>
 
             <div class="product-accordions">
@@ -268,7 +359,7 @@ export function ProductPage() {
           <span>${title}</span>
           <strong>${formatCurrency(product.price)}</strong>
         </div>
-        <button type="button" class="btn-primary ripple-button product-cart-action" data-detail-add="${product.id}">${t('buttons.add')}</button>
+        <button type="button" class="btn-primary ripple-button product-cart-action" data-detail-add="${product.id}" data-action-label="${escapeAttribute(t('buttons.add'))}" data-action-success="${escapeAttribute(t('productDetail.addedToCart'))}">${t('buttons.add')}</button>
       </div>
     </section>
   `;

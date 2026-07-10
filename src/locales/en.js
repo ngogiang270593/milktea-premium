@@ -180,6 +180,20 @@ export const en = {
     relatedEyebrow: 'You may also like',
     relatedTitle: 'Related products',
     viewAllProducts: 'View all products',
+    tagsAria: 'Product tags',
+    shareAria: 'Share this product',
+    shareFacebook: 'Share this product on Facebook',
+    shareTwitter: 'Share this product on X',
+    copyLink: 'Copy product link',
+    copyLinkShort: 'Copy link',
+    meta: {
+      title: 'Product information',
+      category: 'Category',
+      tags: 'Tags',
+      sku: 'SKU',
+      brand: 'Brand',
+      availability: 'Availability'
+    },
     defaults: {
       ingredients: 'Fresh brewed tea, milk or oat milk, house syrup, premium toppings, and filtered ice. Ingredients may vary by selected options.',
       nutrition: 'Estimated 180-420 calories depending on size, sugar level, milk choice, and toppings. Ask our team for allergen guidance.'
@@ -612,7 +626,8 @@ export const en = {
     searchCleared: 'Search history cleared',
     noResults: 'No results found',
     couponApplied: 'Coupon applied',
-    configurationSaved: 'Configuration saved'
+    configurationSaved: 'Configuration saved',
+    linkCopied: 'Product link copied'
   },
   validation: {
     required: 'Required',

@@ -895,6 +895,7 @@ export function initProductDetail() {
   const mainImage = detail.querySelector('[data-gallery-main]');
   const zoom = detail.querySelector('[data-product-zoom]');
   const quantityValue = detail.querySelector('[data-detail-quantity-value]');
+  const thumbs = [...detail.querySelectorAll('[data-gallery-thumb]')];
 
   const setQuantity = (value) => {
     const next = Math.max(1, Math.min(12, Number(value) || 1));
@@ -909,46 +910,53 @@ export function initProductDetail() {
     requestAnimationFrame(() => quantityValue.classList.add('quantity-bump'));
   };
 
-  detail.querySelectorAll('[data-gallery-thumb]').forEach((thumb) => {
-    thumb.addEventListener('click', () => {
-      if (thumb.classList.contains('is-active')) {
+  const selectThumb = (thumb) => {
+    if (!thumb || thumb.classList.contains('is-active')) {
+      return;
+    }
+
+    const revealImage = () => {
+      mainImage.classList.remove('is-switching');
+    };
+
+    mainImage.classList.add('is-switching');
+    mainImage.addEventListener('load', revealImage, { once: true });
+    mainImage.src = thumb.dataset.galleryThumb;
+    mainImage.srcset = thumb.dataset.gallerySrcset;
+    mainImage.sizes = '(min-width: 1024px) 48vw, 92vw';
+    thumbs.forEach((item) => {
+      const isActive = item === thumb;
+
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-pressed', String(isActive));
+    });
+
+    if (mainImage.complete) {
+      window.requestAnimationFrame(revealImage);
+    }
+  };
+
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => selectThumb(thumb));
+    thumb.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
         return;
       }
 
-      const revealImage = () => {
-        mainImage.classList.remove('is-switching');
-      };
+      event.preventDefault();
+      const lastIndex = thumbs.length - 1;
+      const nextIndex = event.key === 'Home'
+        ? 0
+        : event.key === 'End'
+          ? lastIndex
+          : event.key === 'ArrowRight'
+            ? Math.min(lastIndex, index + 1)
+            : Math.max(0, index - 1);
+      const nextThumb = thumbs[nextIndex];
 
-      mainImage.classList.add('is-switching');
-      mainImage.addEventListener('load', revealImage, { once: true });
-      mainImage.src = thumb.dataset.galleryThumb;
-      mainImage.srcset = thumb.dataset.gallerySrcset;
-      mainImage.sizes = '(min-width: 1024px) 48vw, 92vw';
-      detail.querySelectorAll('[data-gallery-thumb]').forEach((item) => {
-        const isActive = item === thumb;
-
-        item.classList.toggle('is-active', isActive);
-        item.setAttribute('aria-pressed', String(isActive));
-      });
-
-      if (mainImage.complete) {
-        window.requestAnimationFrame(revealImage);
-      }
+      nextThumb.focus();
+      selectThumb(nextThumb);
     });
-  });
-
-  zoom?.addEventListener('pointermove', (event) => {
-    const rect = zoom.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
-
-    mainImage.style.transformOrigin = `${x}% ${y}%`;
-    mainImage.classList.add('is-zoomed');
-  }, { passive: true });
-
-  zoom?.addEventListener('pointerleave', () => {
-    mainImage.classList.remove('is-zoomed');
-    mainImage.style.transformOrigin = '';
   });
 
   detail.querySelectorAll('[data-product-option]').forEach((option) => {
@@ -959,6 +967,17 @@ export function initProductDetail() {
         item.setAttribute('aria-pressed', String(isActive));
       });
     });
+  });
+
+  detail.querySelector('[data-product-share="copy"]')?.addEventListener('click', async () => {
+    const shareUrl = window.location.href;
+
+    try {
+      await navigator.clipboard?.writeText(shareUrl);
+      showToast(t('toast.linkCopied'));
+    } catch {
+      showToast(shareUrl);
+    }
   });
 
   detail.querySelectorAll('[data-detail-quantity]').forEach((button) => {
@@ -983,18 +1002,45 @@ export function initProductDetail() {
   detail.querySelectorAll('[data-detail-add], [data-detail-buy]').forEach((button) => {
     button.addEventListener('click', () => {
       const product = buildDetailProduct(button.dataset.detailAdd || button.dataset.detailBuy);
+      const label = button.dataset.actionLabel || button.textContent;
+      const successLabel = button.dataset.actionSuccess || label;
 
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      button.textContent = t('common.loading');
       addItem(product);
       updateCartBadges();
       showToast(t('toast.addedToCart', { name: product.name }));
+      button.textContent = successLabel;
       button.classList.remove('cart-pop');
       window.requestAnimationFrame(() => button.classList.add('cart-pop'));
       button.addEventListener('animationend', () => button.classList.remove('cart-pop'), { once: true });
 
       if (button.dataset.detailBuy) {
         window.location.href = '/cart';
+        return;
       }
+
+      window.setTimeout(() => {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+        button.textContent = label;
+      }, 850);
     });
+  });
+
+  zoom?.addEventListener('pointermove', (event) => {
+    const rect = zoom.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    mainImage.style.transformOrigin = `${x}% ${y}%`;
+    mainImage.classList.add('is-zoomed');
+  }, { passive: true });
+
+  zoom?.addEventListener('pointerleave', () => {
+    mainImage.classList.remove('is-zoomed');
+    mainImage.style.transformOrigin = '';
   });
 }
 

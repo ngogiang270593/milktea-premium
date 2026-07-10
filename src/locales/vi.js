@@ -180,6 +180,20 @@ export const vi = {
     relatedEyebrow: 'Có thể bạn cũng thích',
     relatedTitle: 'Sản phẩm liên quan',
     viewAllProducts: 'Xem tất cả sản phẩm',
+    tagsAria: 'Thẻ sản phẩm',
+    shareAria: 'Chia sẻ sản phẩm này',
+    shareFacebook: 'Chia sẻ sản phẩm này lên Facebook',
+    shareTwitter: 'Chia sẻ sản phẩm này lên X',
+    copyLink: 'Sao chép liên kết sản phẩm',
+    copyLinkShort: 'Sao chép',
+    meta: {
+      title: 'Thông tin sản phẩm',
+      category: 'Danh mục',
+      tags: 'Thẻ',
+      sku: 'SKU',
+      brand: 'Thương hiệu',
+      availability: 'Tình trạng'
+    },
     defaults: {
       ingredients: 'Trà pha tươi, sữa hoặc sữa yến mạch, syrup nhà làm, topping cao cấp và đá lọc. Thành phần có thể thay đổi theo tùy chọn.',
       nutrition: 'Ước tính 180-420 calories tùy kích cỡ, mức đường, loại sữa và topping. Vui lòng hỏi nhân viên nếu bạn cần thông tin dị ứng.'
@@ -620,7 +634,8 @@ export const vi = {
     searchCleared: 'Đã xóa lịch sử tìm kiếm',
     noResults: 'Không tìm thấy kết quả',
     couponApplied: 'Đã áp dụng mã ưu đãi',
-    configurationSaved: 'Đã lưu cấu hình'
+    configurationSaved: 'Đã lưu cấu hình',
+    linkCopied: 'Đã sao chép liên kết sản phẩm'
   },
   validation: {
     required: 'Bắt buộc',
