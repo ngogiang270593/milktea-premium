@@ -847,19 +847,36 @@ function getSelectedProductOptions() {
   };
 }
 
+function getDetailQuantity() {
+  const quantityInput = document.querySelector('[data-detail-quantity-value]');
+  const quantity = Number(quantityInput?.value || quantityInput?.textContent || 1);
+
+  return Math.max(1, Number.isFinite(quantity) ? quantity : 1);
+}
+
+function getTranslatedProductName(product) {
+  const key = `products.items.${product.id}.name`;
+  const name = t(key);
+
+  return name === key ? product.name : name;
+}
+
 function buildDetailProduct(id) {
   const product = getProductById(id);
-  const quantity = Number(document.querySelector('[data-detail-quantity-value]')?.textContent || 1);
+  const quantity = getDetailQuantity();
   const options = getSelectedProductOptions();
   const variantParts = [
     options.size || product.size,
-    `${options.sugar || product.sugar} sugar`,
+    t('filters.sugarValue', { value: options.sugar || product.sugar }),
     options.ice || product.ice,
-    options.toppings.length ? options.toppings.join(', ') : 'No extra toppings'
+    options.toppings.length
+      ? options.toppings.map((topping) => t(`productDetail.toppings.${topping}`)).join(', ')
+      : t('productDetail.noExtraToppings')
   ];
 
   return {
     ...product,
+    name: getTranslatedProductName(product),
     size: options.size || product.size,
     sugar: options.sugar || product.sugar,
     ice: options.ice || product.ice,
@@ -878,6 +895,19 @@ export function initProductDetail() {
   const mainImage = detail.querySelector('[data-gallery-main]');
   const zoom = detail.querySelector('[data-product-zoom]');
   const quantityValue = detail.querySelector('[data-detail-quantity-value]');
+
+  const setQuantity = (value) => {
+    const next = Math.max(1, Math.min(12, Number(value) || 1));
+
+    if ('value' in quantityValue) {
+      quantityValue.value = String(next);
+    } else {
+      quantityValue.textContent = String(next);
+    }
+
+    quantityValue.classList.remove('quantity-bump');
+    requestAnimationFrame(() => quantityValue.classList.add('quantity-bump'));
+  };
 
   detail.querySelectorAll('[data-gallery-thumb]').forEach((thumb) => {
     thumb.addEventListener('click', () => {
@@ -933,16 +963,22 @@ export function initProductDetail() {
 
   detail.querySelectorAll('[data-detail-quantity]').forEach((button) => {
     button.addEventListener('click', () => {
-      const current = Number(quantityValue.textContent);
+      const current = getDetailQuantity();
       const next = button.dataset.detailQuantity === 'increase'
         ? Math.min(12, current + 1)
         : Math.max(1, current - 1);
 
-      quantityValue.textContent = String(next);
-      quantityValue.classList.remove('quantity-bump');
-      requestAnimationFrame(() => quantityValue.classList.add('quantity-bump'));
+      setQuantity(next);
     });
   });
+
+  quantityValue?.addEventListener('input', () => {
+    if (Number(quantityValue.value) < 1) {
+      quantityValue.value = '1';
+    }
+  });
+
+  quantityValue?.addEventListener('change', () => setQuantity(quantityValue.value));
 
   detail.querySelectorAll('[data-detail-add], [data-detail-buy]').forEach((button) => {
     button.addEventListener('click', () => {

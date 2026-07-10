@@ -1427,6 +1427,29 @@
     text-align: center;
   }
 
+  .product-quantity-input {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    color: #1f1710;
+    font-weight: 800;
+    text-align: center;
+    background: transparent;
+    border: 0;
+    outline: none;
+    appearance: textfield;
+  }
+
+  .product-quantity-input:focus-visible {
+    border-radius: 9999px;
+    box-shadow: 0 0 0 3px rgba(211, 168, 106, 0.34);
+  }
+
+  .product-quantity-input::-webkit-outer-spin-button,
+  .product-quantity-input::-webkit-inner-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+
   .cart-remove,
   .cart-clear {
     color: #b25449;

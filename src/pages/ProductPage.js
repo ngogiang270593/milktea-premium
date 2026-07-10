@@ -1,5 +1,5 @@
 import { MenuProductCard } from '../components/menu/MenuProductCard.js';
-import { Accordion } from '../components/ui/index.js';
+import { Accordion, Rating } from '../components/ui/index.js';
 import { getProductById, MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { formatCurrency } from '../utils/format.js';
 import { escapeImageAttribute, imageAttributes, imageSourceSet, resizeImageUrl } from '../utils/image.js';
@@ -56,7 +56,6 @@ function getSoldCount(product) {
 function getRelatedProducts(product) {
   return MENU_PRODUCTS
     .filter((item) => item.id !== product.id && item.category === product.category)
-    .concat(MENU_PRODUCTS.filter((item) => item.id !== product.id && item.category !== product.category))
     .slice(0, 4);
 }
 
@@ -86,6 +85,20 @@ function productCategory(product) {
   return value === path ? product.category.replaceAll('-', ' ') : value;
 }
 
+function categoryUrl(product) {
+  const params = new URLSearchParams();
+  params.set('category', product.category);
+
+  return `/menu?${params.toString()}`;
+}
+
+function availabilityText(product) {
+  const path = `filters.availabilityOptions.${product.availability}`;
+  const value = t(path);
+
+  return value === path ? product.availability : value;
+}
+
 function notFound() {
   return `
     <section class="product-page" aria-labelledby="product-title">
@@ -113,8 +126,9 @@ export function ProductPage() {
   const description = productText(product, 'description');
   const relatedProducts = getRelatedProducts(product);
   const soldCount = getSoldCount(product);
-  const availability = product.availability || 'Available now';
-  const availabilityLabel = t(`filters.availabilityOptions.${availability}`);
+  const categoryTitle = productCategory(product);
+  const availabilityLabel = availabilityText(product);
+  const ratingLabel = t('products.ratingAria', { rating: product.rating, reviews: product.reviews });
 
   return `
     <section class="product-page" aria-labelledby="product-title" data-product-detail="${product.id}">
@@ -123,6 +137,7 @@ export function ProductPage() {
           <ol>
             <li><a href="/">${t('navbar.home')}</a></li>
             <li><a href="/menu">${t('navbar.menu')}</a></li>
+            <li><a href="${categoryUrl(product)}">${categoryTitle}</a></li>
             <li aria-current="page">${title}</li>
           </ol>
         </nav>
@@ -162,7 +177,7 @@ export function ProductPage() {
           </section>
 
           <aside class="product-info" data-reveal>
-            <p class="menu-product-category">${productCategory(product)}</p>
+            <p class="menu-product-category">${categoryTitle}</p>
             <div class="mt-4 flex items-start justify-between gap-4">
               <h1 id="product-title">${title}</h1>
               <button type="button" class="favorite-button ripple-button static shrink-0" aria-label="${t('products.addWishlistAria', { name: title })}" aria-pressed="false" data-favorite-button="${product.id}">
@@ -170,9 +185,8 @@ export function ProductPage() {
               </button>
             </div>
 
-            <div class="product-rating" aria-label="${t('products.ratingAria', { rating: product.rating, reviews: product.reviews })}">
-              <span aria-hidden="true">★★★★★</span>
-              <strong>${product.rating}</strong>
+            <div class="product-rating">
+              ${Rating({ value: product.rating, label: ratingLabel })}
               <small>${t('products.reviewCount', { count: product.reviews })}</small>
               <small>${t('products.soldCount', { count: soldCount.toLocaleString() })}</small>
               <small class="product-stock-pill">${availabilityLabel}</small>
@@ -210,7 +224,16 @@ export function ProductPage() {
             <div class="product-action-row">
               <div class="cart-quantity" aria-label="${t('productDetail.quantityAria')}">
                 <button type="button" data-detail-quantity="decrease" aria-label="${t('productDetail.decreaseQuantity')}">-</button>
-                <output data-detail-quantity-value aria-live="polite">1</output>
+                <input
+                  type="number"
+                  value="1"
+                  min="1"
+                  max="12"
+                  inputmode="numeric"
+                  class="product-quantity-input"
+                  data-detail-quantity-value
+                  aria-label="${t('productDetail.quantityInputAria')}"
+                />
                 <button type="button" data-detail-quantity="increase" aria-label="${t('productDetail.increaseQuantity')}">+</button>
               </div>
               <button type="button" class="btn-primary ripple-button flex-1 product-cart-action" data-detail-add="${product.id}">${t('buttons.addToCart')}</button>
@@ -232,7 +255,7 @@ export function ProductPage() {
               <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-green">${t('productDetail.relatedEyebrow')}</p>
               <h2 id="related-products-title" class="section-heading mt-4">${t('productDetail.relatedTitle')}</h2>
             </div>
-            <a href="/menu" class="btn-secondary">${t('productDetail.viewAllProducts')}</a>
+            <a href="${categoryUrl(product)}" class="btn-secondary">${t('productDetail.viewAllProducts')}</a>
           </div>
           <div class="product-related-grid">
             ${relatedProducts.map(MenuProductCard).join('')}
