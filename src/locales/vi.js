@@ -87,6 +87,10 @@ export const vi = {
     reviewCount: '{count} đánh giá',
     soldCount: 'Đã bán {count}',
     viewDetailsAria: 'Xem chi tiết {name}',
+    quickView: 'Xem nhanh',
+    quickViewAria: 'Xem nhanh {name}',
+    closeQuickView: 'Đóng xem nhanh',
+    viewFullDetails: 'Xem chi tiết đầy đủ',
     addCartAria: 'Thêm {name} vào giỏ hàng',
     items: {
       'midnight-milk-tea': {

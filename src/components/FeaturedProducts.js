@@ -29,9 +29,9 @@ function featuredCard(product, featuredContent) {
             <path d="M20.8 5.6a5.1 5.1 0 0 0-7.2 0L12 7.2l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2L12 21.6l8.8-8.8a5.1 5.1 0 0 0 0-7.2Z"></path>
           </svg>
         </button>
-        <a href="/product?id=${product.id}" class="quick-view-button ripple-button text-center" aria-label="${t('home.featured.quickViewAria', { title })}">
+        <button type="button" class="quick-view-button ripple-button text-center" aria-label="${t('home.featured.quickViewAria', { title })}" data-quick-view="${product.id}">
           ${t('home.featured.quickView')}
-        </a>
+        </button>
       </div>
 
       <div class="featured-product-body flex flex-1 flex-col p-6 pt-5">

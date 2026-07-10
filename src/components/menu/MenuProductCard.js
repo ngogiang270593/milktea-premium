@@ -95,7 +95,7 @@ export function MenuProductCard(product) {
             <div class="menu-product-old-price">${formatCurrency(product.oldPrice)}</div>
           </div>
           <div class="flex gap-2">
-            <a href="/product?id=${product.id}" class="quick-view-icon ripple-button" aria-label="${t('products.viewDetailsAria', { name })}">${t('buttons.view')}</a>
+            <button type="button" class="quick-view-icon ripple-button" aria-label="${t('products.quickViewAria', { name })}" data-quick-view="${product.id}">${t('products.quickView')}</button>
             <button type="button" class="add-cart-button ripple-button" aria-label="${t('products.addCartAria', { name })}" data-add-to-cart="${product.id}">${t('buttons.add')}</button>
           </div>
         </div>

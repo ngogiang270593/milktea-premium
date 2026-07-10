@@ -87,6 +87,10 @@ export const en = {
     reviewCount: '{count} reviews',
     soldCount: '{count} sold',
     viewDetailsAria: 'View details for {name}',
+    quickView: 'Quick View',
+    quickViewAria: 'Quick view {name}',
+    closeQuickView: 'Close quick view',
+    viewFullDetails: 'View full details',
     addCartAria: 'Add {name} to cart',
     items: {
       'midnight-milk-tea': {

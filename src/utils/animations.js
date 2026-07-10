@@ -1013,6 +1013,245 @@ function getTranslatedProductName(product) {
   return name === key ? product.name : name;
 }
 
+function getTranslatedProductDescription(product) {
+  const key = `products.items.${product.id}.description`;
+  const description = t(key);
+
+  return description === key ? product.description : description;
+}
+
+function getTranslatedProductCategory(product) {
+  const key = `filters.categoryOptions.${product.category}`;
+  const category = t(key);
+
+  return category === key ? product.category.replaceAll('-', ' ') : category;
+}
+
+function quickViewContent(product) {
+  const gallery = product.gallery?.length ? product.gallery : [product.image];
+  const name = getTranslatedProductName(product);
+  const description = getTranslatedProductDescription(product);
+  const category = getTranslatedProductCategory(product);
+  const activeWishlist = isWishlistItem(product.id);
+
+  return `
+    <div class="quick-view-grid">
+      <section class="quick-view-gallery" aria-label="${t('productDetail.galleryAria', { name })}">
+        <div class="quick-view-main-image">
+          <img ${imageAttributes(gallery[0], {
+            alt: name,
+            width: 900,
+            height: 900,
+            sizes: '(min-width: 1024px) 42vw, 92vw',
+            extra: 'data-quick-view-main'
+          })} />
+        </div>
+        <div class="quick-view-thumbnails" role="group" aria-label="${t('productDetail.thumbnailsAria')}">
+          ${gallery.map((image, index) => `
+            <button type="button" class="${index === 0 ? 'is-active' : ''}" data-quick-view-thumb="${escapeAttribute(image)}" aria-label="${t('productDetail.viewImageAria', { index: index + 1 })}" aria-pressed="${index === 0}">
+              <img ${imageAttributes(image, {
+                alt: '',
+                width: 120,
+                height: 120,
+                sizes: '72px'
+              })} />
+            </button>
+          `).join('')}
+        </div>
+      </section>
+
+      <section class="quick-view-info" aria-labelledby="quick-view-title">
+        <p class="menu-product-category">${category}</p>
+        <h2 id="quick-view-title">${name}</h2>
+        <div class="product-rating" aria-label="${t('products.ratingAria', { rating: product.rating, reviews: product.reviews })}">
+          <span aria-hidden="true">&#9733;</span>
+          <strong>${product.rating}</strong>
+          <small>${t('products.reviewCount', { count: product.reviews })}</small>
+        </div>
+        <div class="quick-view-price-row">
+          <strong>${formatCurrency(product.price)}</strong>
+          <span>${formatCurrency(product.oldPrice)}</span>
+          <em>-${product.discount}%</em>
+        </div>
+        <p>${description}</p>
+
+        <div class="quick-view-actions">
+          <div class="cart-quantity" aria-label="${t('productDetail.quantityAria')}">
+            <button type="button" data-quick-view-quantity="decrease" aria-label="${t('productDetail.decreaseQuantity')}">-</button>
+            <input type="number" value="1" min="1" max="12" inputmode="numeric" class="product-quantity-input" data-quick-view-quantity-value aria-label="${t('productDetail.quantityInputAria')}" />
+            <button type="button" data-quick-view-quantity="increase" aria-label="${t('productDetail.increaseQuantity')}">+</button>
+          </div>
+          <button type="button" class="btn-primary ripple-button quick-view-add-cart" data-quick-view-add="${product.id}">${t('buttons.addToCart')}</button>
+          <button type="button" class="favorite-button ripple-button static${activeWishlist ? ' is-active' : ''}" aria-label="${t('products.addWishlistAria', { name })}" aria-pressed="${activeWishlist}" data-quick-view-wishlist="${product.id}">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 5.6a5.1 5.1 0 0 0-7.2 0L12 7.2l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2L12 21.6l8.8-8.8a5.1 5.1 0 0 0 0-7.2Z"></path></svg>
+          </button>
+        </div>
+        <a href="/product?id=${product.id}" class="btn-secondary quick-view-detail-link">${t('products.viewFullDetails')}</a>
+      </section>
+    </div>
+  `;
+}
+
+function getQuickViewQuantity(modal) {
+  const input = modal?.querySelector('[data-quick-view-quantity-value]');
+  const value = Number(input?.value || 1);
+
+  return Math.max(1, Math.min(12, Number.isFinite(value) ? value : 1));
+}
+
+function setQuickViewQuantity(modal, value) {
+  const input = modal?.querySelector('[data-quick-view-quantity-value]');
+
+  if (input) {
+    input.value = String(Math.max(1, Math.min(12, Number(value) || 1)));
+  }
+}
+
+function closeQuickView() {
+  const modal = document.querySelector('[data-quick-view-modal]');
+
+  if (!modal || modal.classList.contains('hidden')) {
+    return;
+  }
+
+  modal.classList.remove('is-open');
+  modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('nav-open');
+  window.quickViewLastFocus?.focus?.();
+}
+
+function openQuickView(productId, trigger) {
+  const modal = document.querySelector('[data-quick-view-modal]');
+  const content = modal?.querySelector('[data-quick-view-content]');
+  const product = getProductById(productId);
+
+  if (!modal || !content || !product) {
+    return;
+  }
+
+  window.quickViewLastFocus = trigger || document.activeElement;
+  content.innerHTML = quickViewContent(product);
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('nav-open');
+  initRippleButtons();
+
+  requestAnimationFrame(() => {
+    modal.classList.add('is-open');
+    modal.querySelector('[data-quick-view-close]')?.focus();
+  });
+}
+
+function trapQuickViewFocus(event, modal) {
+  const focusable = [...modal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+  const first = focusable[0];
+  const last = focusable.at(-1);
+
+  if (!first || !last) {
+    return;
+  }
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+export function initQuickView() {
+  if (window.quickViewReady === true) {
+    return;
+  }
+
+  window.quickViewReady = true;
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-quick-view]');
+    const close = event.target.closest('[data-quick-view-close]');
+    const modal = document.querySelector('[data-quick-view-modal]');
+
+    if (trigger) {
+      event.preventDefault();
+      openQuickView(trigger.dataset.quickView, trigger);
+      return;
+    }
+
+    if (close || event.target === modal) {
+      closeQuickView();
+      return;
+    }
+
+    const thumb = event.target.closest('[data-quick-view-thumb]');
+    if (thumb && modal?.classList.contains('is-open')) {
+      const mainImage = modal.querySelector('[data-quick-view-main]');
+      mainImage.classList.add('is-switching');
+      mainImage.src = thumb.dataset.quickViewThumb;
+      thumb.parentElement.querySelectorAll('[data-quick-view-thumb]').forEach((item) => {
+        const isActive = item === thumb;
+        item.classList.toggle('is-active', isActive);
+        item.setAttribute('aria-pressed', String(isActive));
+      });
+      mainImage.addEventListener('load', () => mainImage.classList.remove('is-switching'), { once: true });
+      return;
+    }
+
+    const quantityButton = event.target.closest('[data-quick-view-quantity]');
+    if (quantityButton) {
+      const current = getQuickViewQuantity(modal);
+      setQuickViewQuantity(modal, quantityButton.dataset.quickViewQuantity === 'increase' ? current + 1 : current - 1);
+      return;
+    }
+
+    const addButton = event.target.closest('[data-quick-view-add]');
+    if (addButton) {
+      const product = getProductById(addButton.dataset.quickViewAdd);
+      if (product) {
+        addItem({ ...product, name: getTranslatedProductName(product), quantity: getQuickViewQuantity(modal) });
+        updateCartBadges();
+        showToast(t('toast.addedToCart', { name: getTranslatedProductName(product) }));
+        addButton.classList.add('cart-pop');
+        addButton.addEventListener('animationend', () => addButton.classList.remove('cart-pop'), { once: true });
+      }
+      return;
+    }
+
+    const wishlistButton = event.target.closest('[data-quick-view-wishlist]');
+    if (wishlistButton) {
+      const product = getProductById(wishlistButton.dataset.quickViewWishlist);
+      if (product) {
+        const { active } = toggleWishlistItem(product);
+        wishlistButton.classList.toggle('is-active', active);
+        wishlistButton.setAttribute('aria-pressed', String(active));
+        updateWishlistBadges();
+        showToast(t(active ? 'toast.wishlistSaved' : 'toast.wishlistRemoved', { name: getTranslatedProductName(product) }));
+      }
+    }
+  });
+
+  document.addEventListener('input', (event) => {
+    if (event.target.matches('[data-quick-view-quantity-value]')) {
+      setQuickViewQuantity(document.querySelector('[data-quick-view-modal]'), event.target.value);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    const modal = document.querySelector('[data-quick-view-modal].is-open');
+
+    if (!modal) {
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      closeQuickView();
+    } else if (event.key === 'Tab') {
+      trapQuickViewFocus(event, modal);
+    }
+  });
+}
+
 function buildDetailProduct(id) {
   const product = getProductById(id);
   const quantity = getDetailQuantity();
@@ -1501,6 +1740,7 @@ export function initAppInteractions() {
   initCategoryFilters();
   initHeroParallax();
   initProductCards();
+  initQuickView();
   initSearchOverlay();
   initMenuPage();
   initCartPage();
