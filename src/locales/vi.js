@@ -474,6 +474,7 @@ export const vi = {
     popularSearches: 'Tìm kiếm phổ biến',
     recentSearches: 'Tìm kiếm gần đây',
     clear: 'Xóa',
+    clearSearch: 'Xóa tìm kiếm',
     noResults: 'Không tìm thấy kết quả',
     emptyCopy: 'Hãy thử tìm trà sữa, matcha, trà trái cây, cà phê hoặc topping.',
     noRecent: 'Chưa có tìm kiếm gần đây.',

@@ -622,10 +622,18 @@ export function initWishlistPage() {
 }
 
 function searchResultItem(product, term) {
+  const nameKey = `products.items.${product.id}.name`;
+  const descriptionKey = `products.items.${product.id}.description`;
+  const localizedName = t(nameKey) === nameKey ? product.name : t(nameKey);
+  const localizedCategory = t(`filters.categoryOptions.${product.category}`);
+  const category = localizedCategory === `filters.categoryOptions.${product.category}`
+    ? product.category.replaceAll('-', ' ')
+    : localizedCategory;
   const tags = product.tags?.slice(0, 3).map((tag) => highlightMatch(tag, term)).join(', ');
+  const description = t(descriptionKey) === descriptionKey ? tags : highlightMatch(t(descriptionKey), term);
 
   return `
-    <a href="/product?id=${product.id}" class="search-result-item" role="option">
+    <a href="/product?id=${product.id}" id="search-option-${escapeAttribute(product.id)}" class="search-result-item" role="option" data-search-option aria-selected="false">
       <img ${imageAttributes(product.image, {
         alt: '',
         width: 120,
@@ -633,8 +641,8 @@ function searchResultItem(product, term) {
         sizes: '72px'
       })} />
       <span>
-        <strong>${highlightMatch(product.name, term)}</strong>
-        <small>${highlightMatch(product.category.replaceAll('-', ' '), term)} &middot; ${tags}</small>
+        <strong>${highlightMatch(localizedName, term)}</strong>
+        <small>${highlightMatch(category, term)} &middot; ${description}</small>
       </span>
     </a>
   `;
@@ -655,7 +663,26 @@ export function initSearchOverlay() {
   const openButtons = document.querySelectorAll('[data-search-open]');
   const closeButtons = overlay.querySelectorAll('[data-search-close]');
   const clearButton = overlay.querySelector('[data-search-clear]');
+  const resetButton = overlay.querySelector('[data-search-reset]');
   let lastFocusedElement = null;
+  let activeIndex = -1;
+  let lastResultsHtml = '';
+
+  const options = () => [...results.querySelectorAll('[data-search-option]')];
+
+  const setActiveOption = (index) => {
+    const items = options();
+
+    activeIndex = items.length ? Math.max(0, Math.min(index, items.length - 1)) : -1;
+    items.forEach((item, itemIndex) => {
+      const isActive = itemIndex === activeIndex;
+
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-selected', String(isActive));
+    });
+
+    input.setAttribute('aria-activedescendant', activeIndex >= 0 ? items[activeIndex].id : '');
+  };
 
   const renderRecentSearches = () => {
     const recentSearches = getRecentSearches();
@@ -667,13 +694,21 @@ export function initSearchOverlay() {
   const renderResults = (term) => {
     const query = term.trim();
     const matches = searchProducts(query);
+    const html = query ? matches.map((product) => searchResultItem(product, query)).join('') : '';
 
     meta.hidden = Boolean(query);
     empty.hidden = !query || matches.length > 0;
-    results.innerHTML = query ? matches.map((product) => searchResultItem(product, query)).join('') : '';
+    input.setAttribute('aria-expanded', String(Boolean(query)));
+
+    if (html !== lastResultsHtml) {
+      results.innerHTML = html;
+      lastResultsHtml = html;
+    }
+
+    setActiveOption(matches.length ? 0 : -1);
   };
 
-  const debouncedRender = debounce((event) => renderResults(event.target.value), 300);
+  const debouncedRender = debounce((event) => renderResults(event.target.value), 250);
 
   const openSearch = () => {
     lastFocusedElement = document.activeElement;
@@ -685,6 +720,7 @@ export function initSearchOverlay() {
     requestAnimationFrame(() => {
       overlay.classList.add('is-open');
       input.focus();
+      renderResults(input.value);
     });
   };
 
@@ -706,14 +742,25 @@ export function initSearchOverlay() {
   closeButtons.forEach((button) => button.addEventListener('click', closeSearch));
   input.addEventListener('input', debouncedRender);
   input.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && input.value.trim()) {
-      const firstResult = results.querySelector('a');
+    const items = options();
 
-      if (firstResult) {
+    if (event.key === 'ArrowDown' && items.length) {
+      event.preventDefault();
+      setActiveOption(activeIndex + 1);
+    } else if (event.key === 'ArrowUp' && items.length) {
+      event.preventDefault();
+      setActiveOption(activeIndex <= 0 ? items.length - 1 : activeIndex - 1);
+    } else if (event.key === 'Enter' && input.value.trim()) {
+      const selectedResult = items[activeIndex] || items[0];
+
+      if (selectedResult) {
+        event.preventDefault();
         saveRecentSearch(input.value.trim());
         renderRecentSearches();
-        firstResult.click();
+        selectedResult.click();
       }
+    } else if (event.key === 'Escape') {
+      closeSearch();
     }
   });
 
@@ -741,6 +788,13 @@ export function initSearchOverlay() {
   clearButton?.addEventListener('click', () => {
     clearRecentSearches();
     renderRecentSearches();
+    showToast(t('toast.searchCleared'));
+    input.focus();
+  });
+
+  resetButton?.addEventListener('click', () => {
+    input.value = '';
+    renderResults('');
     input.focus();
   });
 

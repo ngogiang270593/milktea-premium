@@ -59,6 +59,12 @@ export const siteConfig = {
     tiktok: 'https://www.tiktok.com',
     youtube: 'https://www.youtube.com'
   },
+  search: {
+    popularTerms: {
+      en: ['brown sugar', 'matcha', 'fruit tea', 'coffee', 'smoothie', 'topping'],
+      vi: ['đường nâu', 'matcha', 'trà trái cây', 'cà phê', 'smoothie', 'topping']
+    }
+  },
   seo: {
     en: {
       title: 'MilkTea Premium | Handcrafted Bubble Tea',

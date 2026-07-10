@@ -466,6 +466,7 @@ export const en = {
     popularSearches: 'Popular searches',
     recentSearches: 'Recent searches',
     clear: 'Clear',
+    clearSearch: 'Clear search',
     noResults: 'No results found',
     emptyCopy: 'Try searching for milk tea, matcha, fruit tea, coffee, or toppings.',
     noRecent: 'No recent searches yet.',
