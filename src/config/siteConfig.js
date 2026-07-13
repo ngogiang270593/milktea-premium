@@ -44,6 +44,7 @@ export const siteConfig = {
     copyrightYear: 2026,
     email: 'support@milkteapremium.com',
     phone: '+1 (800) 555-0199',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=New%20York%2C%20NY',
     address: {
       en: 'New York, NY',
       vi: 'New York, NY'
@@ -59,6 +60,13 @@ export const siteConfig = {
     tiktok: 'https://www.tiktok.com',
     youtube: 'https://www.youtube.com'
   },
+  payments: [
+    { value: 'visa', label: 'Visa' },
+    { value: 'mastercard', label: 'Mastercard' },
+    { value: 'paypal', label: 'PayPal' },
+    { value: 'apple-pay', label: 'Apple Pay' },
+    { value: 'google-pay', label: 'Google Pay' }
+  ],
   search: {
     popularTerms: {
       en: ['brown sugar', 'matcha', 'fruit tea', 'coffee', 'smoothie', 'topping'],

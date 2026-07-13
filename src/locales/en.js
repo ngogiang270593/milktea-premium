@@ -631,7 +631,42 @@ export const en = {
     label: 'Site footer',
     explore: 'Explore',
     navigation: 'Footer navigation',
-    contact: 'Contact'
+    contact: 'Contact',
+    description: 'Premium bubble tea crafted with fresh ingredients, slow-brewed tea, and a calm modern ordering experience.',
+    mission: 'Our mission is to make every cup feel thoughtful, beautiful, and worth slowing down for.',
+    copyright: 'Designed for premium bubble tea lovers.',
+    quickLinks: 'Quick Links',
+    customerService: 'Customer Service',
+    newsletter: 'Newsletter',
+    newsletterCopy: 'Get seasonal drops, member treats, and tasting invites in your inbox.',
+    emailLabel: 'Email address',
+    emailPlaceholder: 'you@example.com',
+    subscribe: 'Subscribe',
+    payment: 'Payment Methods',
+    languageTheme: 'Language and theme',
+    backToTop: 'Back to Top',
+    googleMaps: 'Open in Google Maps',
+    social: 'Social media',
+    socialAria: 'Follow us on {name}',
+    paymentAria: 'Accepted payment method: {name}',
+    links: {
+      home: 'Home',
+      menu: 'Menu',
+      categories: 'Categories',
+      featured: 'Featured',
+      testimonials: 'Testimonials',
+      newsletter: 'Newsletter',
+      about: 'About',
+      contact: 'Contact',
+      faq: 'FAQ'
+    },
+    service: {
+      shipping: 'Shipping Policy',
+      returns: 'Return Policy',
+      privacy: 'Privacy Policy',
+      terms: 'Terms & Conditions',
+      help: 'Help Center'
+    }
   },
   language: {
     current: 'Current language: {label}. Change language'

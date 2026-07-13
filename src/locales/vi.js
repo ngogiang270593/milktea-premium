@@ -639,7 +639,42 @@ export const vi = {
     label: 'Chân trang',
     explore: 'Khám phá',
     navigation: 'Điều hướng chân trang',
-    contact: 'Liên hệ'
+    contact: 'Liên hệ',
+    description: 'Trà sữa cao cấp được pha từ nguyên liệu tươi, lá trà ủ chậm và trải nghiệm đặt món hiện đại.',
+    mission: 'Sứ mệnh của chúng tôi là biến mỗi ly trà thành một khoảnh khắc tinh tế, đẹp mắt và đáng thưởng thức.',
+    copyright: 'Thiết kế cho những người yêu trà sữa cao cấp.',
+    quickLinks: 'Liên kết nhanh',
+    customerService: 'Chăm sóc khách hàng',
+    newsletter: 'Nhận tin ưu đãi',
+    newsletterCopy: 'Nhận thông tin món mới theo mùa, ưu đãi thành viên và lời mời thử vị.',
+    emailLabel: 'Địa chỉ email',
+    emailPlaceholder: 'ban@example.com',
+    subscribe: 'Đăng ký',
+    payment: 'Phương thức thanh toán',
+    languageTheme: 'Ngôn ngữ và giao diện',
+    backToTop: 'Lên đầu trang',
+    googleMaps: 'Mở trên Google Maps',
+    social: 'Mạng xã hội',
+    socialAria: 'Theo dõi chúng tôi trên {name}',
+    paymentAria: 'Phương thức thanh toán được hỗ trợ: {name}',
+    links: {
+      home: 'Trang chủ',
+      menu: 'Thực đơn',
+      categories: 'Danh mục',
+      featured: 'Nổi bật',
+      testimonials: 'Đánh giá',
+      newsletter: 'Ưu đãi',
+      about: 'Giới thiệu',
+      contact: 'Liên hệ',
+      faq: 'FAQ'
+    },
+    service: {
+      shipping: 'Chính sách giao hàng',
+      returns: 'Chính sách đổi trả',
+      privacy: 'Chính sách bảo mật',
+      terms: 'Điều khoản & điều kiện',
+      help: 'Trung tâm hỗ trợ'
+    }
   },
   language: {
     current: 'Ngôn ngữ hiện tại: {label}. Đổi ngôn ngữ'
