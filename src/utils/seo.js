@@ -4,7 +4,7 @@ import { getProductById } from '../repositories/ProductRepository.js';
 import { getLanguage } from '../store/languageStore.js';
 import { t } from './i18n.js';
 
-const DEFAULT_OG_IMAGE = '/assets/og-image.jpg';
+const DEFAULT_OG_IMAGE = '/assets/og-image.png';
 
 function siteUrl() {
   return getSiteConfig().siteUrl.replace(/\/$/, '');

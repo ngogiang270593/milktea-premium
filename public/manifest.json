@@ -64,9 +64,9 @@
   ],
   "screenshots": [
     {
-      "src": "/assets/og-image.jpg",
-      "sizes": "800x800",
-      "type": "image/jpeg",
+      "src": "/assets/og-image.png",
+      "sizes": "1672x941",
+      "type": "image/png",
       "form_factor": "wide",
       "label": "MilkTea Premium storefront preview"
     }
