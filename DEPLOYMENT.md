@@ -1,122 +1,159 @@
 # Deployment Guide
 
-MilkTea Premium builds to static files and can be deployed to any static hosting provider.
+MilkTea Premium is a static Vite single-page application. Production deployments should serve the generated `dist/` folder and return `index.html` for client-side routes.
 
-## Build
+## Production Build
 
 ```bash
+npm install
 npm run build
 ```
 
-The production output is generated in:
+Output:
 
 ```text
 dist/
 ```
 
-Deploy the contents of `dist/`, not the project source folder.
-
-## Preview Before Deployment
+Preview the production bundle locally:
 
 ```bash
 npm run preview
 ```
 
-Use this command to test the production build locally.
+## SPA Routing
 
-## SPA Routing Requirement
+The app owns routes in the browser. Hosting providers must serve `index.html` for unknown application routes so refresh and direct links keep working.
 
-The app uses client-side routing. Configure your host to serve `index.html` for unknown routes.
+Routes that require fallback:
 
-Required fallback examples:
+- `/`
+- `/menu`
+- `/product`
+- `/cart`
+- `/wishlist`
+- `/checkout`
+- `/about`
+- `/contact`
+- `/faq`
+- `/admin`
 
-- `/menu` should serve `index.html`
-- `/product?id=royal-brown-sugar` should serve `index.html`
-- `/cart` should serve `index.html`
-- `/wishlist` should serve `index.html`
-- `/admin` should serve `index.html`
+Static files should still be served normally:
+
+- `/assets/*`
+- `/icons/*`
+- `/favicon.svg`
+- `/manifest.json`
+- `/manifest.webmanifest`
+- `/offline.html`
+- `/robots.txt`
+- `/sitemap.xml`
+- `/sw.js`
 
 ## Netlify
 
-Create a `_redirects` file in `public/` if your deployment needs SPA fallback:
+Configuration is included in:
+
+```text
+netlify.toml
+public/_redirects
+```
+
+Netlify settings:
+
+```text
+Build command: npm run build
+Publish directory: dist
+```
+
+SPA fallback:
 
 ```text
 /* /index.html 200
 ```
 
-Build command:
-
-```bash
-npm run build
-```
-
-Publish directory:
-
-```text
-dist
-```
-
 ## Vercel
 
-Vercel detects Vite automatically.
-
-Build command:
-
-```bash
-npm run build
-```
-
-Output directory:
+Configuration is included in:
 
 ```text
-dist
+vercel.json
 ```
 
-If route fallback is needed, configure rewrites to send all routes to `/index.html`.
+Vercel settings:
 
-## Static Server
+```text
+Framework preset: Vite
+Build command: npm run build
+Output directory: dist
+```
 
-Any static server can host the output:
+The included rewrite sends application routes to `/index.html` while allowing static assets to resolve directly.
+
+## GitHub Pages
+
+GitHub Pages uses `404.html` as the closest equivalent to an SPA fallback. Build with:
 
 ```bash
-npm run build
-npm run preview
+npm run build:github-pages
 ```
 
-For production, upload the `dist/` directory to your hosting provider.
+This command runs the Vite production build and copies:
 
-## PWA Files
+```text
+dist/index.html -> dist/404.html
+```
 
-The project includes:
+Deploy the `dist/` folder to GitHub Pages. The project also includes:
 
-- `public/manifest.webmanifest`
-- `public/sw.js`
-- `public/offline.html`
-- `public/icons/`
+```text
+public/.nojekyll
+```
 
-After deployment, verify:
+This prevents Jekyll processing from interfering with Vite assets.
 
-- Manifest is reachable at `/manifest.webmanifest`
-- Service worker is reachable at `/sw.js`
-- Offline fallback is reachable at `/offline.html`
+## GitHub Pages Workflow Example
 
-## SEO Files
+Use Node 20, install dependencies, build the GitHub Pages bundle, then publish `dist/`.
 
-The project includes:
+```yaml
+- uses: actions/checkout@v4
+- uses: actions/setup-node@v4
+  with:
+    node-version: 20
+    cache: npm
+- run: npm ci
+- run: npm run build:github-pages
+```
 
+## Environment Notes
+
+This frontend does not require runtime environment variables. Before a real launch, update:
+
+- `siteUrl` in `src/config/siteConfig.js`
 - `public/sitemap.xml`
 - `public/robots.txt`
-- Dynamic document metadata in `src/utils/seo.js`
+- social preview domain references if the production URL changes
 
-Before going live, update production domain values in SEO files if the final domain is different.
+## PWA Verification
 
-## Deployment Checklist
+After deployment, verify these URLs:
+
+- `/manifest.json`
+- `/sw.js`
+- `/offline.html`
+- `/icons/icon.svg`
+- `/icons/icon-192.svg`
+- `/icons/icon-512.svg`
+
+Deploy over HTTPS so service workers, install prompts, and offline support work correctly.
+
+## Release Checklist
 
 - Run `npm run build`.
-- Preview the build locally.
-- Confirm all routes load after refresh.
-- Confirm images load from production URLs.
-- Confirm language and theme preferences persist.
-- Confirm cart and wishlist work in the deployed browser.
-- Confirm `robots.txt`, `sitemap.xml`, and manifest are reachable.
-- Confirm service worker does not cache stale files during final QA.
+- For GitHub Pages, run `npm run build:github-pages`.
+- Refresh direct routes such as `/menu`, `/product?id=royal-brown-sugar`, `/cart`, and `/admin`.
+- Verify language and theme preferences persist.
+- Verify cart and wishlist persistence.
+- Verify `robots.txt`, `sitemap.xml`, manifest, favicon, and OpenGraph image are reachable.
+- Run Lighthouse against the deployed URL.
