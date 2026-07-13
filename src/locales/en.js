@@ -195,6 +195,77 @@ export const en = {
       ]
     }
   },
+  faq: {
+    hero: {
+      badge: 'Help Center',
+      eyebrow: 'Frequently Asked Questions',
+      title: 'Answers for a smoother milk tea experience.',
+      subtitle: 'Find quick guidance on payments, shipping, returns, ingredients, rewards, and store support.'
+    },
+    support: {
+      aria: 'Need more help',
+      title: 'Need more help?',
+      copy: 'Our tea bar team can help with custom orders, delivery questions, and partnership requests.',
+      cta: 'Contact Us'
+    },
+    categoryTitle: 'Categories',
+    categoryAria: 'FAQ categories',
+    eyebrow: 'FAQ',
+    title: 'Browse by topic.',
+    copy: 'Choose a category or open any question to view the answer.',
+    categories: [
+      {
+        value: 'payment',
+        label: 'Payment',
+        icon: '$',
+        items: [
+          { question: 'Which payment methods are supported?', answer: 'The frontend is prepared for cash, bank transfer, credit card, digital wallet, PayPal, and Stripe-style gateway integrations.' },
+          { question: 'Can I apply a coupon at checkout?', answer: 'Yes. Enter your coupon code in the checkout coupon field before placing the order. The demo coupon flow is ready for backend validation.' },
+          { question: 'Are online payments processed now?', answer: 'This template includes frontend payment UI only. Live payment processing can be connected through your preferred gateway.' }
+        ]
+      },
+      {
+        value: 'shipping',
+        label: 'Shipping',
+        icon: '↗',
+        items: [
+          { question: 'How fast is delivery?', answer: 'Standard delivery is designed for a relaxed window, while express delivery is prepared for faster local fulfillment where available.' },
+          { question: 'Can I choose store pickup?', answer: 'Yes. Store pickup is available in the checkout delivery method options and has no shipping fee in the current flow.' },
+          { question: 'How do I track an order?', answer: 'The order success state is frontend-ready. Real tracking numbers and status updates can be connected during backend integration.' }
+        ]
+      },
+      {
+        value: 'return',
+        label: 'Return',
+        icon: '↺',
+        items: [
+          { question: 'Can drinks be returned?', answer: 'Freshly prepared drinks are usually not returnable, but the store team can help if an order is incorrect, missing, or damaged.' },
+          { question: 'What if my order is wrong?', answer: 'Contact the store with your order details as soon as possible so the team can review and offer the right solution.' },
+          { question: 'Can I cancel an order?', answer: 'Cancellation rules depend on preparation status. Backend order status can later decide whether cancellation is still available.' }
+        ]
+      },
+      {
+        value: 'ingredients',
+        label: 'Ingredients',
+        icon: '☘',
+        items: [
+          { question: 'Are ingredients fresh?', answer: 'The brand experience is built around fresh milk, brewed tea, seasonal fruit, and toppings prepared in controlled batches.' },
+          { question: 'Can I customize sugar and ice?', answer: 'Yes. Product detail and checkout flows support size, sugar, ice, topping, and quantity customization.' },
+          { question: 'Do you provide nutrition information?', answer: 'Product detail accordions include nutrition-ready content that can be expanded with exact CMS or backend data.' }
+        ]
+      },
+      {
+        value: 'rewards',
+        label: 'Rewards',
+        icon: '★',
+        items: [
+          { question: 'Is there a rewards program?', answer: 'The template is ready for a future rewards program with member offers, points, and exclusive drink drops.' },
+          { question: 'How do I receive offers?', answer: 'Subscribe to the newsletter to receive seasonal menu updates, promotions, and tasting invitations.' },
+          { question: 'Can rewards be connected to accounts?', answer: 'Yes. The current frontend can be extended with authentication and a backend rewards ledger.' }
+        ]
+      }
+    ]
+  },
   menu: {
     breadcrumbAria: 'Breadcrumb',
     eyebrow: 'Premium Menu',

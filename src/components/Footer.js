@@ -74,7 +74,7 @@ export function Footer() {
     { label: t('footer.links.newsletter'), href: homeHash('#newsletter') },
     { label: t('footer.links.about'), href: '/about' },
     { label: t('footer.links.contact'), href: '/contact' },
-    { label: t('footer.links.faq'), href: homeHash('#testimonials') }
+    { label: t('footer.links.faq'), href: '/faq' }
   ];
   const serviceLinks = [
     { label: t('footer.service.shipping'), href: '/checkout' },

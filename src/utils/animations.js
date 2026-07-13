@@ -1062,6 +1062,47 @@ function bindContactForm() {
   updateSubmitState();
 }
 
+function initFaqPage() {
+  const accordion = document.querySelector('[data-faq-accordion]');
+  const categoryButtons = [...document.querySelectorAll('[data-faq-category]')];
+
+  if (!accordion || accordion.dataset.faqReady === 'true') {
+    return;
+  }
+
+  accordion.dataset.faqReady = 'true';
+  const items = [...accordion.querySelectorAll('[data-faq-item]')];
+
+  const setCategory = (category) => {
+    categoryButtons.forEach((button) => {
+      const isActive = button.dataset.faqCategory === category;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+
+    items.forEach((item, index) => {
+      const isVisible = item.dataset.faqPanel === category;
+      item.hidden = !isVisible;
+
+      if (!isVisible) {
+        item.open = false;
+      } else if (index === items.findIndex((entry) => entry.dataset.faqPanel === category)) {
+        item.open = true;
+      }
+    });
+  };
+
+  categoryButtons.forEach((button) => {
+    button.addEventListener('click', () => setCategory(button.dataset.faqCategory));
+  });
+
+  const firstCategory = categoryButtons[0]?.dataset.faqCategory;
+
+  if (firstCategory) {
+    setCategory(firstCategory);
+  }
+}
+
 function renderCartContent() {
   const content = document.querySelector('[data-cart-content]');
 
@@ -1954,6 +1995,7 @@ export function initAppInteractions() {
   initQuickView();
   initNewsletterForms();
   bindContactForm();
+  initFaqPage();
   initSearchOverlay();
   initMenuPage();
   initCartPage();

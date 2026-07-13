@@ -195,6 +195,77 @@ export const vi = {
       ]
     }
   },
+  faq: {
+    hero: {
+      badge: 'Trung tâm hỗ trợ',
+      eyebrow: 'Câu hỏi thường gặp',
+      title: 'Câu trả lời giúp trải nghiệm trà sữa mượt mà hơn.',
+      subtitle: 'Tìm nhanh thông tin về thanh toán, giao hàng, đổi trả, nguyên liệu, ưu đãi thành viên và hỗ trợ cửa hàng.'
+    },
+    support: {
+      aria: 'Cần hỗ trợ thêm',
+      title: 'Cần hỗ trợ thêm?',
+      copy: 'Đội ngũ quầy trà có thể hỗ trợ đơn tùy chỉnh, câu hỏi giao hàng và yêu cầu hợp tác.',
+      cta: 'Liên hệ'
+    },
+    categoryTitle: 'Danh mục',
+    categoryAria: 'Danh mục FAQ',
+    eyebrow: 'FAQ',
+    title: 'Duyệt theo chủ đề.',
+    copy: 'Chọn một danh mục hoặc mở bất kỳ câu hỏi nào để xem câu trả lời.',
+    categories: [
+      {
+        value: 'payment',
+        label: 'Thanh toán',
+        icon: '$',
+        items: [
+          { question: 'Hỗ trợ những phương thức thanh toán nào?', answer: 'Giao diện đã chuẩn bị cho tiền mặt, chuyển khoản, thẻ tín dụng, ví điện tử, PayPal và các cổng thanh toán kiểu Stripe.' },
+          { question: 'Tôi có thể dùng mã ưu đãi khi thanh toán không?', answer: 'Có. Nhập mã ưu đãi tại ô coupon trong trang thanh toán trước khi đặt hàng. Luồng demo đã sẵn sàng để kết nối xác thực backend.' },
+          { question: 'Thanh toán online đã xử lý thật chưa?', answer: 'Mẫu này chỉ bao gồm giao diện thanh toán frontend. Xử lý thanh toán thật có thể được kết nối qua cổng thanh toán bạn chọn.' }
+        ]
+      },
+      {
+        value: 'shipping',
+        label: 'Giao hàng',
+        icon: '↗',
+        items: [
+          { question: 'Giao hàng mất bao lâu?', answer: 'Giao hàng tiêu chuẩn dành cho khung thời gian thoải mái, còn giao nhanh phù hợp với khu vực hỗ trợ xử lý nội thành.' },
+          { question: 'Tôi có thể chọn nhận tại cửa hàng không?', answer: 'Có. Nhận tại cửa hàng có trong lựa chọn phương thức giao hàng tại checkout và hiện không tính phí vận chuyển.' },
+          { question: 'Làm sao theo dõi đơn hàng?', answer: 'Trạng thái đặt hàng thành công đã sẵn sàng ở frontend. Mã vận đơn và cập nhật trạng thái thật có thể kết nối khi tích hợp backend.' }
+        ]
+      },
+      {
+        value: 'return',
+        label: 'Đổi trả',
+        icon: '↺',
+        items: [
+          { question: 'Đồ uống có thể đổi trả không?', answer: 'Đồ uống pha mới thường không áp dụng đổi trả, nhưng đội ngũ cửa hàng sẽ hỗ trợ nếu đơn bị sai, thiếu hoặc hư hỏng.' },
+          { question: 'Nếu đơn hàng bị sai thì sao?', answer: 'Hãy liên hệ cửa hàng kèm thông tin đơn hàng sớm nhất để đội ngũ kiểm tra và đưa ra phương án phù hợp.' },
+          { question: 'Tôi có thể hủy đơn không?', answer: 'Quy định hủy phụ thuộc vào trạng thái chuẩn bị. Khi tích hợp backend, trạng thái đơn có thể quyết định đơn còn hủy được hay không.' }
+        ]
+      },
+      {
+        value: 'ingredients',
+        label: 'Nguyên liệu',
+        icon: '☘',
+        items: [
+          { question: 'Nguyên liệu có tươi không?', answer: 'Trải nghiệm thương hiệu được xây dựng quanh sữa tươi, trà pha mới, trái cây theo mùa và topping chuẩn bị theo từng mẻ.' },
+          { question: 'Có thể tùy chỉnh đường và đá không?', answer: 'Có. Trang chi tiết sản phẩm hỗ trợ tùy chỉnh kích cỡ, đường, đá, topping và số lượng.' },
+          { question: 'Có thông tin dinh dưỡng không?', answer: 'Accordion ở trang chi tiết sản phẩm đã có cấu trúc sẵn cho thông tin dinh dưỡng và có thể mở rộng bằng dữ liệu CMS hoặc backend.' }
+        ]
+      },
+      {
+        value: 'rewards',
+        label: 'Thành viên',
+        icon: '★',
+        items: [
+          { question: 'Có chương trình tích điểm không?', answer: 'Mẫu giao diện đã sẵn sàng cho chương trình thành viên trong tương lai với ưu đãi, điểm thưởng và món độc quyền.' },
+          { question: 'Làm sao nhận ưu đãi?', answer: 'Đăng ký newsletter để nhận cập nhật thực đơn theo mùa, khuyến mãi và lời mời thử vị.' },
+          { question: 'Có thể kết nối ưu đãi với tài khoản không?', answer: 'Có. Frontend hiện tại có thể mở rộng thêm đăng nhập và sổ điểm thưởng từ backend.' }
+        ]
+      }
+    ]
+  },
   menu: {
     breadcrumbAria: 'Đường dẫn',
     eyebrow: 'Thực đơn cao cấp',
