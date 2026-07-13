@@ -135,6 +135,16 @@
   }
 }
 
+@keyframes skeleton-shimmer {
+  from {
+    background-position: 180% 0;
+  }
+
+  to {
+    background-position: -180% 0;
+  }
+}
+
 .cart-pop {
   animation: cart-pop 360ms ease both;
 }
