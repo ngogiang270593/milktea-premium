@@ -5,6 +5,7 @@ import { MenuToolbar } from '../components/menu/MenuToolbar.js';
 import { MENU_CATEGORIES } from '../repositories/CategoryRepository.js';
 import { MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { t } from '../utils/i18n.js';
+import { EmptyState } from '../components/ui/index.js';
 
 function getSelectedCategory() {
   const category = new URLSearchParams(window.location.search).get('category');
@@ -50,7 +51,18 @@ export function MenuPage() {
             <div id="menu-results" class="menu-results-grid" data-menu-grid aria-live="polite">
               ${MENU_PRODUCTS.map(MenuProductCard).join('')}
             </div>
-            <p class="menu-empty" data-menu-empty hidden>${t('menu.emptyState')}</p>
+            ${EmptyState({
+              title: t('menu.emptyTitle'),
+              description: t('menu.emptyCopy'),
+              actionHref: '/menu',
+              actionLabel: t('menu.viewAll'),
+              illustration: 'menu',
+              className: 'menu-empty',
+              attributes: {
+                'data-menu-empty': '',
+                hidden: true
+              }
+            })}
             ${MenuPagination(Math.ceil(MENU_PRODUCTS.length / 8))}
           </section>
         </div>

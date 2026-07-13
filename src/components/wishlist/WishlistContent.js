@@ -3,6 +3,7 @@ import { formatCurrency } from '../../utils/format.js';
 import { escapeAttribute, escapeHtml } from '../../utils/html.js';
 import { imageAttributes } from '../../utils/image.js';
 import { t } from '../../utils/i18n.js';
+import { EmptyState } from '../ui/index.js';
 
 function translatedProductName(item) {
   const key = `products.items.${item.id}.name`;
@@ -45,18 +46,17 @@ function wishlistItem(item) {
 }
 
 function emptyWishlist() {
-  return `
-    <section class="cart-empty" aria-label="${t('wishlist.emptyAria')}">
-      <div class="wishlist-empty-illustration" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-          <path d="M20.8 5.6a5.1 5.1 0 0 0-7.2 0L12 7.2l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2L12 21.6l8.8-8.8a5.1 5.1 0 0 0 0-7.2Z"></path>
-        </svg>
-      </div>
-      <h2>${t('wishlist.emptyTitle')}</h2>
-      <p>${t('wishlist.emptyCopy')}</p>
-      <a href="/menu" class="btn-primary ripple-button">${t('wishlist.browseMenu')}</a>
-    </section>
-  `;
+  return EmptyState({
+    title: t('wishlist.emptyTitle'),
+    description: t('wishlist.emptyCopy'),
+    actionHref: '/menu',
+    actionLabel: t('wishlist.browseMenu'),
+    illustration: 'favorites',
+    className: 'cart-empty wishlist-empty',
+    attributes: {
+      'aria-label': t('wishlist.emptyAria')
+    }
+  });
 }
 
 export function WishlistContent() {

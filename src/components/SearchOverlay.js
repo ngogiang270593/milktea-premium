@@ -1,4 +1,4 @@
-import { Chip } from './ui/index.js';
+import { Chip, EmptyState } from './ui/index.js';
 import { getSiteConfig } from '../config/siteConfig.js';
 import { getLanguage } from '../store/languageStore.js';
 import { t } from '../utils/i18n.js';
@@ -10,6 +10,25 @@ function searchChip(term, type) {
     attributes: {
       'data-search-term': term,
       [`data-search-${type}`]: true
+    }
+  });
+}
+
+function searchEmptyState(search) {
+  return EmptyState({
+    title: search.noResults,
+    description: search.emptyCopy,
+    illustration: 'search',
+    className: 'search-empty',
+    body: `
+      <div class="search-chip-row" data-search-suggestions>
+        ${['milk-tea', 'fruit-tea', 'coffee', 'smoothie', 'cake', 'topping'].map((category) => searchChip(t(`filters.categoryOptions.${category}`), 'suggestion')).join('')}
+      </div>
+    `,
+    action: `<button type="button" class="search-clear" data-search-reset>${t('search.clearSearch')}</button>`,
+    attributes: {
+      'data-search-empty': '',
+      hidden: true
     }
   });
 }
@@ -79,17 +98,7 @@ export function SearchOverlay() {
         </div>
 
         <div id="global-search-results" class="search-results" data-search-results role="listbox" aria-label="${t('products.resultsAria')}" aria-live="polite"></div>
-        <div class="search-empty" data-search-empty hidden>
-          <div class="search-empty-illustration" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none"><circle cx="28" cy="28" r="16" stroke="currentColor" stroke-width="4"></circle><path d="m40 40 12 12" stroke="currentColor" stroke-width="4" stroke-linecap="round"></path><path d="M22 28h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path></svg>
-          </div>
-          <h3>${search.noResults}</h3>
-          <p>${search.emptyCopy}</p>
-          <div class="search-chip-row" data-search-suggestions>
-            ${['milk-tea', 'fruit-tea', 'coffee', 'smoothie', 'cake', 'topping'].map((category) => searchChip(t(`filters.categoryOptions.${category}`), 'suggestion')).join('')}
-          </div>
-          <button type="button" class="search-clear" data-search-reset>${t('search.clearSearch')}</button>
-        </div>
+        ${searchEmptyState(search)}
       </section>
     </div>
   `;

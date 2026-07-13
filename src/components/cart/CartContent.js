@@ -5,6 +5,7 @@ import { formatCurrency } from '../../utils/format.js';
 import { escapeAttribute, escapeHtml } from '../../utils/html.js';
 import { imageAttributes } from '../../utils/image.js';
 import { t } from '../../utils/i18n.js';
+import { EmptyState } from '../ui/index.js';
 
 function translatedProductName(item) {
   const key = `products.items.${item.id}.name`;
@@ -80,17 +81,17 @@ function cartItem(item) {
 }
 
 function emptyCart() {
-  return `
-    <section class="cart-empty" aria-label="${t('cart.emptyAria')}">
-      <div class="cart-empty-illustration" aria-hidden="true">
-        <div></div>
-        <span></span>
-      </div>
-      <h2>${t('cart.emptyTitle')}</h2>
-      <p>${t('cart.emptyCopy')}</p>
-      <a href="/menu" class="btn-primary ripple-button">${t('cart.browseMenu')}</a>
-    </section>
-  `;
+  return EmptyState({
+    title: t('cart.emptyTitle'),
+    description: t('cart.emptyCopy'),
+    actionHref: '/menu',
+    actionLabel: t('cart.browseMenu'),
+    illustration: 'cart',
+    className: 'cart-empty',
+    attributes: {
+      'aria-label': t('cart.emptyAria')
+    }
+  });
 }
 
 function orderSummary() {
