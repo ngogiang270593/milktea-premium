@@ -145,27 +145,27 @@ MilkTea Premium is suitable for:
 Whether you're building a client project, launching a new brand, or creating your own commercial website, this starter kit provides a clean and scalable foundation to accelerate development.
 
 ---
-# 📸 Preview
+## 📸 Preview
 
-> 📷 Screenshots below are from the latest production build.
+### Desktop
 
 | Home | Menu |
 |------|------|
-| *Coming Soon* | *Coming Soon* |
+| ![](preview/home-light.png) | ![](preview/menu.png) |
 
 | Product | Cart |
 |------|------|
-| *Coming Soon* | *Coming Soon* |
+| ![](preview/product.png) | ![](preview/cart.png) |
 
 | Wishlist | Checkout |
 |------|------|
-| *Coming Soon* | *Coming Soon* |
+| ![](preview/wishlist.png) | ![](preview/checkout.png) |
 
-| Mobile | Dark Mode |
+### Mobile
+
+| Home | Menu |
 |------|------|
-| *Coming Soon* | *Coming Soon* |
-
-> **Live Preview:** https://milktea-premium.vercel.app
+| ![](preview/mobile-home.png) | ![](preview/mobile-menu.png) |
 
 ---
 
