@@ -63,8 +63,20 @@
 
   body {
     min-height: 100vh;
+    overflow-x: clip;
     background: var(--page-gradient);
     color: var(--color-text);
+  }
+
+  #app,
+  main,
+  section,
+  article,
+  aside,
+  header,
+  footer,
+  nav {
+    min-width: 0;
   }
 
   body.nav-open {

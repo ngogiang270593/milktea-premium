@@ -49,17 +49,17 @@ export function Navbar() {
 
   return `
     <header id="site-header" class="site-header sticky top-0 z-50 px-4 py-4 transition-all duration-300" data-reveal>
-      <div class="nav-shell mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full px-4 py-3 transition-all duration-300 md:gap-4 md:px-5">
+      <div class="nav-shell mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full px-4 py-3 transition-all duration-300 lg:gap-4 lg:px-5">
         <a href="/" class="nav-logo group inline-flex shrink-0 items-center gap-3 rounded-full text-sm font-semibold tracking-tight text-brand-green outline-none transition focus-visible:ring-2 focus-visible:ring-brand-gold/70 focus-visible:ring-offset-2">
           <span class="grid h-10 w-10 place-items-center rounded-full bg-[#0d3b2e] text-sm font-semibold text-white shadow-[0_10px_30px_rgba(13,59,46,0.24)]">${siteConfig.brand.logoText}</span>
           <span class="hidden sm:inline">${siteConfig.brand.name}</span>
         </a>
 
-        <nav class="hidden min-w-0 flex-1 items-center justify-center gap-1 rounded-full bg-white/35 px-2 py-1 md:flex" aria-label="${t('navbar.primary')}" data-i18n-aria="navbar.primary">
+        <nav class="hidden min-w-0 flex-1 items-center justify-center gap-1 rounded-full bg-white/35 px-2 py-1 lg:flex" aria-label="${t('navbar.primary')}" data-i18n-aria="navbar.primary">
           ${localizedLinks.map((link) => navLink(link, 'nav-link rounded-full px-4 py-2 text-sm font-medium text-[#4d4035] outline-none transition duration-300 hover:text-brand-green focus-visible:ring-2 focus-visible:ring-brand-gold/70')).join('')}
         </nav>
 
-        <div class="nav-actions hidden shrink-0 items-center justify-end gap-2 md:flex">
+        <div class="nav-actions hidden shrink-0 items-center justify-end gap-2 lg:flex">
           ${iconButton(t('navbar.searchProducts'), searchIcon, '', 'data-search-open aria-haspopup="dialog" data-i18n-aria="navbar.searchProducts"')}
           ${ThemeToggle()}
           ${LanguageSwitcher()}
@@ -74,15 +74,15 @@ export function Navbar() {
           </a>
         </div>
 
-        <button id="menu-toggle" type="button" class="nav-icon-button ripple-button ml-auto md:hidden" aria-label="${t('navbar.openMenu')}" aria-controls="mobile-drawer" aria-expanded="false" data-i18n-aria="navbar.openMenu">
+        <button id="menu-toggle" type="button" class="nav-icon-button ripple-button ml-auto lg:hidden" aria-label="${t('navbar.openMenu')}" aria-controls="mobile-drawer" aria-expanded="false" data-i18n-aria="navbar.openMenu">
           <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16"></path>
           </svg>
         </button>
       </div>
 
-      <div id="drawer-overlay" class="drawer-overlay fixed inset-0 z-40 bg-[#1f1710]/30 opacity-0 backdrop-blur-sm transition duration-300 md:hidden" hidden aria-hidden="true"></div>
-      <aside id="mobile-drawer" class="mobile-drawer fixed right-0 top-0 z-50 h-dvh w-[min(86vw,24rem)] translate-x-full bg-white/92 p-5 shadow-[-24px_0_70px_rgba(31,23,16,0.2)] backdrop-blur-2xl transition duration-300 md:hidden" role="dialog" aria-modal="true" aria-label="${t('navbar.mobile')}" aria-hidden="true" inert data-i18n-aria="navbar.mobile">
+      <div id="drawer-overlay" class="drawer-overlay fixed inset-0 z-40 bg-[#1f1710]/30 opacity-0 backdrop-blur-sm transition duration-300 lg:hidden" hidden aria-hidden="true"></div>
+      <aside id="mobile-drawer" class="mobile-drawer fixed right-0 top-0 z-50 h-dvh w-[min(86vw,24rem)] translate-x-full bg-white/92 p-5 shadow-[-24px_0_70px_rgba(31,23,16,0.2)] backdrop-blur-2xl transition duration-300 lg:hidden" role="dialog" aria-modal="true" aria-label="${t('navbar.mobile')}" aria-hidden="true" inert data-i18n-aria="navbar.mobile">
         <div class="flex items-center justify-between">
           <a href="/" class="inline-flex items-center gap-3 rounded-full text-sm font-semibold text-brand-green outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/70">
             <span class="grid h-10 w-10 place-items-center rounded-full bg-[#0d3b2e] text-sm font-semibold text-white">${siteConfig.brand.logoText}</span>

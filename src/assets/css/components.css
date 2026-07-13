@@ -4126,6 +4126,39 @@
     margin-top: 2rem;
   }
 
+  .section-heading,
+  .menu-heading h1,
+  .cart-heading h1,
+  .product-info h1,
+  .about-page h1,
+  .contact-page h1,
+  .faq-page h1,
+  .not-found-page h1,
+  .quick-view-info h2 {
+    overflow-wrap: anywhere;
+  }
+
+  .product-card,
+  .menu-product-card,
+  .cart-item,
+  .wishlist-item,
+  .checkout-panel,
+  .footer-brand,
+  .footer-commerce,
+  .quick-view-modal > div,
+  .product-info,
+  .product-gallery {
+    min-width: 0;
+  }
+
+  .product-action-row > *,
+  .quick-view-actions > *,
+  .checkout-coupon-row > *,
+  .cart-coupon > div > *,
+  .footer-newsletter-form > * {
+    min-width: 0;
+  }
+
   @media (min-width: 1024px) {
     .product-purchase-panel {
       position: sticky;
@@ -4192,6 +4225,24 @@
 
     .footer-newsletter {
       grid-template-columns: 1fr;
+    }
+
+    .product-detail-layout,
+    .checkout-grid,
+    .contact-layout,
+    .faq-layout,
+    .about-story-grid,
+    .footer-main,
+    .footer-commerce {
+      gap: 1.5rem;
+    }
+
+    .menu-toolbar {
+      flex-wrap: wrap;
+    }
+
+    .menu-toolbar > * {
+      min-width: 0;
     }
   }
 
@@ -4281,6 +4332,10 @@
       flex: 1 1 auto;
     }
 
+    .nav-shell {
+      max-width: calc(100vw - 1rem);
+    }
+
     .pwa-install-prompt {
       grid-template-columns: auto minmax(0, 1fr);
       align-items: start;
@@ -4298,6 +4353,22 @@
 
     .product-meta-list {
       grid-template-columns: 1fr;
+    }
+
+    .product-info h1,
+    .menu-heading h1,
+    .cart-heading h1 {
+      font-size: clamp(2.15rem, 12vw, 3.4rem);
+      line-height: 1;
+    }
+
+    .product-action-row .btn-primary,
+    .product-action-row .btn-secondary,
+    .quick-view-add-cart,
+    .quick-view-detail-link,
+    .checkout-submit,
+    .footer-newsletter-button {
+      width: 100%;
     }
 
     .product-share a,

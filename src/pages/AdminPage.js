@@ -103,7 +103,7 @@ export function AdminPage() {
   const activeTheme = getResolvedTheme(getThemePreference());
 
   return `
-    <main class="menu-page" aria-labelledby="admin-title">
+    <section class="menu-page" aria-labelledby="admin-title">
       <div class="menu-container">
         <nav class="menu-breadcrumb" aria-label="${t('menu.breadcrumbAria')}">
           <ol>
@@ -193,6 +193,6 @@ export function AdminPage() {
           </div>
         </form>
       </div>
-    </main>
+    </section>
   `;
 }
