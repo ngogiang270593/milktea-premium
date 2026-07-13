@@ -1,4 +1,5 @@
-import { Chip, EmptyState } from './ui/index.js';
+import { Chip } from './ui/Chip.js';
+import { EmptyState } from './ui/EmptyState.js';
 import { getSiteConfig } from '../config/siteConfig.js';
 import { getLanguage } from '../store/languageStore.js';
 import { t } from '../utils/i18n.js';

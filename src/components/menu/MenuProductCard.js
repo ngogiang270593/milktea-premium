@@ -1,4 +1,5 @@
-import { formatCategoryName, formatCurrency } from '../../utils/format.js';
+import { formatCurrency } from '../../utils/currency.js';
+import { formatCategoryName } from '../../utils/format.js';
 import { imageAttributes } from '../../utils/image.js';
 import { t } from '../../utils/i18n.js';
 

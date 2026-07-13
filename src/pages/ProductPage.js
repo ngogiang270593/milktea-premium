@@ -5,7 +5,7 @@ import { Rating } from '../components/ui/Rating.js';
 import { Tag } from '../components/ui/Tag.js';
 import { getSiteConfig } from '../config/siteConfig.js';
 import { getProductById, MENU_PRODUCTS } from '../repositories/ProductRepository.js';
-import { formatCurrency } from '../utils/format.js';
+import { formatCurrency } from '../utils/currency.js';
 import { escapeAttribute, escapeHtml } from '../utils/html.js';
 import { escapeImageAttribute, imageAttributes, imageSourceSet, resizeImageUrl } from '../utils/image.js';
 import { t } from '../utils/i18n.js';

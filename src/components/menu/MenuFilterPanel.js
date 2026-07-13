@@ -1,5 +1,5 @@
 import { MENU_CATEGORIES, MENU_FILTERS } from '../../repositories/CategoryRepository.js';
-import { Checkbox } from '../ui/index.js';
+import { Checkbox } from '../ui/Checkbox.js';
 import { formatCurrency } from '../../utils/currency.js';
 import { t } from '../../utils/i18n.js';
 

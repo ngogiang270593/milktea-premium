@@ -1,4 +1,4 @@
-import { Modal } from './ui/index.js';
+import { Modal } from './ui/Modal.js';
 import { t } from '../utils/i18n.js';
 
 export function QuickViewModal() {

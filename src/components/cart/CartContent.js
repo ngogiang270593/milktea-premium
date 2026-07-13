@@ -1,11 +1,11 @@
 import { CheckoutContent } from '../checkout/CheckoutContent.js';
 import { OrderSuccess } from '../checkout/OrderSuccess.js';
 import { getCart, getDiscount, getShipping, getSubtotal, getTotal } from '../../store/cartStore.js';
-import { formatCurrency } from '../../utils/format.js';
+import { formatCurrency } from '../../utils/currency.js';
 import { escapeAttribute, escapeHtml } from '../../utils/html.js';
 import { imageAttributes } from '../../utils/image.js';
 import { t } from '../../utils/i18n.js';
-import { EmptyState } from '../ui/index.js';
+import { EmptyState } from '../ui/EmptyState.js';
 
 function translatedProductName(item) {
   const key = `products.items.${item.id}.name`;

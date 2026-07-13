@@ -48,7 +48,7 @@ import { getLanguage, setLanguage } from '../store/languageStore.js';
 import { debounce, prefersReducedMotion, rafThrottle } from './animation.js';
 import { trapFocus } from './accessibility.js';
 import { setAttributeIfChanged, setTextIfChanged } from './dom.js';
-import { formatCurrency } from './format.js';
+import { formatCurrency } from './currency.js';
 import { escapeAttribute, escapeHtml } from './html.js';
 import { imageAttributes, initLazyImageObserver } from './image.js';
 import { t } from './i18n.js';

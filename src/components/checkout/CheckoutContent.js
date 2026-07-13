@@ -1,6 +1,8 @@
-import { Button, Input, Textarea } from '../ui/index.js';
+import { Button } from '../ui/Button.js';
+import { Input } from '../ui/Input.js';
+import { Textarea } from '../ui/Textarea.js';
 import { getDiscount, getShipping, getSubtotal } from '../../store/cartStore.js';
-import { formatCurrency } from '../../utils/format.js';
+import { formatCurrency } from '../../utils/currency.js';
 import { t } from '../../utils/i18n.js';
 
 const TAX_RATE = 0.08;

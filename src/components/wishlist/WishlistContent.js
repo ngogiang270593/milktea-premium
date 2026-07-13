@@ -1,9 +1,9 @@
 import { getWishlist } from '../../store/wishlistStore.js';
-import { formatCurrency } from '../../utils/format.js';
+import { formatCurrency } from '../../utils/currency.js';
 import { escapeAttribute, escapeHtml } from '../../utils/html.js';
 import { imageAttributes } from '../../utils/image.js';
 import { t } from '../../utils/i18n.js';
-import { EmptyState } from '../ui/index.js';
+import { EmptyState } from '../ui/EmptyState.js';
 
 function translatedProductName(item) {
   const key = `products.items.${item.id}.name`;
