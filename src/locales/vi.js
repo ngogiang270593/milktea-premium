@@ -910,6 +910,13 @@ export const vi = {
       system: 'Hệ thống'
     }
   },
+  pwa: {
+    installTitle: 'Cài đặt MilkTea Premium',
+    installCopy: 'Thêm cửa hàng vào thiết bị để truy cập nhanh hơn, có trang dự phòng offline và trải nghiệm mua sắm giống ứng dụng.',
+    installAction: 'Cài ứng dụng',
+    dismissAria: 'Đóng gợi ý cài đặt',
+    installed: 'MilkTea Premium đã sẵn sàng trên thiết bị của bạn.'
+  },
   toast: {
     addedToCart: 'Đã thêm {name} vào giỏ hàng',
     removedFromCart: 'Đã xóa sản phẩm khỏi giỏ hàng',

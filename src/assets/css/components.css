@@ -2893,6 +2893,84 @@
     transform: translateY(0);
   }
 
+  .pwa-install-prompt {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 95;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    width: min(42rem, calc(100vw - 2rem));
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 1.5rem;
+    box-shadow: 0 22px 70px rgba(48, 35, 24, 0.16);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    animation: hero-fade-up 360ms ease both;
+  }
+
+  .pwa-install-prompt[hidden] {
+    display: none;
+  }
+
+  .pwa-install-icon {
+    display: grid;
+    width: 3.25rem;
+    height: 3.25rem;
+    place-items: center;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 850;
+    background: #0d3b2e;
+    border-radius: 1rem;
+    box-shadow: 0 14px 36px rgba(13, 59, 46, 0.22);
+  }
+
+  .pwa-install-prompt h2 {
+    color: #1f1710;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0;
+  }
+
+  .pwa-install-prompt p {
+    margin-top: 0.25rem;
+    color: #7b6a5a;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .pwa-install-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+
+  .pwa-install-dismiss {
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    color: #4d4035;
+    font-size: 0.875rem;
+    font-weight: 750;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(216, 200, 184, 0.72);
+    border-radius: 9999px;
+    outline: none;
+    transition: background 220ms ease, color 220ms ease, border-color 220ms ease;
+  }
+
+  .pwa-install-dismiss:hover,
+  .pwa-install-dismiss:focus-visible {
+    color: #0d3b2e;
+    background: white;
+    border-color: #d3a86a;
+  }
+
   .wishlist-page {
     min-height: 100vh;
     padding: 6rem 0 5rem;
@@ -4203,6 +4281,21 @@
       flex: 1 1 auto;
     }
 
+    .pwa-install-prompt {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+      border-radius: 1.25rem;
+    }
+
+    .pwa-install-actions {
+      grid-column: 1 / -1;
+      justify-content: stretch;
+    }
+
+    .pwa-install-actions > * {
+      flex: 1 1 auto;
+    }
+
     .product-meta-list {
       grid-template-columns: 1fr;
     }
@@ -5153,6 +5246,7 @@
   .product-main-image,
   .product-accordion,
   .mobile-product-bar,
+  .pwa-install-prompt,
   .search-panel,
   .search-result-item,
   .search-empty {
@@ -5223,6 +5317,7 @@
   [data-theme='dark'] .product-thumbnails button,
   [data-theme='dark'] .product-accordion,
   [data-theme='dark'] .mobile-product-bar,
+  [data-theme='dark'] .pwa-install-prompt,
   [data-theme='dark'] .footer-brand,
   [data-theme='dark'] .footer-commerce,
   [data-theme='dark'] .footer-bottom,
@@ -5293,6 +5388,7 @@
   [data-theme='dark'] .product-meta-list dd,
   [data-theme='dark'] .product-accordion summary,
   [data-theme='dark'] .mobile-product-bar span,
+  [data-theme='dark'] .pwa-install-prompt h2,
   [data-theme='dark'] .search-panel h2,
   [data-theme='dark'] .quick-view-info h2,
   [data-theme='dark'] .search-meta h3,
@@ -5358,6 +5454,7 @@
   [data-theme='dark'] .product-meta-list dt,
   [data-theme='dark'] .product-share span,
   [data-theme='dark'] .product-accordion p,
+  [data-theme='dark'] .pwa-install-prompt p,
   [data-theme='dark'] .search-result-item small,
   [data-theme='dark'] .quick-view-info > p:last-of-type,
   [data-theme='dark'] .search-empty p {
@@ -5382,6 +5479,7 @@
   [data-theme='dark'] .contact-social-link,
   [data-theme='dark'] .contact-method-icon,
   [data-theme='dark'] .faq-category,
+  [data-theme='dark'] .pwa-install-dismiss,
   [data-theme='dark'] .cart-quantity button {
     color: var(--color-text-soft);
     background: var(--color-surface-strong);

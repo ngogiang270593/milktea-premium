@@ -29,9 +29,9 @@
     <meta name="twitter:description" content="Trà sữa cao cấp, nguyên liệu tuyển chọn, giao hàng nhanh và trải nghiệm thưởng thức tinh tế." />
     <meta name="twitter:image" content="https://milktea-premium.example/assets/og-image.jpg" />
 
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/icons/icon.svg" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
@@ -109,10 +109,52 @@
         }
       })();
     </script>
+    <style>
+      .app-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        gap: 1rem;
+        color: #0d3b2e;
+        background:
+          radial-gradient(circle at 50% 34%, rgba(205, 237, 246, 0.72), transparent 18rem),
+          linear-gradient(180deg, #fffdf8 0%, #f8f5ee 100%);
+        transition: opacity 260ms ease, visibility 260ms ease;
+      }
+
+      .app-splash.is-hidden {
+        visibility: hidden;
+        opacity: 0;
+      }
+
+      .app-splash-logo {
+        display: grid;
+        width: 5rem;
+        height: 5rem;
+        place-items: center;
+        color: white;
+        font: 800 1.5rem/1 "Be Vietnam Pro", Inter, sans-serif;
+        background: #0d3b2e;
+        border-radius: 1.75rem;
+        box-shadow: 0 24px 70px rgba(13, 59, 46, 0.18);
+      }
+
+      .app-splash p {
+        margin: 0;
+        font: 700 1rem/1.2 "Be Vietnam Pro", Inter, sans-serif;
+        letter-spacing: 0;
+      }
+    </style>
     <title>MilkTea Premium - Trà sữa cao cấp</title>
   </head>
   <body class="antialiased">
     <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
+    <div id="app-splash" class="app-splash" role="status" aria-live="polite">
+      <div class="app-splash-logo" aria-hidden="true">MP</div>
+      <p>MilkTea Premium</p>
+    </div>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

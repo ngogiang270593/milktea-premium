@@ -15,6 +15,17 @@ const appRoutes = new Set(APP_ROUTES);
 
 let isRenderingLanguageChange = false;
 
+function hideSplashScreen() {
+  const splash = document.querySelector('#app-splash');
+
+  if (!splash) {
+    return;
+  }
+
+  splash.classList.add('is-hidden');
+  window.setTimeout(() => splash.remove(), 320);
+}
+
 async function renderCurrentRoute({ preserveScroll = false } = {}) {
   const scrollPosition = preserveScroll
     ? { x: window.scrollX, y: window.scrollY }
@@ -24,6 +35,7 @@ async function renderCurrentRoute({ preserveScroll = false } = {}) {
   await renderApp();
   updateDocumentMeta();
   initAppInteractions();
+  hideSplashScreen();
 
   if (scrollPosition) {
     window.scrollTo(scrollPosition.x, scrollPosition.y);

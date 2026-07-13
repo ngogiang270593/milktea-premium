@@ -1,11 +1,14 @@
-const CACHE_NAME = 'milktea-premium-v1';
+const CACHE_NAME = 'milktea-premium-v2';
 const OFFLINE_URL = '/offline.html';
 const APP_SHELL = [
   '/',
   OFFLINE_URL,
-  '/manifest.webmanifest',
+  '/manifest.json',
   '/favicon.svg',
   '/icons/icon.svg',
+  '/icons/icon-192.svg',
+  '/icons/icon-512.svg',
+  '/icons/maskable.svg',
   '/assets/og-image.jpg'
 ];
 
@@ -36,12 +39,32 @@ self.addEventListener('fetch', (event) => {
 
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request).catch(() => caches.match(OFFLINE_URL))
+      fetch(request)
+        .then((response) => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
+          return response;
+        })
+        .catch(() => caches.match(request).then((cached) => cached || caches.match(OFFLINE_URL)))
     );
     return;
   }
 
   event.respondWith(
-    caches.match(request).then((cachedResponse) => cachedResponse || fetch(request))
+    caches.match(request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(request).then((response) => {
+        if (!response || response.status !== 200 || response.type === 'opaque') {
+          return response;
+        }
+
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
+        return response;
+      });
+    })
   );
 });

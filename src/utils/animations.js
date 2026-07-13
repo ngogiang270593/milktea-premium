@@ -57,6 +57,9 @@ import { getScrollBehavior } from './scroll.js';
 import { updateDocumentMeta } from './seo.js';
 
 let motionModulePromise;
+let deferredInstallPrompt = null;
+let pwaInstallListenerReady = false;
+let pwaInstallDismissed = false;
 
 function loadMotionModule() {
   motionModulePromise ||= import('./motion.js');
@@ -646,6 +649,62 @@ function searchResultItem(product, term) {
       </span>
     </a>
   `;
+}
+
+function initPwaInstallPrompt() {
+  const prompt = document.querySelector('[data-pwa-install]');
+  const accept = prompt?.querySelector('[data-pwa-install-accept]');
+  const dismiss = prompt?.querySelector('[data-pwa-install-dismiss]');
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+  if (!pwaInstallListenerReady) {
+    pwaInstallListenerReady = true;
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+
+      if (!pwaInstallDismissed && !isStandalone) {
+        document.querySelector('[data-pwa-install]')?.removeAttribute('hidden');
+        document.querySelector('[data-pwa-install]')?.setAttribute('aria-hidden', 'false');
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      document.querySelector('[data-pwa-install]')?.setAttribute('hidden', '');
+      document.querySelector('[data-pwa-install]')?.setAttribute('aria-hidden', 'true');
+      showToast(t('pwa.installed'));
+    });
+  }
+
+  if (!prompt || prompt.dataset.pwaReady === 'true') {
+    return;
+  }
+
+  prompt.dataset.pwaReady = 'true';
+
+  if (deferredInstallPrompt && !pwaInstallDismissed && !isStandalone) {
+    prompt.hidden = false;
+    prompt.setAttribute('aria-hidden', 'false');
+  }
+
+  accept?.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) {
+      return;
+    }
+
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    prompt.hidden = true;
+    prompt.setAttribute('aria-hidden', 'true');
+  });
+
+  dismiss?.addEventListener('click', () => {
+    pwaInstallDismissed = true;
+    prompt.hidden = true;
+    prompt.setAttribute('aria-hidden', 'true');
+  });
 }
 
 export function initSearchOverlay() {
@@ -1987,6 +2046,7 @@ export function initMenuPage() {
 export function initAppInteractions() {
   initThemeSystem();
   initLanguageControls();
+  initPwaInstallPrompt();
   initNavigation();
   initRippleButtons();
   initCategoryFilters();

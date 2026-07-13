@@ -902,6 +902,13 @@ export const en = {
       system: 'System'
     }
   },
+  pwa: {
+    installTitle: 'Install MilkTea Premium',
+    installCopy: 'Add the storefront to your device for faster access, offline fallback, and a more app-like shopping experience.',
+    installAction: 'Install App',
+    dismissAria: 'Dismiss install prompt',
+    installed: 'MilkTea Premium is ready on your device.'
+  },
   toast: {
     addedToCart: '{name} added to cart',
     removedFromCart: 'Item removed from cart',
