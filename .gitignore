@@ -1,4 +1,15 @@
 node_modules/
+
 dist/
-.DS_Store
+
+.vscode/
+
+.idea/
+
 .env
+
+.env.*
+
+coverage/
+
+.DS_Store
