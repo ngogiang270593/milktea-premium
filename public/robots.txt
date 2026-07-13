@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /cart
+Disallow: /wishlist
 
 Sitemap: https://milktea-premium.example/sitemap.xml

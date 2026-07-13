@@ -34,6 +34,7 @@ function withSiteAssets(locale) {
 }
 
 export const siteConfig = {
+  siteUrl: 'https://milktea-premium.example',
   brand: {
     name: 'MilkTea Premium',
     legalName: 'MilkTea Premium LLC',
@@ -52,6 +53,10 @@ export const siteConfig = {
     openingHours: {
       en: 'Daily, 8:00 AM - 10:00 PM',
       vi: 'Hằng ngày, 8:00 - 22:00'
+    },
+    geo: {
+      latitude: 40.7128,
+      longitude: -74.006
     }
   },
   social: {
