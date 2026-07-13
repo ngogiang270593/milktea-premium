@@ -1,37 +1,10 @@
-# Customization Guide
+# Customization
 
-MilkTea Premium is designed so common buyer changes can be made without rewriting components.
+MilkTea Premium is structured so buyers can customize content, branding, themes, images, products, and language without rewriting the application.
 
-## Theme
+## Brand and Business Information
 
-Theme definitions live in:
-
-```text
-src/store/themeStore.js
-```
-
-Each theme defines CSS variables such as:
-
-- Background colors
-- Surface colors
-- Border colors
-- Text colors
-- Brand color
-- Accent colors
-- Shadows
-- Page gradient
-
-To add a theme:
-
-1. Add a new value to `THEMES`.
-2. Add a matching entry in `THEME_DEFINITIONS`.
-3. Add the theme to `SELECTABLE_THEMES`.
-
-The theme switcher will pick it up automatically.
-
-## Brand
-
-Editable brand content is centralized in:
+Edit:
 
 ```text
 src/config/siteConfig.js
@@ -47,85 +20,89 @@ Common fields:
 - `business.phone`
 - `business.address`
 - `business.openingHours`
+- `business.mapUrl`
 - `social.facebook`
 - `social.instagram`
 - `social.tiktok`
 - `social.youtube`
 
-You can also open `/admin` in the browser and edit key brand values locally. Admin changes are stored in `localStorage` and merged over the default config.
+The `/admin` page can also update selected values locally. Admin changes are saved to `localStorage` and merged over the default config.
 
-## CMS Config
+## CMS-Ready Content
 
-The storefront reads editable business content through:
+Editable marketing and business content is read through:
 
 ```js
 getSiteConfig()
 getSiteContent(language)
 ```
 
-This makes future CMS integration straightforward. A backend response should match the `siteConfig` object shape and be merged as overrides.
+A future CMS should return data matching the `siteConfig` shape. Components can keep using the same getters.
 
 Recommended CMS mapping:
 
 | CMS Area | Config Path |
 | --- | --- |
 | Brand settings | `brand` |
-| Store contact | `business` |
+| Contact details | `business` |
 | Social links | `social` |
 | SEO metadata | `seo` |
-| Homepage copy | `content.{language}.home` |
-| Footer copy | `content.{language}.footer` |
+| Homepage content | `content.{language}.home` |
+| Footer content | `content.{language}.footer` |
+| Popular searches | `search.popularTerms` |
+
+## Themes
+
+Edit:
+
+```text
+src/store/themeStore.js
+```
+
+Theme definitions use CSS variables for:
+
+- Page background
+- Surface colors
+- Border colors
+- Text colors
+- Brand colors
+- Accent colors
+- Shadows
+- Gradients
+
+To add a theme:
+
+1. Add a value to the theme constants.
+2. Add a theme definition.
+3. Add it to selectable themes.
+4. Add localized labels in `src/locales/vi.js` and `src/locales/en.js`.
 
 ## Language
 
-Locales are stored in:
+Locales live in:
 
 ```text
-src/locales/vi.js
-src/locales/en.js
-```
-
-Language registration lives in:
-
-```text
-src/locales/index.js
+src/locales/
 ```
 
 To add a language:
 
-1. Create a new locale file, for example `ja.js`.
-2. Match the key structure used by `vi.js` and `en.js`.
-3. Import and register the locale in `src/locales/index.js`.
-4. Add the language metadata to `LANGUAGES`.
+1. Create a locale file, for example `ja.js`.
+2. Match the key structure in `vi.js` and `en.js`.
+3. Register the locale in `src/locales/index.js`.
+4. Add language metadata in the language store.
 
-Use `t("path.to.key")` for fixed UI labels.
+Use:
 
-## Images
-
-Local images are stored in:
-
-```text
-src/assets/images/
+```js
+t('path.to.key')
 ```
 
-Recommended organization:
-
-- `products/` for product images
-- `testimonials/` for social and testimonial imagery
-- `hero/` for hero visuals
-- `categories/` for category artwork
-- `backgrounds/` for decorative or page backgrounds
-
-Guidelines:
-
-- Use optimized JPG or WebP where possible.
-- Preserve image aspect ratios to avoid layout shift.
-- Keep product images square when possible.
-- Use meaningful alt text for content images.
+for fixed UI labels. Keep editable marketing/business content in `siteConfig`.
 
 ## Products
 
-Product data lives in:
+Edit:
 
 ```text
 src/data/products.js
@@ -136,23 +113,68 @@ Each product should include:
 - `id`
 - `name`
 - `category`
+- `image`
+- `gallery`
+- `rating`
+- `reviews`
 - `price`
 - `oldPrice`
 - `discount`
-- `rating`
-- `reviews`
-- `image`
-- `gallery`
-- `tags`
+- `size`
+- `sugar`
+- `ice`
 - `availability`
-- Product option defaults such as size, sugar, and ice
+- `tags`
 
-When adding a product:
+Add localized product names and descriptions in the locale files under `products.items`.
 
-1. Add or import its image asset.
-2. Add the product object to the relevant product array.
-3. Add localized product text in locale files if the product appears in translated UI.
-4. Verify menu filters and product detail routes.
+## Categories
+
+Edit:
+
+```text
+src/data/categories.js
+```
+
+Category values should match product `category` values and menu filter keys.
+
+## Images
+
+Images live in:
+
+```text
+src/assets/images/
+```
+
+Recommended folders:
+
+- `products/`
+- `categories/`
+- `hero/`
+- `testimonials/`
+- `backgrounds/`
+- `icons/`
+
+Guidelines:
+
+- Use optimized JPG or WebP.
+- Keep product images square.
+- Preserve `width` and `height` attributes through the shared image helper.
+- Use descriptive alt text for content images.
+- Avoid remote image URLs in production packages.
+
+## Screenshots
+
+Suggested marketplace screenshots:
+
+```text
+screenshots/home-desktop.jpg
+screenshots/home-mobile.jpg
+screenshots/menu.jpg
+screenshots/product-detail.jpg
+screenshots/checkout.jpg
+screenshots/admin.jpg
+```
 
 ## Admin Panel
 
@@ -162,16 +184,4 @@ Open:
 /admin
 ```
 
-The admin panel can update:
-
-- Brand name
-- Logo text
-- Hero title
-- Hero subtitle
-- Homepage banner
-- Contact information
-- Social links
-- Theme
-- Language
-
-This panel is intentionally frontend-only and does not include authentication or backend storage.
+The admin panel is frontend-only. It is intended for local preview and future API integration, not secure production administration.

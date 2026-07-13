@@ -1,22 +1,24 @@
 # MilkTea Premium
 
-MilkTea Premium is a commercial-ready milk tea eCommerce storefront template built with Vite, Tailwind CSS, and vanilla JavaScript. It includes a polished homepage, menu filtering, product detail flow, cart, wishlist, checkout, multilingual support, dynamic themes, SEO/PWA setup, and a lightweight admin configuration panel.
+MilkTea Premium is a production-ready bubble tea commerce template built with Vite, Tailwind CSS, and vanilla JavaScript. It is designed for commercial storefronts, theme marketplaces, and teams that want a polished frontend foundation without a backend dependency.
 
 ## Features
 
 - Premium responsive storefront for desktop, tablet, and mobile.
-- Vanilla JavaScript SPA routing with Vite build tooling.
-- Tailwind CSS styling with reusable design system primitives.
-- Homepage sections for hero, categories, featured products, promotion, testimonials, Instagram, and newsletter.
-- Menu page with search, sort, filters, grid/list view, mobile filter drawer, and pagination.
-- Product detail page with gallery, thumbnails, options, toppings, quantity controls, related products, and sticky mobile add-to-cart.
-- Cart, wishlist, checkout, and order success flows.
-- Vietnamese and English localization with persistent language preference.
-- Dynamic theme engine with multiple visual themes and localStorage persistence.
-- CMS-ready `siteConfig` layer for editable brand, content, contact, and social information.
-- `/admin` configuration panel for local storefront customization.
-- SEO metadata, Open Graph tags, Twitter cards, sitemap, robots file, PWA manifest, and offline fallback.
-- GSAP animations with reduced-motion support.
+- Vanilla JavaScript SPA routing with route-level code splitting.
+- Tailwind CSS styling with reusable design system components.
+- Homepage with hero, categories, trust cards, featured products, promotion, testimonials, Instagram gallery, and newsletter.
+- Menu page with category filtering, search, sorting, grid/list view, mobile filter drawer, and pagination.
+- Product detail page with gallery, thumbnails, product options, toppings, quantity selector, related products, wishlist, and add-to-cart.
+- Quick View modal for product previews.
+- Cart, wishlist, checkout, and order success flow.
+- Vietnamese and English localization with instant language switching.
+- Dynamic theme engine with persistent user preference.
+- CMS-ready `siteConfig` layer for brand, content, SEO, contact, social, and business data.
+- Lightweight `/admin` configuration panel using localStorage.
+- SEO metadata, canonical URLs, Open Graph, Twitter Cards, structured data, sitemap, and robots file.
+- PWA manifest, service worker, app icons, install prompt, splash screen, and offline fallback.
+- GSAP-powered animations with reduced-motion support.
 
 ## Tech Stack
 
@@ -25,99 +27,100 @@ MilkTea Premium is a commercial-ready milk tea eCommerce storefront template bui
 - Tailwind CSS
 - GSAP
 - localStorage persistence
+- Vitest-ready test architecture
 - PWA-ready public assets
 
 ## Screenshots
 
-Add your final product screenshots to your marketplace listing or documentation package:
+Add final screenshots to a `screenshots/` folder before publishing or listing the template.
 
-| View | Recommended Image |
+| Screen | Placeholder |
 | --- | --- |
-| Homepage | `screenshots/homepage-desktop.jpg` |
-| Mobile Homepage | `screenshots/homepage-mobile.jpg` |
-| Menu Page | `screenshots/menu-page.jpg` |
-| Product Detail | `screenshots/product-detail.jpg` |
-| Cart and Checkout | `screenshots/checkout-flow.jpg` |
-| Admin Panel | `screenshots/admin-panel.jpg` |
+| Homepage desktop | `screenshots/home-desktop.jpg` |
+| Homepage mobile | `screenshots/home-mobile.jpg` |
+| Menu page | `screenshots/menu.jpg` |
+| Product detail | `screenshots/product-detail.jpg` |
+| Cart and checkout | `screenshots/checkout.jpg` |
+| Admin panel | `screenshots/admin.jpg` |
 
-## Installation
+## Quick Start
 
 ```bash
 npm install
-```
-
-## Development
-
-```bash
 npm run dev
 ```
 
-Vite will print the local development URL in the terminal.
-
-## Build
+Build for production:
 
 ```bash
 npm run build
 ```
 
-The production output is generated in `dist/`.
+Preview production output:
+
+```bash
+npm run preview
+```
 
 ## Folder Structure
 
 ```text
 src/
-  assets/       CSS, images, icons, and visual assets
-  components/   Reusable UI and feature components
-  config/       CMS-ready site configuration
-  data/         Products, categories, and reviews
-  design/       Design tokens
-  layouts/      Shared layout shell
-  locales/      Translation dictionaries
-  pages/        Route-level page modules
-  store/        Client-side persistence stores
-  utils/        Shared helpers, filters, SEO, images, and animation utilities
+  assets/        CSS, images, icons, and fonts
+  components/    Reusable layout, commerce, and UI components
+  config/        CMS-ready site configuration
+  constants/     Navigation, routes, breakpoints, icons, and common constants
+  data/          Static product, category, and review seed data
+  design/        Design tokens
+  layouts/       Shared application shell
+  locales/       Translation dictionaries
+  pages/         Route-level page modules
+  repositories/  Data access layer
+  services/      Storage, image, settings, cart, wishlist, language, and theme services
+  store/         Client-side application stores
+  utils/         Shared utilities for routing, SEO, images, animation, validation, and formatting
 ```
-
-See [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) for the full architecture guide.
-
-## Customization
-
-- Brand and editable business content: `src/config/siteConfig.js`
-- Themes: `src/store/themeStore.js`
-- Translations: `src/locales/vi.js` and `src/locales/en.js`
-- Products: `src/data/products.js`
-- Categories: `src/data/categories.js`
-- Images: `src/assets/images/`
-- Admin panel: `/admin`
-
-See [CUSTOMIZATION.md](CUSTOMIZATION.md) for detailed instructions.
-
-## FAQ
-
-**Does this template require a backend?**  
-No. The current version is frontend-only and stores cart, wishlist, language, theme, and admin configuration in `localStorage`.
-
-**Can I connect it to a CMS later?**  
-Yes. The `siteConfig` shape is designed so a CMS/API response can replace local configuration without changing component markup.
-
-**Can I add more languages?**  
-Yes. Add a locale file in `src/locales/`, register it in `src/locales/index.js`, and add translated keys matching the existing dictionaries.
-
-**Can I change the color palette?**  
-Yes. Add or adjust theme definitions in `src/store/themeStore.js`.
-
-**Is this installable as a PWA?**  
-Yes. The project includes a manifest, icons, service worker registration, and offline fallback page.
 
 ## Documentation
 
 - [INSTALL.md](INSTALL.md)
+- [DEPLOY.md](DEPLOY.md)
 - [CUSTOMIZATION.md](CUSTOMIZATION.md)
-- [DEPLOYMENT.md](DEPLOYMENT.md)
-- [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md)
 - [CHANGELOG.md](CHANGELOG.md)
 - [LICENSE](LICENSE)
 
+## Customization
+
+Common customization points:
+
+- Brand and business content: `src/config/siteConfig.js`
+- Products: `src/data/products.js`
+- Categories: `src/data/categories.js`
+- Translations: `src/locales/vi.js`, `src/locales/en.js`
+- Themes: `src/store/themeStore.js`
+- Images: `src/assets/images/`
+- Local admin panel: `/admin`
+
+See [CUSTOMIZATION.md](CUSTOMIZATION.md) for a complete guide.
+
+## FAQ
+
+**Does this template require a backend?**  
+No. It is frontend-only. Cart, wishlist, theme, language, recent searches, and admin overrides are stored in `localStorage`.
+
+**Can it connect to a CMS later?**  
+Yes. Editable business content is centralized in `siteConfig`, so a future API response can replace or merge with the same shape.
+
+**Can I add more languages?**  
+Yes. Add a locale file in `src/locales/`, register it, and match the existing translation key structure.
+
+**Can I change the theme palette?**  
+Yes. Add or edit theme definitions in `src/store/themeStore.js`.
+
+**Is it PWA-ready?**  
+Yes. The template includes manifest, service worker, icons, install prompt, splash screen, and offline fallback.
+
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE).
+Released under the MIT License. See [LICENSE](LICENSE).
