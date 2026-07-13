@@ -1,5 +1,7 @@
 import { getSiteContent } from '../config/siteConfig.js';
-import { Button, Card, Input } from './ui/index.js';
+import { Button } from './ui/Button.js';
+import { Card } from './ui/Card.js';
+import { Input } from './ui/Input.js';
 import { getLanguage } from '../store/languageStore.js';
 import { t } from '../utils/i18n.js';
 

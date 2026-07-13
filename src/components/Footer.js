@@ -2,7 +2,8 @@ import { getSiteConfig, getSiteContent } from '../config/siteConfig.js';
 import { getLanguage } from '../store/languageStore.js';
 import { escapeAttribute, escapeHtml } from '../utils/html.js';
 import { t } from '../utils/i18n.js';
-import { Button, Input } from './ui/index.js';
+import { Button } from './ui/Button.js';
+import { Input } from './ui/Input.js';
 import { LanguageSwitcher } from './LanguageSwitcher.js';
 import { ThemeSwitcher } from './ThemeSwitcher.js';
 

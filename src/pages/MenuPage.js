@@ -5,7 +5,7 @@ import { MenuToolbar } from '../components/menu/MenuToolbar.js';
 import { MENU_CATEGORIES } from '../repositories/CategoryRepository.js';
 import { MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { t } from '../utils/i18n.js';
-import { EmptyState } from '../components/ui/index.js';
+import { EmptyState } from '../components/ui/EmptyState.js';
 
 function getSelectedCategory() {
   const category = new URLSearchParams(window.location.search).get('category');

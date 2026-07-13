@@ -1,6 +1,7 @@
 import { escapeAttribute, escapeHtml } from '../utils/html.js';
 import { t } from '../utils/i18n.js';
-import { Badge, Button } from '../components/ui/index.js';
+import { Badge } from '../components/ui/Badge.js';
+import { Button } from '../components/ui/Button.js';
 
 function categoryButton(category, index) {
   return `

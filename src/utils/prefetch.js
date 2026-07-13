@@ -2,6 +2,12 @@ import { runWhenIdle } from './animation.js';
 
 const prefetchedRoutes = new Set();
 
+function canPrefetch() {
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+
+  return !connection?.saveData && !['slow-2g', '2g'].includes(connection?.effectiveType);
+}
+
 /**
  * Prefetches route modules once, during idle time.
  *
@@ -9,6 +15,10 @@ const prefetchedRoutes = new Set();
  * @param {(route: string) => Promise<unknown>|unknown} preloadRoute Route preload callback.
  */
 export function prefetchRoutes(routes, preloadRoute) {
+  if (!canPrefetch()) {
+    return;
+  }
+
   runWhenIdle(() => {
     routes.forEach((route) => {
       if (prefetchedRoutes.has(route)) {
@@ -28,7 +38,7 @@ export function prefetchRoutes(routes, preloadRoute) {
  * @param {(route: string) => Promise<unknown>|unknown} preloadRoute Route preload callback.
  */
 export function prefetchRoute(route, preloadRoute) {
-  if (prefetchedRoutes.has(route)) {
+  if (!canPrefetch() || prefetchedRoutes.has(route)) {
     return;
   }
 

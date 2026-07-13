@@ -1,5 +1,9 @@
 import { getSiteConfig, getSiteContent } from '../config/siteConfig.js';
-import { Button, Card, Input, Select, Textarea } from '../components/ui/index.js';
+import { Button } from '../components/ui/Button.js';
+import { Card } from '../components/ui/Card.js';
+import { Input } from '../components/ui/Input.js';
+import { Select } from '../components/ui/Select.js';
+import { Textarea } from '../components/ui/Textarea.js';
 import { getAvailableLanguages, getLanguage } from '../store/languageStore.js';
 import { getSelectableThemes, getResolvedTheme, getThemePreference } from '../store/themeStore.js';
 import { t } from '../utils/i18n.js';

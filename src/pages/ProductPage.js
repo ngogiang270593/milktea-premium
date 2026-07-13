@@ -1,5 +1,8 @@
 import { MenuProductCard } from '../components/menu/MenuProductCard.js';
-import { Accordion, Badge, Rating, Tag } from '../components/ui/index.js';
+import { Accordion } from '../components/ui/Accordion.js';
+import { Badge } from '../components/ui/Badge.js';
+import { Rating } from '../components/ui/Rating.js';
+import { Tag } from '../components/ui/Tag.js';
 import { getSiteConfig } from '../config/siteConfig.js';
 import { getProductById, MENU_PRODUCTS } from '../repositories/ProductRepository.js';
 import { formatCurrency } from '../utils/format.js';

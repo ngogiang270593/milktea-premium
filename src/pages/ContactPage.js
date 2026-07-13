@@ -2,7 +2,11 @@ import { getSiteConfig } from '../config/siteConfig.js';
 import { getLanguage } from '../store/languageStore.js';
 import { escapeAttribute, escapeHtml } from '../utils/html.js';
 import { t } from '../utils/i18n.js';
-import { Badge, Button, Card, Input, Textarea } from '../components/ui/index.js';
+import { Badge } from '../components/ui/Badge.js';
+import { Button } from '../components/ui/Button.js';
+import { Card } from '../components/ui/Card.js';
+import { Input } from '../components/ui/Input.js';
+import { Textarea } from '../components/ui/Textarea.js';
 
 const socialIcons = {
   facebook: '<path d="M14 8h2V4h-3a5 5 0 0 0-5 5v2H6v4h2v5h4v-5h3l1-4h-4V9a1 1 0 0 1 1-1h1Z"></path>',

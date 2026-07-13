@@ -3,7 +3,7 @@ import { updateLanguageSwitchers } from '../components/LanguageSwitcher.js';
 import { updateNavbarTranslations } from '../components/Navbar.js';
 import { ThemeProvider } from '../components/ThemeProvider.js';
 import { updateThemeSwitchers } from '../components/ThemeSwitcher.js';
-import { Toast } from '../components/ui/index.js';
+import { Toast } from '../components/ui/Toast.js';
 import { WishlistContent } from '../components/wishlist/WishlistContent.js';
 import {
   getSiteConfigOverrides,
@@ -50,7 +50,7 @@ import { trapFocus } from './accessibility.js';
 import { setAttributeIfChanged, setTextIfChanged } from './dom.js';
 import { formatCurrency } from './format.js';
 import { escapeAttribute, escapeHtml } from './html.js';
-import { imageAttributes } from './image.js';
+import { imageAttributes, initLazyImageObserver } from './image.js';
 import { t } from './i18n.js';
 import { applyProductFilters } from './productFilter.js';
 import { getScrollBehavior } from './scroll.js';
@@ -2047,6 +2047,7 @@ export function initAppInteractions() {
   initThemeSystem();
   initLanguageControls();
   initPwaInstallPrompt();
+  initLazyImageObserver();
   initNavigation();
   initRippleButtons();
   initCategoryFilters();

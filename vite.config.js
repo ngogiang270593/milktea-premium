@@ -13,7 +13,14 @@ export default defineConfig({
           }
 
           if (moduleId.includes('/src/components/ui/')) {
-            return 'ui';
+            const shellUi = [
+              '/src/components/ui/Button.js',
+              '/src/components/ui/Input.js',
+              '/src/components/ui/Toast.js',
+              '/src/components/ui/utils.js'
+            ];
+
+            return shellUi.some((path) => moduleId.endsWith(path)) ? 'ui-shell' : 'ui-components';
           }
 
           if (moduleId.includes('/src/data/') || moduleId.includes('/src/repositories/')) {
