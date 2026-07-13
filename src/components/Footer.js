@@ -73,7 +73,7 @@ export function Footer() {
     { label: t('footer.links.testimonials'), href: homeHash('#testimonials') },
     { label: t('footer.links.newsletter'), href: homeHash('#newsletter') },
     { label: t('footer.links.about'), href: '/about' },
-    { label: t('footer.links.contact'), href: 'mailto:' + siteConfig.business.email },
+    { label: t('footer.links.contact'), href: '/contact' },
     { label: t('footer.links.faq'), href: homeHash('#testimonials') }
   ];
   const serviceLinks = [

@@ -144,6 +144,57 @@ export const en = {
       secondary: 'Contact Us'
     }
   },
+  contact: {
+    hero: {
+      badge: 'Contact us',
+      title: 'We are here to help with every premium tea moment.',
+      subtitle: 'Questions about orders, delivery, catering, partnerships, or menu recommendations? Send us a message and our team will respond with care.',
+      cardTitle: 'Guest support',
+      cardCopy: 'Reach our tea bar team for order help, store details, and business inquiries.',
+      cta: 'Explore Menu'
+    },
+    form: {
+      eyebrow: 'Send a message',
+      title: 'Tell us how we can help.',
+      copy: 'Share a few details and we will get back to you as soon as possible.',
+      name: 'Full name',
+      namePlaceholder: 'Your full name',
+      email: 'Email address',
+      emailPlaceholder: 'you@example.com',
+      phone: 'Phone number',
+      phonePlaceholder: '+1 800 555 0199',
+      subject: 'Subject',
+      subjectPlaceholder: 'Order, catering, partnership...',
+      message: 'Message',
+      messagePlaceholder: 'Write your message...',
+      submit: 'Send Message',
+      success: 'Thank you. Your message has been prepared for our team.',
+      sending: 'Sending...'
+    },
+    details: {
+      eyebrow: 'Store details',
+      title: 'Visit or reach our tea bar.',
+      hotline: 'Hotline',
+      email: 'Email',
+      address: 'Store Address',
+      hours: 'Business Hours'
+    },
+    map: {
+      eyebrow: 'Google Map',
+      title: 'Find MilkTea Premium.',
+      copy: 'Use the map to plan your visit or open directions in Google Maps.'
+    },
+    faq: {
+      eyebrow: 'FAQ Shortcut',
+      title: 'Need a faster answer?',
+      copy: 'Jump directly to helpful areas of the storefront for ordering, delivery, and support.',
+      items: [
+        { title: 'Explore the menu', copy: 'Browse drinks, toppings, prices, and categories.', href: '/menu' },
+        { title: 'Check your cart', copy: 'Review quantities, coupon, and order summary.', href: '/cart' },
+        { title: 'Delivery details', copy: 'Continue to checkout for shipping and payment options.', href: '/cart#checkout' }
+      ]
+    }
+  },
   menu: {
     breadcrumbAria: 'Breadcrumb',
     eyebrow: 'Premium Menu',

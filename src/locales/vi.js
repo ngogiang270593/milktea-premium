@@ -144,6 +144,57 @@ export const vi = {
       secondary: 'Liên hệ'
     }
   },
+  contact: {
+    hero: {
+      badge: 'Liên hệ',
+      title: 'Chúng tôi luôn sẵn sàng hỗ trợ mọi khoảnh khắc thưởng trà.',
+      subtitle: 'Bạn cần hỗ trợ đơn hàng, giao hàng, đặt tiệc, hợp tác hay gợi ý món phù hợp? Hãy gửi tin nhắn, đội ngũ của chúng tôi sẽ phản hồi tận tâm.',
+      cardTitle: 'Hỗ trợ khách hàng',
+      cardCopy: 'Liên hệ đội ngũ quầy trà để được hỗ trợ đơn hàng, thông tin cửa hàng và yêu cầu hợp tác.',
+      cta: 'Khám phá thực đơn'
+    },
+    form: {
+      eyebrow: 'Gửi tin nhắn',
+      title: 'Cho chúng tôi biết bạn cần hỗ trợ gì.',
+      copy: 'Chia sẻ một vài thông tin, chúng tôi sẽ phản hồi bạn trong thời gian sớm nhất.',
+      name: 'Họ và tên',
+      namePlaceholder: 'Nhập họ và tên',
+      email: 'Địa chỉ email',
+      emailPlaceholder: 'ban@example.com',
+      phone: 'Số điện thoại',
+      phonePlaceholder: '+84 900 000 000',
+      subject: 'Chủ đề',
+      subjectPlaceholder: 'Đơn hàng, đặt tiệc, hợp tác...',
+      message: 'Nội dung',
+      messagePlaceholder: 'Nhập nội dung cần hỗ trợ...',
+      submit: 'Gửi tin nhắn',
+      success: 'Cảm ơn bạn. Tin nhắn đã sẵn sàng được gửi đến đội ngũ của chúng tôi.',
+      sending: 'Đang gửi...'
+    },
+    details: {
+      eyebrow: 'Thông tin cửa hàng',
+      title: 'Ghé thăm hoặc liên hệ quầy trà.',
+      hotline: 'Hotline',
+      email: 'Email',
+      address: 'Địa chỉ cửa hàng',
+      hours: 'Giờ hoạt động'
+    },
+    map: {
+      eyebrow: 'Google Map',
+      title: 'Tìm MilkTea Premium.',
+      copy: 'Sử dụng bản đồ để lên lịch ghé thăm hoặc mở chỉ đường trên Google Maps.'
+    },
+    faq: {
+      eyebrow: 'Lối tắt FAQ',
+      title: 'Bạn cần câu trả lời nhanh hơn?',
+      copy: 'Đi thẳng đến các khu vực hữu ích để xem món, giao hàng và hỗ trợ.',
+      items: [
+        { title: 'Khám phá thực đơn', copy: 'Xem đồ uống, topping, giá và danh mục.', href: '/menu' },
+        { title: 'Kiểm tra giỏ hàng', copy: 'Xem số lượng, mã ưu đãi và tóm tắt đơn hàng.', href: '/cart' },
+        { title: 'Thông tin giao hàng', copy: 'Tiếp tục đến thanh toán để chọn giao hàng và phương thức trả tiền.', href: '/cart#checkout' }
+      ]
+    }
+  },
   menu: {
     breadcrumbAria: 'Đường dẫn',
     eyebrow: 'Thực đơn cao cấp',

@@ -955,6 +955,113 @@ function bindCheckoutControls() {
   updateSubmitState();
 }
 
+function bindContactForm() {
+  const form = document.querySelector('[data-contact-form]');
+
+  if (!form || form.dataset.contactReady === 'true') {
+    return;
+  }
+
+  form.dataset.contactReady = 'true';
+  const fields = [...form.querySelectorAll('[data-contact-field]')];
+  const submitButton = form.querySelector('[data-contact-submit]');
+  const message = form.querySelector('[data-contact-message]');
+  let submitting = false;
+
+  const validationMessage = (field) => {
+    const value = field.value.trim();
+
+    if (field.dataset.required === 'true' && !value) {
+      return t('validation.requiredField');
+    }
+
+    if (!value) {
+      return '';
+    }
+
+    if (field.dataset.contactField === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      return t('validation.invalidEmail');
+    }
+
+    if (field.dataset.contactField === 'phone' && !/^[+()\d\s.-]{8,18}$/.test(value)) {
+      return t('checkout.errors.invalidPhone');
+    }
+
+    return '';
+  };
+
+  const setFieldState = (field) => {
+    const error = validationMessage(field);
+    const errorElement = document.getElementById(field.getAttribute('aria-describedby'));
+
+    field.classList.toggle('is-invalid', Boolean(error));
+    field.setAttribute('aria-invalid', String(Boolean(error)));
+
+    if (errorElement) {
+      errorElement.textContent = error;
+      errorElement.hidden = !error;
+    }
+
+    return !error;
+  };
+
+  const updateSubmitState = () => {
+    const isValid = fields.every((field) => validationMessage(field) === '');
+
+    if (submitButton) {
+      submitButton.disabled = !isValid || submitting;
+      submitButton.toggleAttribute('aria-disabled', !isValid || submitting);
+    }
+
+    return isValid;
+  };
+
+  fields.forEach((field) => {
+    field.addEventListener('input', () => {
+      setFieldState(field);
+      updateSubmitState();
+    });
+    field.addEventListener('blur', () => {
+      setFieldState(field);
+      updateSubmitState();
+    });
+  });
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const isValid = fields.every(setFieldState);
+    updateSubmitState();
+
+    if (!isValid || submitting) {
+      fields.find((field) => validationMessage(field))?.focus();
+      return;
+    }
+
+    submitting = true;
+    submitButton.disabled = true;
+    submitButton.setAttribute('aria-busy', 'true');
+    submitButton.textContent = t('contact.form.sending');
+
+    window.setTimeout(() => {
+      submitting = false;
+      form.reset();
+      submitButton.disabled = false;
+      submitButton.setAttribute('aria-busy', 'false');
+      submitButton.textContent = t('contact.form.submit');
+
+      if (message) {
+        message.textContent = t('contact.form.success');
+        message.classList.add('is-success');
+      }
+
+      updateSubmitState();
+    }, 520);
+  });
+
+  updateSubmitState();
+}
+
 function renderCartContent() {
   const content = document.querySelector('[data-cart-content]');
 
@@ -1846,6 +1953,7 @@ export function initAppInteractions() {
   initProductCards();
   initQuickView();
   initNewsletterForms();
+  bindContactForm();
   initSearchOverlay();
   initMenuPage();
   initCartPage();
