@@ -49,6 +49,11 @@
     contain-intrinsic-size: auto 960px;
   }
 
+  .about-page {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
+  }
+
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-full bg-brand-green px-7 py-3 text-sm font-semibold text-white transition hover:bg-[#0b3427];
   }
@@ -933,6 +938,377 @@
 
   .testimonial-card {
     min-height: 100%;
+  }
+
+  .about-page {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(205, 237, 246, 0.5), transparent 24rem),
+      radial-gradient(circle at 86% 18%, rgba(211, 168, 106, 0.24), transparent 22rem),
+      linear-gradient(180deg, #fffdf8 0%, #f8f5ee 100%);
+  }
+
+  .about-container {
+    width: min(100% - 2rem, 90rem);
+    margin: 0 auto;
+  }
+
+  .about-hero {
+    padding: 8rem 0 5rem;
+  }
+
+  .about-hero-grid,
+  .about-story-grid,
+  .about-purpose-grid,
+  .about-why-grid,
+  .about-timeline-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.8fr);
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .about-eyebrow {
+    color: #0d3b2e;
+    font-size: 0.8rem;
+    font-weight: 850;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .about-hero h1 {
+    max-width: 56rem;
+    margin-top: 1rem;
+    color: #1f1710;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 750;
+    line-height: 0.94;
+    letter-spacing: 0;
+  }
+
+  .about-lead {
+    max-width: 42rem;
+    margin-top: 1.5rem;
+    color: #6f5f51;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.8;
+  }
+
+  .about-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .about-hero-card {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    border-radius: 2.5rem;
+  }
+
+  .about-hero-card::before {
+    position: absolute;
+    right: -4rem;
+    top: -4rem;
+    width: 12rem;
+    height: 12rem;
+    content: '';
+    background: rgba(211, 168, 106, 0.24);
+    border-radius: 9999px;
+    filter: blur(18px);
+  }
+
+  .about-hero-card span {
+    display: grid;
+    width: 4rem;
+    height: 4rem;
+    place-items: center;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 900;
+    background: #0d3b2e;
+    border-radius: 9999px;
+    box-shadow: 0 16px 36px rgba(13, 59, 46, 0.22);
+  }
+
+  .about-hero-card h2 {
+    margin-top: 1.5rem;
+    color: #1f1710;
+    font-size: 1.75rem;
+    font-weight: 850;
+  }
+
+  .about-hero-card p,
+  .about-hero-card a {
+    display: block;
+    margin-top: 0.75rem;
+    color: #6f5f51;
+    font-size: 0.95rem;
+  }
+
+  .about-hero-card a {
+    color: #0d3b2e;
+    font-weight: 850;
+  }
+
+  .about-section {
+    padding: 4.5rem 0;
+  }
+
+  .about-story-grid,
+  .about-timeline-grid {
+    align-items: start;
+  }
+
+  .about-story-copy {
+    display: grid;
+    gap: 1.25rem;
+    color: #5f5044;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .about-purpose-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-purpose-card,
+  .about-card,
+  .about-team-card {
+    padding: 1.5rem;
+  }
+
+  .about-purpose-card h2 {
+    margin-top: 1rem;
+    color: #1f1710;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.05;
+  }
+
+  .about-purpose-card p:last-child {
+    margin-top: 1rem;
+    color: #6f5f51;
+    line-height: 1.75;
+  }
+
+  .about-section-heading {
+    max-width: 46rem;
+  }
+
+  .about-section-heading .section-copy {
+    margin-top: 1rem;
+  }
+
+  .about-card-grid,
+  .about-stats-grid,
+  .about-team-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .about-card-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .about-card {
+    min-height: 16rem;
+    outline: none;
+    transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms ease;
+  }
+
+  .about-card:hover,
+  .about-card:focus-visible,
+  .about-team-card:hover,
+  .about-team-card:focus-within,
+  .about-stat:hover,
+  .about-stat:focus-visible {
+    border-color: rgba(211, 168, 106, 0.68);
+    box-shadow: 0 28px 76px rgba(48, 35, 24, 0.14);
+    transform: translateY(-0.35rem);
+  }
+
+  .about-card-compact {
+    min-height: 13rem;
+  }
+
+  .about-icon {
+    display: grid;
+    width: 3.5rem;
+    height: 3.5rem;
+    place-items: center;
+    color: #0d3b2e;
+    background: rgba(205, 237, 246, 0.65);
+    border-radius: 1.25rem;
+  }
+
+  .about-icon svg {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .about-card h3 {
+    margin-top: 1.25rem;
+    color: #1f1710;
+    font-size: 1.05rem;
+    font-weight: 850;
+  }
+
+  .about-card p {
+    margin-top: 0.75rem;
+    color: #6f5f51;
+    line-height: 1.7;
+  }
+
+  .about-why-grid {
+    align-items: start;
+  }
+
+  .about-card-grid-compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 0;
+  }
+
+  .about-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .about-stat {
+    padding: 1.5rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 2rem;
+    box-shadow: 0 18px 55px rgba(48, 35, 24, 0.08);
+    outline: none;
+    transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms ease;
+  }
+
+  .about-stat strong {
+    display: block;
+    color: #0d3b2e;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 850;
+    line-height: 1;
+  }
+
+  .about-stat span {
+    display: block;
+    margin-top: 0.75rem;
+    color: #6f5f51;
+    font-size: 0.95rem;
+    font-weight: 750;
+  }
+
+  .about-timeline {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .about-timeline-item {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 1.5rem;
+    box-shadow: 0 14px 44px rgba(48, 35, 24, 0.07);
+  }
+
+  .about-timeline-item > span,
+  .about-timeline-item small {
+    color: #0d3b2e;
+    font-weight: 850;
+  }
+
+  .about-timeline-item h3,
+  .about-team-card h3 {
+    color: #1f1710;
+    font-size: 1.05rem;
+    font-weight: 850;
+  }
+
+  .about-timeline-item p,
+  .about-team-card span {
+    display: block;
+    margin-top: 0.5rem;
+    color: #6f5f51;
+    line-height: 1.65;
+  }
+
+  .about-timeline-item small {
+    opacity: 0.28;
+  }
+
+  .about-team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .about-team-card {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms ease;
+  }
+
+  .about-team-avatar {
+    display: grid;
+    width: 4rem;
+    height: 4rem;
+    flex: 0 0 auto;
+    place-items: center;
+    color: white;
+    font-weight: 900;
+    background: linear-gradient(135deg, #0d3b2e, #d3a86a);
+    border-radius: 9999px;
+  }
+
+  .about-team-card p {
+    margin-top: 0.25rem;
+    color: #0d3b2e;
+    font-size: 0.85rem;
+    font-weight: 850;
+  }
+
+  .about-cta {
+    padding: 4.5rem 0 6rem;
+  }
+
+  .about-cta-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem;
+    background:
+      radial-gradient(circle at 92% 12%, rgba(211, 168, 106, 0.24), transparent 18rem),
+      rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 2.5rem;
+    box-shadow: 0 24px 70px rgba(48, 35, 24, 0.1);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+  }
+
+  .about-cta-panel h2 {
+    max-width: 44rem;
+    margin-top: 0.75rem;
+    color: #1f1710;
+    font-size: clamp(2rem, 4vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .about-cta-panel p:last-child {
+    max-width: 38rem;
+    margin-top: 1rem;
+    color: #6f5f51;
+    line-height: 1.75;
   }
 
   .menu-page {
@@ -2984,6 +3360,18 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .about-hero-grid,
+    .about-story-grid,
+    .about-why-grid,
+    .about-timeline-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-card-grid,
+    .about-stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .footer-main {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -3001,6 +3389,32 @@
   @media (max-width: 640px) {
     .trust-grid {
       grid-template-columns: 1fr;
+    }
+
+    .about-hero {
+      padding: 6.5rem 0 3rem;
+    }
+
+    .about-purpose-grid,
+    .about-card-grid,
+    .about-card-grid-compact,
+    .about-stats-grid,
+    .about-team-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-timeline-item {
+      grid-template-columns: 1fr;
+    }
+
+    .about-timeline-item small {
+      display: none;
+    }
+
+    .about-team-card,
+    .about-cta-panel {
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .site-footer {
@@ -3660,6 +4074,7 @@
 
   [data-theme='dark'] .premium-hero,
   [data-theme='dark'] .trust-section,
+  [data-theme='dark'] .about-page,
   [data-theme='dark'] .category-section,
   [data-theme='dark'] .featured-products-section,
   [data-theme='dark'] .site-footer,
@@ -3679,6 +4094,11 @@
   [data-theme='dark'] .hero-quality-card,
   [data-theme='dark'] .category-card,
   [data-theme='dark'] .trust-card,
+  [data-theme='dark'] .about-card,
+  [data-theme='dark'] .about-stat,
+  [data-theme='dark'] .about-timeline-item,
+  [data-theme='dark'] .about-team-card,
+  [data-theme='dark'] .about-cta-panel,
   [data-theme='dark'] .testimonial-card,
   [data-theme='dark'] .promotion-banner,
   [data-theme='dark'] .product-card,
@@ -3730,6 +4150,13 @@
   [data-theme='dark'] .floating-card,
   [data-theme='dark'] .category-card h3,
   [data-theme='dark'] .trust-card h3,
+  [data-theme='dark'] .about-hero h1,
+  [data-theme='dark'] .about-hero-card h2,
+  [data-theme='dark'] .about-purpose-card h2,
+  [data-theme='dark'] .about-card h3,
+  [data-theme='dark'] .about-timeline-item h3,
+  [data-theme='dark'] .about-team-card h3,
+  [data-theme='dark'] .about-cta-panel h2,
   [data-theme='dark'] .product-card h3,
   [data-theme='dark'] .menu-heading h1,
   [data-theme='dark'] .menu-product-card h2,
@@ -3764,6 +4191,15 @@
   [data-theme='dark'] .section-copy,
   [data-theme='dark'] .hero-stat-card span,
   [data-theme='dark'] .trust-card p,
+  [data-theme='dark'] .about-lead,
+  [data-theme='dark'] .about-hero-card p,
+  [data-theme='dark'] .about-story-copy,
+  [data-theme='dark'] .about-purpose-card p:last-child,
+  [data-theme='dark'] .about-card p,
+  [data-theme='dark'] .about-stat span,
+  [data-theme='dark'] .about-timeline-item p,
+  [data-theme='dark'] .about-team-card span,
+  [data-theme='dark'] .about-cta-panel p:last-child,
   [data-theme='dark'] .testimonial-card p,
   [data-theme='dark'] .floating-card small,
   [data-theme='dark'] .menu-heading p,

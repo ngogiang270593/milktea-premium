@@ -196,7 +196,7 @@ export function animateCardSet(cards, options = {}) {
 }
 
 function initCardStaggers() {
-  const cardSelectors = '.category-card, .trust-card, .product-card, .featured-premium-card, .menu-product-card, .testimonial-card, .instagram-tile, .wishlist-item, .cart-item';
+  const cardSelectors = '.category-card, .trust-card, .about-card, .about-stat, .about-team-card, .product-card, .featured-premium-card, .menu-product-card, .testimonial-card, .instagram-tile, .wishlist-item, .cart-item';
 
   ScrollTrigger.batch(cardSelectors, {
     start: 'top 88%',

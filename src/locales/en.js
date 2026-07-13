@@ -59,6 +59,91 @@ export const en = {
     english: 'English',
     vietnamese: 'Vietnamese'
   },
+  about: {
+    hero: {
+      badge: 'About our tea bar',
+      title: 'Crafting premium bubble tea with care, calm, and character.',
+      subtitle: 'MilkTea Premium blends slow-brewed tea, fresh ingredients, and hospitality-led service into a modern commerce experience for everyday indulgence.',
+      businessCardAria: 'MilkTea Premium business information'
+    },
+    story: {
+      eyebrow: 'Brand Story',
+      title: 'Built for guests who notice the details.',
+      paragraphs: [
+        'MilkTea Premium began with a simple belief: bubble tea can feel both comforting and elevated. Every recipe is developed around the balance of real tea aroma, creamy texture, natural sweetness, and toppings prepared with consistency.',
+        'From the first menu sketch to the final sealed cup, our team focuses on small details that shape the guest experience: clearer ordering, better packaging, thoughtful flavor notes, and drinks that look as polished as they taste.'
+      ]
+    },
+    mission: {
+      eyebrow: 'Mission',
+      title: 'Make every cup worth slowing down for.',
+      copy: 'We create handcrafted drinks that bring premium ingredients, reliable service, and beautiful presentation into one easy daily ritual.'
+    },
+    vision: {
+      eyebrow: 'Vision',
+      title: 'A modern tea brand guests return to with confidence.',
+      copy: 'Our vision is to become a trusted destination for premium bubble tea, known for refined flavors, transparent quality, and a digital-first customer journey.'
+    },
+    values: {
+      eyebrow: 'Core Values',
+      title: 'The principles behind every pour.',
+      copy: 'Our values keep the brand consistent as the menu, team, and store experience grow.',
+      items: [
+        { icon: 'leaf', title: 'Freshness First', copy: 'We prioritize fresh milk, quality tea leaves, and toppings prepared in controlled daily batches.' },
+        { icon: 'cup', title: 'Balanced Flavor', copy: 'Every drink is tested for aroma, sweetness, texture, and finish before it reaches the menu.' },
+        { icon: 'heart', title: 'Guest Care', copy: 'Clear service, accessible choices, and reliable delivery matter as much as the drink itself.' },
+        { icon: 'sparkle', title: 'Premium Detail', copy: 'Packaging, photography, copy, and presentation are treated as part of the product experience.' }
+      ]
+    },
+    why: {
+      eyebrow: 'Why Choose Us',
+      title: 'A better bubble tea experience from browse to first sip.',
+      copy: 'We combine product discipline with a clean commerce flow so guests can choose faster and enjoy more confidently.',
+      items: [
+        { icon: 'leaf', title: 'Fresh Ingredients', copy: 'Seasonal fruit, brewed tea, and prepared toppings keep the menu bright and dependable.' },
+        { icon: 'cup', title: 'Premium Tea Leaves', copy: 'Tea-forward recipes are designed around aroma, mouthfeel, and a smooth finish.' },
+        { icon: 'sparkle', title: 'Fast Delivery', copy: 'Orders are structured for pickup and delivery with consistent preparation timing.' },
+        { icon: 'heart', title: 'Handcrafted Drinks', copy: 'Each cup is assembled with care, from sugar level to topping balance.' }
+      ]
+    },
+    stats: {
+      title: 'Store statistics',
+      items: [
+        { value: '120+', label: 'Signature drinks' },
+        { value: '15k+', label: 'Happy customers' },
+        { value: '4.9★', label: 'Average rating' },
+        { value: '8', label: 'Years of craft' }
+      ]
+    },
+    timeline: {
+      eyebrow: 'Timeline',
+      title: 'How the brand has grown.',
+      copy: 'A focused roadmap built around better drinks, stronger operations, and a more polished customer journey.',
+      items: [
+        { year: '2018', title: 'First recipes tested', copy: 'The founding team developed tea bases, brown sugar pearls, and cream foam signatures.' },
+        { year: '2020', title: 'Digital ordering launched', copy: 'The store experience expanded with clearer product cards and easier pickup flows.' },
+        { year: '2023', title: 'Premium menu refined', copy: 'Seasonal fruit tea, matcha, coffee, and dessert pairings joined the core collection.' },
+        { year: '2026', title: 'Commercial template ready', copy: 'The brand system, storefront, and commerce flow are prepared for future CMS integration.' }
+      ]
+    },
+    team: {
+      eyebrow: 'Team',
+      title: 'People behind the premium experience.',
+      copy: 'A cross-functional tea bar team focused on product quality, guest care, and operational consistency.',
+      items: [
+        { initials: 'AL', name: 'Alicia Lee', role: 'Head of Tea Craft', copy: 'Leads recipe development and tea quality standards.' },
+        { initials: 'MP', name: 'Minh Pham', role: 'Operations Lead', copy: 'Keeps service, packaging, and fulfillment running smoothly.' },
+        { initials: 'SN', name: 'Sofia Nguyen', role: 'Guest Experience', copy: 'Shapes customer touchpoints across store and digital channels.' }
+      ]
+    },
+    cta: {
+      eyebrow: 'Ready to sip?',
+      title: 'Explore handcrafted favorites from our premium menu.',
+      copy: 'Choose a signature drink, customize your sweetness and ice, then add the perfect topping.',
+      primary: 'Explore Menu',
+      secondary: 'Contact Us'
+    }
+  },
   menu: {
     breadcrumbAria: 'Breadcrumb',
     eyebrow: 'Premium Menu',

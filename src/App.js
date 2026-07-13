@@ -2,6 +2,7 @@ import { DefaultLayout } from './layouts/DefaultLayout.js';
 import { ROUTES } from './constants/routes.js';
 
 const routes = {
+  [ROUTES.ABOUT]: () => import('./pages/AboutPage.js').then((module) => module.AboutPage),
   [ROUTES.ADMIN]: () => import('./pages/AdminPage.js').then((module) => module.AdminPage),
   [ROUTES.CART]: () => import('./pages/CartPage.js').then((module) => module.CartPage),
   [ROUTES.MENU]: () => import('./pages/MenuPage.js').then((module) => module.MenuPage),

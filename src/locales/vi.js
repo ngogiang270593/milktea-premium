@@ -59,6 +59,91 @@ export const vi = {
     english: 'Tiếng Anh',
     vietnamese: 'Tiếng Việt'
   },
+  about: {
+    hero: {
+      badge: 'Về quầy trà của chúng tôi',
+      title: 'Tạo nên trà sữa cao cấp bằng sự chỉn chu, tinh tế và cá tính.',
+      subtitle: 'MilkTea Premium kết hợp trà ủ chậm, nguyên liệu tươi và dịch vụ tận tâm để mang đến trải nghiệm thưởng thức hiện đại mỗi ngày.',
+      businessCardAria: 'Thông tin kinh doanh của MilkTea Premium'
+    },
+    story: {
+      eyebrow: 'Câu chuyện thương hiệu',
+      title: 'Dành cho những vị khách trân trọng từng chi tiết.',
+      paragraphs: [
+        'MilkTea Premium bắt đầu từ một niềm tin giản dị: trà sữa có thể vừa thân thuộc vừa cao cấp. Mỗi công thức được phát triển quanh hương trà thật, kết cấu béo mịn, độ ngọt tự nhiên và topping ổn định.',
+        'Từ bản phác thực đơn đầu tiên đến ly trà được đóng nắp, đội ngũ luôn chăm chút những chi tiết nhỏ tạo nên trải nghiệm: đặt món rõ ràng hơn, bao bì đẹp hơn, mô tả hương vị tinh tế hơn và đồ uống chỉn chu cả về vị lẫn hình ảnh.'
+      ]
+    },
+    mission: {
+      eyebrow: 'Sứ mệnh',
+      title: 'Biến mỗi ly trà thành khoảnh khắc đáng chậm lại.',
+      copy: 'Chúng tôi tạo ra đồ uống thủ công kết hợp nguyên liệu cao cấp, phục vụ ổn định và trình bày đẹp mắt trong một thói quen thưởng thức dễ chịu.'
+    },
+    vision: {
+      eyebrow: 'Tầm nhìn',
+      title: 'Một thương hiệu trà hiện đại khiến khách hàng tin tưởng quay lại.',
+      copy: 'Chúng tôi hướng đến một điểm đến trà sữa cao cấp, được nhớ đến bởi hương vị tinh tế, chất lượng minh bạch và hành trình mua hàng ưu tiên trải nghiệm số.'
+    },
+    values: {
+      eyebrow: 'Giá trị cốt lõi',
+      title: 'Những nguyên tắc đứng sau mỗi ly trà.',
+      copy: 'Các giá trị này giúp thương hiệu giữ sự nhất quán khi thực đơn, đội ngũ và trải nghiệm cửa hàng phát triển.',
+      items: [
+        { icon: 'leaf', title: 'Tươi mới trước tiên', copy: 'Chúng tôi ưu tiên sữa tươi, lá trà chất lượng và topping được chuẩn bị theo từng mẻ trong ngày.' },
+        { icon: 'cup', title: 'Hương vị cân bằng', copy: 'Mỗi món đều được thử về hương trà, độ ngọt, kết cấu và hậu vị trước khi lên thực đơn.' },
+        { icon: 'heart', title: 'Chăm sóc khách hàng', copy: 'Dịch vụ rõ ràng, lựa chọn dễ tiếp cận và giao hàng ổn định quan trọng như chính ly trà.' },
+        { icon: 'sparkle', title: 'Chi tiết cao cấp', copy: 'Bao bì, hình ảnh, nội dung và cách trình bày đều là một phần của trải nghiệm sản phẩm.' }
+      ]
+    },
+    why: {
+      eyebrow: 'Vì sao chọn chúng tôi',
+      title: 'Trải nghiệm trà sữa tốt hơn từ lúc chọn món đến ngụm đầu tiên.',
+      copy: 'Chúng tôi kết hợp kỷ luật sản phẩm với luồng mua hàng gọn gàng để khách chọn nhanh hơn và thưởng thức tự tin hơn.',
+      items: [
+        { icon: 'leaf', title: 'Nguyên liệu tươi', copy: 'Trái cây theo mùa, trà pha mới và topping chuẩn bị hằng ngày giúp thực đơn luôn tươi sáng.' },
+        { icon: 'cup', title: 'Lá trà cao cấp', copy: 'Công thức tôn vị trà, chú trọng hương thơm, độ mượt và hậu vị hài hòa.' },
+        { icon: 'sparkle', title: 'Giao hàng nhanh', copy: 'Quy trình đơn hàng được tối ưu cho mang đi và giao tận nơi với thời gian chuẩn bị ổn định.' },
+        { icon: 'heart', title: 'Đồ uống thủ công', copy: 'Mỗi ly được hoàn thiện cẩn thận, từ mức đường, đá đến độ cân bằng topping.' }
+      ]
+    },
+    stats: {
+      title: 'Số liệu cửa hàng',
+      items: [
+        { value: '120+', label: 'Món đặc trưng' },
+        { value: '15k+', label: 'Khách hàng hài lòng' },
+        { value: '4.9★', label: 'Đánh giá trung bình' },
+        { value: '8', label: 'Năm kinh nghiệm' }
+      ]
+    },
+    timeline: {
+      eyebrow: 'Hành trình',
+      title: 'Thương hiệu đã phát triển như thế nào.',
+      copy: 'Một lộ trình tập trung vào đồ uống tốt hơn, vận hành chắc hơn và hành trình khách hàng chỉn chu hơn.',
+      items: [
+        { year: '2018', title: 'Thử nghiệm công thức đầu tiên', copy: 'Đội ngũ sáng lập phát triển nền trà, trân châu đường nâu và lớp kem foam đặc trưng.' },
+        { year: '2020', title: 'Ra mắt đặt món trực tuyến', copy: 'Trải nghiệm cửa hàng mở rộng với thẻ sản phẩm rõ ràng và quy trình nhận món dễ hơn.' },
+        { year: '2023', title: 'Tinh chỉnh thực đơn cao cấp', copy: 'Trà trái cây theo mùa, matcha, cà phê và bánh dùng kèm được bổ sung vào bộ sưu tập.' },
+        { year: '2026', title: 'Sẵn sàng cho mẫu thương mại', copy: 'Hệ thống thương hiệu, giao diện cửa hàng và luồng mua sắm đã sẵn sàng tích hợp CMS trong tương lai.' }
+      ]
+    },
+    team: {
+      eyebrow: 'Đội ngũ',
+      title: 'Những con người đứng sau trải nghiệm cao cấp.',
+      copy: 'Đội ngũ quầy trà đa nhiệm, tập trung vào chất lượng sản phẩm, chăm sóc khách hàng và vận hành ổn định.',
+      items: [
+        { initials: 'AL', name: 'Alicia Lee', role: 'Trưởng bộ phận trà', copy: 'Dẫn dắt phát triển công thức và tiêu chuẩn chất lượng trà.' },
+        { initials: 'MP', name: 'Minh Pham', role: 'Phụ trách vận hành', copy: 'Đảm bảo dịch vụ, bao bì và xử lý đơn hàng luôn trơn tru.' },
+        { initials: 'SN', name: 'Sofia Nguyen', role: 'Trải nghiệm khách hàng', copy: 'Hoàn thiện các điểm chạm khách hàng tại cửa hàng và kênh số.' }
+      ]
+    },
+    cta: {
+      eyebrow: 'Sẵn sàng thưởng thức?',
+      title: 'Khám phá những món thủ công nổi bật trong thực đơn cao cấp.',
+      copy: 'Chọn món đặc trưng, tùy chỉnh đường đá và thêm topping yêu thích.',
+      primary: 'Khám phá thực đơn',
+      secondary: 'Liên hệ'
+    }
+  },
   menu: {
     breadcrumbAria: 'Đường dẫn',
     eyebrow: 'Thực đơn cao cấp',
