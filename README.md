@@ -1,126 +1,194 @@
 # MilkTea Premium
 
-MilkTea Premium is a production-ready bubble tea commerce template built with Vite, Tailwind CSS, and vanilla JavaScript. It is designed for commercial storefronts, theme marketplaces, and teams that want a polished frontend foundation without a backend dependency.
+<p align="center">
+  <strong>A premium bubble tea commerce template built with Vite, Vanilla JavaScript, Tailwind CSS, and SPA architecture.</strong>
+</p>
 
-## Features
+<p align="center">
+  <a href="#installation"><img alt="Vite" src="https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite&logoColor=white"></a>
+  <a href="#tech-stack"><img alt="Vanilla JavaScript" src="https://img.shields.io/badge/Vanilla_JS-ES_Modules-F7DF1E?style=for-the-badge&logo=javascript&logoColor=111"></a>
+  <a href="#tech-stack"><img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-3.x-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white"></a>
+  <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-0D3B2E?style=for-the-badge"></a>
+</p>
 
-- Premium responsive storefront for desktop, tablet, and mobile.
-- Vanilla JavaScript SPA routing with route-level code splitting.
-- Tailwind CSS styling with reusable design system components.
-- Homepage with hero, categories, trust cards, featured products, promotion, testimonials, Instagram gallery, and newsletter.
-- Menu page with category filtering, search, sorting, grid/list view, mobile filter drawer, and pagination.
-- Product detail page with gallery, thumbnails, product options, toppings, quantity selector, related products, wishlist, and add-to-cart.
-- Quick View modal for product previews.
-- Cart, wishlist, checkout, and order success flow.
-- Vietnamese and English localization with instant language switching.
-- Dynamic theme engine with persistent user preference.
-- CMS-ready `siteConfig` layer for brand, content, SEO, contact, social, and business data.
-- Lightweight `/admin` configuration panel using localStorage.
-- SEO metadata, canonical URLs, Open Graph, Twitter Cards, structured data, sitemap, and robots file.
-- PWA manifest, service worker, app icons, install prompt, splash screen, and offline fallback.
-- GSAP-powered animations with reduced-motion support.
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/Version-0.1.0-D3A86A?style=flat-square">
+  <img alt="Last Update" src="https://img.shields.io/badge/Last_Update-2026--07--13-0D3B2E?style=flat-square">
+  <img alt="Architecture" src="https://img.shields.io/badge/Architecture-SPA-1f7665?style=flat-square">
+  <img alt="PWA" src="https://img.shields.io/badge/PWA-Ready-6f4329?style=flat-square">
+</p>
 
-## Tech Stack
+![MilkTea Premium Preview](demo/preview-banner.png)
 
-- Vite
-- Vanilla JavaScript ES modules
-- Tailwind CSS
-- GSAP
-- localStorage persistence
-- Vitest-ready test architecture
-- PWA-ready public assets
+## Hero
+
+MilkTea Premium is a polished commercial storefront template for bubble tea, dessert, and cafe brands that need a fast, responsive, multilingual shopping experience without a backend dependency.
+
+## Live Demo
+
+<p>
+  <a href="https://milktea-premium.example/"><strong>View Live Demo</strong></a>
+  ·
+  <a href="https://github.com/your-username/milktea-premium"><strong>View on GitHub</strong></a>
+</p>
+
+> Replace the demo and repository URLs with your production links before publishing.
 
 ## Screenshots
 
-Add final screenshots to a `screenshots/` folder before publishing or listing the template.
-
-| Screen | Placeholder |
+| View | Preview |
 | --- | --- |
-| Homepage desktop | `screenshots/home-desktop.jpg` |
-| Homepage mobile | `screenshots/home-mobile.jpg` |
-| Menu page | `screenshots/menu.jpg` |
-| Product detail | `screenshots/product-detail.jpg` |
-| Cart and checkout | `screenshots/checkout.jpg` |
-| Admin panel | `screenshots/admin.jpg` |
+| Desktop | ![Desktop homepage](screenshots/desktop/home.png) |
+| Tablet | ![Tablet homepage](screenshots/tablet/home.png) |
+| Mobile | ![Mobile homepage](screenshots/mobile/home.png) |
+| Light Mode | ![Light mode storefront](screenshots/desktop/menu.png) |
+| Dark Mode | ![Dark mode preview](screenshots/desktop/product.png) |
+| Vietnamese | ![Vietnamese interface](screenshots/tablet/menu.png) |
+| English | ![English-ready product interface](screenshots/tablet/product.png) |
 
-## Quick Start
+Additional captures are available in `screenshots/desktop`, `screenshots/tablet`, and `screenshots/mobile`.
+
+## Features
+
+- Modern premium UI for bubble tea, cafe, and dessert storefronts.
+- Vanilla JavaScript SPA router with route-level code splitting.
+- Multilingual i18n architecture with Vietnamese and English support.
+- Theme engine with light, dark, and branded palettes.
+- Wishlist, cart, checkout, quick view, and product detail flow.
+- Responsive layouts for desktop, tablet, and mobile.
+- SEO metadata, canonical URLs, OpenGraph, Twitter Cards, sitemap, and robots file.
+- PWA manifest, service worker, offline page, install support, and app icons.
+- Accessibility-focused landmarks, labels, focus states, and reduced-motion support.
+- CMS-ready business content layer through `siteConfig`.
+- Lightweight admin configuration panel powered by localStorage.
+- Deployment-ready configs for Netlify, Vercel, and GitHub Pages.
+
+## Tech Stack
+
+| Technology | Description |
+| --- | --- |
+| Vite | Fast local development, optimized production builds, and native ES module workflow. |
+| Vanilla JavaScript | Framework-free SPA architecture with reusable modules, stores, services, and repositories. |
+| Tailwind CSS | Utility-first styling with a premium design system and reusable UI patterns. |
+| GSAP | Subtle production animations with reduced-motion safeguards. |
+| localStorage | Persistent cart, wishlist, theme, language, search, and admin configuration. |
+| Vitest | Test-ready architecture for unit, integration, and component coverage. |
+| PWA APIs | Manifest, service worker, offline fallback, and installable app support. |
+
+## Folder Structure
+
+```text
+milktea-premium/
+├── public/
+│   ├── assets/
+│   ├── icons/
+│   ├── manifest.json
+│   ├── offline.html
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   └── sw.js
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── config/
+│   ├── constants/
+│   ├── data/
+│   ├── design/
+│   ├── layouts/
+│   ├── locales/
+│   ├── pages/
+│   ├── repositories/
+│   ├── services/
+│   ├── store/
+│   ├── utils/
+│   ├── App.js
+│   └── main.js
+├── tests/
+├── docs/
+├── screenshots/
+├── demo/
+├── netlify.toml
+├── vercel.json
+└── vite.config.js
+```
+
+## Installation
+
+Install dependencies:
 
 ```bash
 npm install
+```
+
+Start development:
+
+```bash
 npm run dev
 ```
 
-Build for production:
+Create a production build:
 
 ```bash
 npm run build
 ```
 
-Preview production output:
+Preview the production build:
 
 ```bash
 npm run preview
 ```
 
-## Folder Structure
+Build for GitHub Pages SPA fallback:
 
-```text
-src/
-  assets/        CSS, images, icons, and fonts
-  components/    Reusable layout, commerce, and UI components
-  config/        CMS-ready site configuration
-  constants/     Navigation, routes, breakpoints, icons, and common constants
-  data/          Static product, category, and review seed data
-  design/        Design tokens
-  layouts/       Shared application shell
-  locales/       Translation dictionaries
-  pages/         Route-level page modules
-  repositories/  Data access layer
-  services/      Storage, image, settings, cart, wishlist, language, and theme services
-  store/         Client-side application stores
-  utils/         Shared utilities for routing, SEO, images, animation, validation, and formatting
+```bash
+npm run build:github-pages
 ```
-
-## Documentation
-
-- [INSTALL.md](INSTALL.md)
-- [DEPLOY.md](DEPLOY.md)
-- [CUSTOMIZATION.md](CUSTOMIZATION.md)
-- [CONTRIBUTING.md](CONTRIBUTING.md)
-- [CHANGELOG.md](CHANGELOG.md)
-- [LICENSE](LICENSE)
 
 ## Customization
 
-Common customization points:
+| Area | File |
+| --- | --- |
+| Logo and brand name | `src/config/siteConfig.js` |
+| Theme palettes | `src/store/themeStore.js` |
+| Language content | `src/locales/vi.js`, `src/locales/en.js` |
+| Products | `src/data/products.js` |
+| Categories and filters | `src/data/categories.js` |
+| Business information | `src/config/siteConfig.js` |
+| Images | `src/assets/images/` and `public/assets/` |
+| SEO domain and metadata | `src/config/siteConfig.js`, `public/sitemap.xml`, `public/robots.txt` |
 
-- Brand and business content: `src/config/siteConfig.js`
-- Products: `src/data/products.js`
-- Categories: `src/data/categories.js`
-- Translations: `src/locales/vi.js`, `src/locales/en.js`
-- Themes: `src/store/themeStore.js`
-- Images: `src/assets/images/`
-- Local admin panel: `/admin`
+For deeper guidance, see [CUSTOMIZATION.md](CUSTOMIZATION.md) and [DEPLOY.md](DEPLOY.md).
 
-See [CUSTOMIZATION.md](CUSTOMIZATION.md) for a complete guide.
+## Roadmap
 
-## FAQ
+### v1.0
 
-**Does this template require a backend?**  
-No. It is frontend-only. Cart, wishlist, theme, language, recent searches, and admin overrides are stored in `localStorage`.
+- Final commercial storefront release.
+- Production deployment presets.
+- Complete responsive demo screenshots and marketplace preview assets.
+- Accessibility, SEO, PWA, and documentation hardening.
 
-**Can it connect to a CMS later?**  
-Yes. Editable business content is centralized in `siteConfig`, so a future API response can replace or merge with the same shape.
+### v1.1
 
-**Can I add more languages?**  
-Yes. Add a locale file in `src/locales/`, register it, and match the existing translation key structure.
+- Expanded test coverage for cart, checkout, i18n, and routing.
+- Additional product listing layouts.
+- More theme presets and marketplace-ready demo variations.
 
-**Can I change the theme palette?**  
-Yes. Add or edit theme definitions in `src/store/themeStore.js`.
+### v2.0
 
-**Is it PWA-ready?**  
-Yes. The template includes manifest, service worker, icons, install prompt, splash screen, and offline fallback.
+- Optional API/CMS adapter.
+- Backend checkout integration hooks.
+- Account dashboard and order history architecture.
+- Advanced analytics and campaign configuration.
 
 ## License
 
-Released under the MIT License. See [LICENSE](LICENSE).
+MilkTea Premium is released under the [MIT License](LICENSE).
+
+## Author
+
+- GitHub: [your-username](https://github.com/your-username)
+- Email: `hello@example.com`
+- Website: `https://your-website.example`
+
+Replace the author placeholders with your commercial profile before publishing.
