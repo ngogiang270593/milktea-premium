@@ -266,6 +266,13 @@ export const vi = {
       }
     ]
   },
+  notFound: {
+    badge: '404',
+    title: 'Trang này đã rời khỏi thực đơn.',
+    copy: 'Liên kết có thể đã cũ hoặc trang đã được di chuyển. Hãy quay về trang chủ hoặc khám phá thực đơn trà sữa thủ công của chúng tôi.',
+    backHome: 'Về trang chủ',
+    browseMenu: 'Xem thực đơn'
+  },
   menu: {
     breadcrumbAria: 'Đường dẫn',
     eyebrow: 'Thực đơn cao cấp',

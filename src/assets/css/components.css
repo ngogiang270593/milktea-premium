@@ -64,6 +64,11 @@
     contain-intrinsic-size: auto 1000px;
   }
 
+  .not-found-page {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 760px;
+  }
+
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-full bg-brand-green px-7 py-3 text-sm font-semibold text-white transition hover:bg-[#0b3427];
   }
@@ -1840,6 +1845,170 @@
     color: #6f5f51;
     line-height: 1.75;
     animation: faq-answer-in 240ms ease both;
+  }
+
+  .not-found-page {
+    min-height: 100vh;
+    padding: 8rem 0 6rem;
+    background:
+      radial-gradient(circle at 12% 10%, rgba(205, 237, 246, 0.52), transparent 24rem),
+      radial-gradient(circle at 88% 20%, rgba(211, 168, 106, 0.24), transparent 22rem),
+      linear-gradient(180deg, #fffdf8 0%, #f8f5ee 100%);
+  }
+
+  .not-found-container {
+    display: grid;
+    width: min(100% - 2rem, 90rem);
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.82fr);
+    gap: 3rem;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .not-found-content h1 {
+    max-width: 48rem;
+    margin-top: 1rem;
+    color: #1f1710;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.94;
+    letter-spacing: 0;
+  }
+
+  .not-found-content p:last-of-type {
+    max-width: 38rem;
+    margin-top: 1.5rem;
+    color: #6f5f51;
+    font-size: clamp(1rem, 2vw, 1.18rem);
+    line-height: 1.8;
+  }
+
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .not-found-illustration {
+    position: relative;
+    min-height: 30rem;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 3rem;
+    box-shadow: 0 28px 86px rgba(48, 35, 24, 0.13);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .not-found-illustration strong {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1rem;
+    color: rgba(13, 59, 46, 0.09);
+    font-size: clamp(6rem, 14vw, 11rem);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .not-found-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(12px);
+    animation: hero-float 7s ease-in-out infinite;
+  }
+
+  .not-found-orb-one {
+    top: 12%;
+    left: 14%;
+    width: 5rem;
+    height: 5rem;
+    background: rgba(205, 237, 246, 0.75);
+  }
+
+  .not-found-orb-two {
+    right: 12%;
+    top: 18%;
+    width: 7rem;
+    height: 7rem;
+    background: rgba(211, 168, 106, 0.26);
+    animation-delay: -2s;
+  }
+
+  .not-found-cup {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: min(58%, 17rem);
+    height: 22rem;
+    transform: translate(-50%, -50%);
+    animation: hero-float 6.5s ease-in-out infinite;
+  }
+
+  .not-found-straw {
+    position: absolute;
+    top: -1.5rem;
+    left: 56%;
+    width: 0.9rem;
+    height: 14rem;
+    background: linear-gradient(180deg, #0d3b2e, #2e6a58);
+    border-radius: 9999px;
+    transform: rotate(12deg);
+  }
+
+  .not-found-lid,
+  .not-found-tea {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .not-found-lid {
+    top: 2rem;
+    width: 92%;
+    height: 2.6rem;
+    background: rgba(255, 255, 255, 0.76);
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    border-radius: 9999px;
+    box-shadow: 0 14px 32px rgba(48, 35, 24, 0.1);
+  }
+
+  .not-found-tea {
+    bottom: 0;
+    width: 82%;
+    height: 18rem;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.12)),
+      linear-gradient(180deg, #d3a86a, #6f4329);
+    border: 1px solid rgba(255, 255, 255, 0.86);
+    border-radius: 2rem 2rem 4rem 4rem;
+    box-shadow: inset 16px 0 32px rgba(255, 255, 255, 0.18), 0 32px 78px rgba(48, 35, 24, 0.2);
+  }
+
+  .not-found-pearl {
+    position: absolute;
+    z-index: 2;
+    width: 1.45rem;
+    height: 1.45rem;
+    background: radial-gradient(circle at 35% 30%, #6d5447, #1f1710 68%);
+    border-radius: 9999px;
+  }
+
+  .not-found-pearl-one {
+    left: 35%;
+    bottom: 2.5rem;
+  }
+
+  .not-found-pearl-two {
+    right: 34%;
+    bottom: 4rem;
+  }
+
+  .not-found-pearl-three {
+    left: 48%;
+    bottom: 5.7rem;
   }
 
   .menu-page {
@@ -3899,7 +4068,8 @@
     .contact-layout,
     .contact-map-grid,
     .faq-hero-grid,
-    .faq-layout {
+    .faq-layout,
+    .not-found-container {
       grid-template-columns: 1fr;
     }
 
@@ -3963,6 +4133,14 @@
 
     .faq-hero {
       padding: 6.5rem 0 3rem;
+    }
+
+    .not-found-page {
+      padding: 6.5rem 0 4rem;
+    }
+
+    .not-found-illustration {
+      min-height: 24rem;
     }
 
     .about-timeline-item {
@@ -4639,6 +4817,7 @@
   [data-theme='dark'] .about-page,
   [data-theme='dark'] .contact-page,
   [data-theme='dark'] .faq-page,
+  [data-theme='dark'] .not-found-page,
   [data-theme='dark'] .category-section,
   [data-theme='dark'] .featured-products-section,
   [data-theme='dark'] .site-footer,
@@ -4671,6 +4850,7 @@
   [data-theme='dark'] .faq-sidebar,
   [data-theme='dark'] .faq-support-card,
   [data-theme='dark'] .faq-item,
+  [data-theme='dark'] .not-found-illustration,
   [data-theme='dark'] .testimonial-card,
   [data-theme='dark'] .promotion-banner,
   [data-theme='dark'] .product-card,
@@ -4740,6 +4920,7 @@
   [data-theme='dark'] .faq-sidebar h2,
   [data-theme='dark'] .faq-content-heading h2,
   [data-theme='dark'] .faq-item summary,
+  [data-theme='dark'] .not-found-content h1,
   [data-theme='dark'] .product-card h3,
   [data-theme='dark'] .menu-heading h1,
   [data-theme='dark'] .menu-product-card h2,
@@ -4795,6 +4976,7 @@
   [data-theme='dark'] .faq-support-card p,
   [data-theme='dark'] .faq-content-heading p:last-child,
   [data-theme='dark'] .faq-item p,
+  [data-theme='dark'] .not-found-content p:last-of-type,
   [data-theme='dark'] .testimonial-card p,
   [data-theme='dark'] .floating-card small,
   [data-theme='dark'] .menu-heading p,
@@ -4925,7 +5107,9 @@
   }
 
   [data-theme='dark'] .tea-cup,
-  [data-theme='dark'] .tea-lid {
+  [data-theme='dark'] .tea-lid,
+  [data-theme='dark'] .not-found-lid,
+  [data-theme='dark'] .not-found-tea {
     background: rgba(247, 245, 238, 0.12);
     border-color: rgba(247, 245, 238, 0.18);
   }

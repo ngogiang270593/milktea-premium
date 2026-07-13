@@ -12,6 +12,10 @@ const routes = {
   [ROUTES.WISHLIST]: () => import('./pages/WishlistPage.js').then((module) => module.WishlistPage)
 };
 
+function loadNotFoundPage() {
+  return import('./pages/NotFoundPage.js').then((module) => module.NotFoundPage);
+}
+
 function loadHomeComponents() {
   return Promise.all([
     import('./components/Hero.js'),
@@ -61,7 +65,7 @@ export function preloadRoute(pathname) {
     return loadHomeComponents();
   }
 
-  return undefined;
+  return loadNotFoundPage();
 }
 
 /**
@@ -77,7 +81,11 @@ export async function renderApp() {
   }
 
   const pageLoader = routes[window.location.pathname];
-  const content = pageLoader ? (await pageLoader())() : await renderHomePage();
+  const content = pageLoader
+    ? (await pageLoader())()
+    : window.location.pathname === ROUTES.HOME
+      ? await renderHomePage()
+      : (await loadNotFoundPage())();
 
   app.innerHTML = DefaultLayout(content);
 }

@@ -266,6 +266,13 @@ export const en = {
       }
     ]
   },
+  notFound: {
+    badge: '404',
+    title: 'This page drifted off the menu.',
+    copy: 'The link may be outdated, or the page may have moved. Head back home or browse our handcrafted milk tea menu.',
+    backHome: 'Back Home',
+    browseMenu: 'Browse Menu'
+  },
   menu: {
     breadcrumbAria: 'Breadcrumb',
     eyebrow: 'Premium Menu',
