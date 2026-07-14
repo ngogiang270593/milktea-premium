@@ -14,12 +14,16 @@
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:component": "vitest run tests/component",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "demo": "playwright test scripts/demo/portfolio.spec.js --headed",
+    "demo:ui": "playwright test --ui",
+    "portfolio": "playwright test scripts/demo"
   },
   "dependencies": {
     "gsap": "^3.15.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "autoprefixer": "^10.4.19",
     "jsdom": "^26.1.0",
     "postcss": "^8.4.35",
